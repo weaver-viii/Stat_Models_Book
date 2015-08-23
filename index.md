@@ -8,7 +8,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, set eiusmod tempor inci
 
 # Articles #
 
-[Article one.][art1]  
+[Vignette][vig]  
 [Article two.][art2]  
 [Article three.][art3]  
 [Article four.][art4]  
@@ -19,15 +19,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, set eiusmod tempor inci
 [Article nine.][art9]  
 [Article ten.][art10]  
 
-[art1]: article1.html
-[art2]: article2.html
-[art3]: article3.html
-[art4]: article4.html
-[art5]: article5.html
-[art6]: article6.html
-[art7]: article7.html
-[art8]: article8.html
-[art9]: article9.html
-[art10]: article10.html
+[vig]: vignette.html
+
 
 
