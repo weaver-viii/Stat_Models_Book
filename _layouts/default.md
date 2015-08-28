@@ -24,18 +24,7 @@
 </header>
 
 <section>  
-<div id="post">
-<p>This is a book based on STAT 215A, a graduate-level applied statistics class at UC Berkeley taught by Prof. Bin Yu.</p>
-
-<h1>Contents</h1>
-
-<ul>
-<li><a href="introduction.html">Introduction</a></li>
-</ul>
-
-</div>
-
-
+{{ content }}
 </section>
 
 <footer>

@@ -1,8 +1,7 @@
 ---
+layout: post
 title: "Introduction"
 header-includes: \usepackage{graphicx}
-    \usepackages{color}
-output: html_document
 ---
 
 
