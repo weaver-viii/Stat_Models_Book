@@ -1,4 +1,5 @@
-KnitPost <- function(site.path=getwd(), overwriteAll=F, overwriteOne=NULL) {
+KnitPost <- function(site.path=getwd(), overwriteAll=T, overwriteOne=NULL) {
+  setwd("~/Google Drive/Berkeley PhD/Research/Book/Stat_Models_Book")
   if(!'package:knitr' %in% search()) library('knitr')
   
   ## Blog-specific directories.  This will depend on how you organize your blog.

@@ -29,11 +29,7 @@
 
 <footer>
 
-<p><small>This project is maintained by <a href="https://github.com/rlbarter">rlbarter</a></small></p>
-<p><small>Hosted on GitHub Pages &mdash; Theme by <a
-href="https://github.com/orderedlist">orderedlist. </a></small></p>
-
-<p><small>Powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a></small></p>
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
 </footer>
 
 
