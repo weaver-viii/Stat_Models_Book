@@ -12,7 +12,9 @@ The tools provided by statistics were first developed as instruments used to sol
 
 To ensure that useful questions are asked and valid answers are drawn, domain experts (scientists, for example) should always be in the picture for statisticians to strengthen their domain knowledge by asking questions and brainstorming. Data does not stand alone: it must be viewed with a strong consideration towards the questions being asked, the scientific background of the problem and the data collection process.
 
-This idea can be conveyed through the concept of *data wisdom*. In *Data Wisdom for Data Science*, a piece I wrote for the big data website, *Operational Database Management Systems*, I describe data wisdom as "the ability to combine domain, mathematical and methodological knowledge with experience, understanding, common sense, insight and good judgement in order to think critically about data and to make decisions based on data". The essence of data wisdom can be encompassed in the following set of (not necessarily sequential) questions that a data analyst is encouraged to ask before embarking on and during any data analysis project.
+# Data wisdom
+
+The ideas introduced above can be conveyed through the concept of *data wisdom*. In *Data Wisdom for Data Science*, a piece I wrote for the big data website, *Operational Database Management Systems*, I describe data wisdom as "the ability to combine domain, mathematical and methodological knowledge with experience, understanding, common sense, insight and good judgement in order to think critically about data and to make decisions based on data". The essence of data wisdom can be encompassed in the following set of (not necessarily sequential) questions that a data analyst is encouraged to ask before embarking on and during any data analysis project.
 
 ### 1. Question
 
