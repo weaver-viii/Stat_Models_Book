@@ -46,6 +46,13 @@ a small {
   display:block;
 }
 
+a medium {
+    font-size:14px;
+    color:#777;
+    margin-top:-0.6em;
+    display:block;
+}
+
 .wrapper {
   width:860px;
   margin:0 auto;
@@ -190,6 +197,29 @@ footer {
     width:auto;
     margin:0;
   }
+  
+  ul.toc {
+      padding-left: 0px;
+  }
+  
+  ul.toc .dropdown-header {
+      padding: 5px 0 0 0;
+  }
+  
+  ul .dropdown-header:first-child {
+      margin-top: 2px;
+  }
+  
+  .dropdown-header {
+      font-weight: bold;
+      color: #333;
+      margin-top: 8px;
+  }
+  
+  .dropdown-menu .dropdown-header {
+      border-bottom: 1px solid #eee;
+  }
+
   
   header, section, footer {
     float:none;
