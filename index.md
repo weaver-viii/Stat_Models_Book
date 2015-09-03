@@ -11,13 +11,13 @@ This is an online version of *Statistical Models: Theory and Applications*, a bo
 
 
 * [Introduction][intro]
-* [The Fruitfly Project][fly]
-* [Philosophy][phil]
-* [Exploratory Data Analysis][eda]
+* [How to be an applied statistician][how]
+* [The fruitfly project][fly]
+* [Exploratory data analysis][eda]
 
 [intro]: introduction.html 
+[how]: philosophy.html
 [fly]: fruitfly.html 
-[phil]: philosophy.html
 [eda]: eda.html 
 
 
