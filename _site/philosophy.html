@@ -36,46 +36,57 @@
 
 
 <section>  
-<h1>How to be an applied statistician</h1>
+<h1>How to be an applied statistician (this section is currently a smörgåsbord of wisdoms we wish to impart)</h1>
 
-<p>In essence, this book is about how to be an applied statistician. More precisely, how to use the statistical methods you&#39;ve picked up (be it through your degree or by necessity) in practice. Before embarking on a journey discussing how to implement statistical methods in reality, we will first spend some time discussing the skills that are necessary for one to be a successful applied statistician. In this section, we focus not on using statistical methods, but on the importance of thinking critically, communicating effectively and understanding the philosophy behind statistics.</p>
+<p>In essence, this book is about how to be an applied statistician. More precisely, how to use the statistical methods you&#39;ve picked up (be it through your degree or by necessity) in practice and collaboration. Before embarking on a journey discussing how to implement your statistical skills in reality, we will first spend some time discussing the tools that are necessary for one to be a successful applied statistician. In this section, we focus not on using statistical methods, but on the importance of thinking critically, communicating effectively and understanding the philosophy behind statistics.</p>
 
 <h2>The importance of communication</h2>
 
+<p>There is an unfortunate presupposition that statisticians (along with mathematicians, computer scientists, etc) are terrible at communication. It should be fairly obvious that if you have great ideas or are doing inspirational work while lacking the skills to adequately communicate it (not just to other statisticians, but also potential collaborators), then you will find it hard to make much of an impact. Moreover, there is a complete lack of awareness among statisticians on the importance of being communicative, approachable and even likable, particularly for those who wish to work with non-statistician collaborators. </p>
+
+<p>Why is it useful:</p>
+
 <ol>
-<li>The importance of communication people skills -- you want to be someone people can work with. Even if you don&#39;t have the skills they need, the will still come to you if they like you -- get involved. Most people (professors) learn by talking with people with experience.</li>
+<li><p>finding collaborators</p></li>
+<li><p>working with the found collaborators: explaining your approaches and being open to suggestions. Listen to them. They have all the domain knowledge!</p></li>
+<li><p>you learn from others by talking with them -- seeking them out!</p></li>
 </ol>
+
+<ul>
+<li>The importance of communication people skills -- you want to be someone people can work with. Even if you don&#39;t have the skills they need, the will still come to you if they like you -- get involved. Most people learn by talking with people with experience.</li>
+</ul>
 
 <h2>The human need to infer causation</h2>
 
-<p>Many of you have no doubt heard the much lauded phrase &quot;correlation does not imply causation&quot;. It is a well-known fact that although we might wag our fingers and utter the phrase, those less statistically informed continue to mistake correlation for causation, some even abuse the human desire to infer causation. Our desire to infer causation begins from a young age; <FONT COLOR="red">give some example: touch something hot, it hurts -- you learn that touching something hot caused the pain even though don&#39;t understand the mechanism behind it. Rub plastic hand infer that the real hand is plastic....? Technically the evidence you have is only association but we believe causation</FONT>. </p>
+<p>Many of you have no doubt heard the much lauded phrase &quot;correlation does not imply causation&quot;. It is a well-known fact that although we continue to wag our fingers and utter the phrase, those less statistically informed (such as the media) continue to mistake correlation for causation. It is not hard to see why this fallacy is so common: there exists a fundamental human desire to infer causation as a result of our innate need to understand and explain the world in which we live. Our desire to draw causal conclusions begins from a young age; <FONT COLOR="red">give some example: touch something hot, it hurts -- you learn that touching something hot caused the pain even though don&#39;t understand the mechanism behind it. Rub plastic hand infer that the real hand is plastic....what was that example? Technically the evidence you have is only association but we believe causation</FONT>. </p>
 
-<p>Our past experiences lead us to believe that something causes something else. Moreover we continue to infer causality to satisfy our overwhelming desire to explain why how the world around us works. This notion is something that advertising agences are extremely aware of. For example, if we consider drug advertisements, most of them feature extraordinarily happy people, bright colours, and a passing description of what the drug is for. The idea behind these advertisements is that the human mind automatically infers causation from the association between the drug and happy people: the aim is to make people believe that the drug <em>causes</em> happiness (which if you listen closely to the speedily spoken side-effects at the end of the ad, is clearly the opposite of what the drug causes). The point is, humans have an innate need to explain associations through causation not just in statistics but also in real life.</p>
+<p>Our past experiences lead us to infer causality, however the media has a tendency to abuse this fact. For example, most drug advertisements feature extraordinarily happy people, bright colors, and a passing description of what the drug is for. The idea behind these advertisements is that the human mind automatically infers causation from the association between the drug and happy people: the aim is to make people believe that the drug <em>causes</em> happiness (which if you listen closely to the speedily spoken side-effects at the end of the ad, is clearly the opposite of what the drug causes). Although the tendency of humans to explain associations via causation can certainly be seen certainly an evolutionary advantage, the same fallacy can be disastrous when introduced in the realm of science.</p>
 
 <h3>The egg-yolk study</h3>
+
+<p>To exem</p>
 
 <p>Describe the egg yolk study and the reactions by the newspeople: &quot;Sounds great right?!&quot;. What are the problems? </p>
 
 <h3>Causal Inference</h3>
 
-<p>So if correlation doesn&#39;t imply causation, what does? In the egg-yold study, we concluded that we probably didn&#39;t have enough evidence for causality, but how could we have concevably shown causation in a similar stufy? CAUSAL INFERENCE</p>
+<p>So if correlation doesn&#39;t imply causation, what does? In the egg-yolk study, we concluded that we probably didn&#39;t have enough evidence for causality, but how could we have conceivably shown causation in a similar study? CAUSAL INFERENCE</p>
 
 <h2>Sources of data</h2>
 
-<ol>
-<li><p>The importance of experimental design: people believe that when you have numbers, somehow the answer just pops up. </p></li>
-<li><p>Getting data from a database is kind of shit...</p></li>
-</ol>
+<p>A common problem among statisticians is finding good sources of data. The truth is that in most cases we are not the ones who actually go and collect the data, and as a result those without collaborators turn to databases. The problem with this approach is that there is a lack of transparency about data taken from databases. For example suppose a neuroscientist collected some fMRI (functional MRI; brain imaging) data. It is likely that there were a number of pre-processing steps that were undertaken throughout this data collection procedure. For instance, not every brain is alike, and the images need to be co-registered to an anatomical space and then spatially-normalized (squashed and stretched to match some image template). The images are also blurred to accommodate the heterogeneity in individual anatomy. Finally the images are then typically converted to a matrix of numbers. Clearly the process of translating the original image to numeric data involved a large number of assumptions. If a statistician simply obtained their fMRI data from a database, they would be ignorant to the assumptions made and the pre-processing steps taken, each of which are significant sources of noise in the data. All they see is a matrix of numbers (or many matrices of numbers) but they do not know how those numbers arose from the experiment was undertaken which leads to the possibility of misinterpretation.</p>
+
+<p>As exemplified above, it is extremely important to understand the experimental design including all pre-processing steps when analyzing data. It is vital to understand what the numbers in your dataset mean and how they were obtained. Moreover, if the experimental design was poor, then the statistician will be able to take this knowledge into consideration for their analysis and will know to approach with caution and take the conclusions generated with a grain of salt. Numbers are not magical; they can be severely misleading if their origin is ignored. The upshot of this discussion is that we should be weary of analyses performed on data taken from sources without knowledge of the data collection process.</p>
 
 <h2>Why should we shift away from &quot;optimality&quot;?</h2>
 
-<p>It is an unfortunate truth that statistics has become a field obsessed with optimality. Although this may seem like a positive direction in theoretical statistics (well why <em>wouldn&#39;t</em> we want to find the method with the lowest risk or the quickest run-time?), in the world of applied statistics, this push for optimality is resulting in a statistical philosophy that searches for the &quot;biggest&quot;, &quot;best&quot; and &quot;fastest&quot; method, while forgoing interpretability. Moreover, in applied statistics, it is my belief that in the vast majority of situations there is no single optimal approach. By requiring optimality, even by defining optimality, we are constraining our freedom to solve the problem at hand. How would one define optimality in terms of an approach to an applied problem? It&#39;s not hard to identify good and bad apporaches, but how can we specify that one single approach is &quot;optimal&quot;? In my experience, I have never seen a data problem for which I feel I have found the &quot;optimal&quot; approach. </p>
+<p>It is an unfortunate truth that statistics has become a field obsessed with optimality. Although this may seem like a positive direction in theoretical statistics (why <em>wouldn&#39;t</em> we want to find the method with the lowest risk or the quickest run-time?), in the world of applied statistics this push for optimality is resulting in a statistical philosophy that searches for the &quot;biggest&quot;, &quot;best&quot; and &quot;fastest&quot; method, forgoing interpretability. Moreover, in the vast majority of situations in applied statistics there is no single optimal approach. By requiring optimality, even by defining optimality, we are constraining our freedom to solve the problem at hand. Firstly, how would one even define optimality in terms of an approach to an applied problem? It&#39;s not hard to identify good and bad approaches, but how can we specify that one single approach is &quot;optimal&quot;? In my experience, I have never seen a data problem for which I feel I have found the &quot;optimal&quot; approach. </p>
 
-<p>Even in most realms of statisical optimization (perhaps with the exception of convex optimization), quite often the result is not a globally optimal approach, but rather a local one.</p>
+<p>Even in most realms of theoretical statistical optimization (perhaps with the exception of convex optimization), quite often the result is not a globally optimal approach, but rather a local one.</p>
 
 <h2>Critical thinking</h2>
 
-<p>The need to move away from the search for an optimal solution may leave you asking what type of solutions should you seek? This is where judgement comes in. It may seem contradictory to many of you with a traditionally objective statistical education, but in reality many of the decisions made in applied statistical projects are brought about by thinking critically about the problem and making judgement calls.</p>
+<p>The need to move away from the search for an optimal solution may understandably leave you asking what type of solutions you should seek. This is where judgement comes in: it may seem contradictory to many of you with a traditional objective statistical education, but in reality many of the decisions made in applied statistical projects are brought about by thinking critically about the problem and making judgement calls.</p>
 
 <ol>
 <li>The importance of critical thinking -- non-conventional problem. Making judgement calls (much harder to learn than mathematical skills).</li>
@@ -83,11 +94,13 @@
 
 <h2>For the theoretically inclined</h2>
 
+<p>Keep in mind that although we are encouraging you to step back from tackling applied problems from a theoretical point of view and focus on intuition and critical thinking, </p>
+
 <ol>
 <li>The &quot;importance of the theorem&quot; -- and how not every theorem is a good theorem!</li>
 </ol>
 
-<p>That&#39;s not to say that I hate thoerems: to the contrary, I think that good theorems are immensely useful. The problem is that not all theorems are &quot;good&quot;.</p>
+<p>That&#39;s not to say that I hate theorems: to the contrary, I think that good theorems are immensely useful. The problem is that not all theorems are &quot;good&quot;.</p>
 
 <h2>Using statistics in real life</h2>
 
@@ -97,11 +110,11 @@
 
 <ol>
 <li><p>&quot;Here&#39;s a new method! Let&#39;s learn how to derive it!&quot;</p></li>
-<li><p>&quot;It&#39;s homework time! Let&#39;s use this specific method we just learned how to derive on this pretty, clean and unintetesring dataset and report a p-value!&quot;</p></li>
+<li><p>&quot;It&#39;s homework time! Let&#39;s use this specific method we just learned how to derive on this pretty, clean and uninteresting dataset and report a p-value!&quot;</p></li>
 <li><p>Repeat steps 1-2 with new methods until the semester ends at which point you will be tested on whether you know how to derive the specific method and use each method when prompted on simple examples.</p></li>
 </ol>
 
-<p>If this was not your experience, congratulations; perhaps you learned something useful. The problem with the disturbingly common approach described above (ignoring, for the moment, issues with p-values) is that it bears virtually no connection to what it is really like to analyze data (also it&#39;s really, really boring). Firstly, in the real world, no one will be telling you what method to use and when. The general idea is to use what you know and then expand your search for a solution and learn new approaches. It is important to realize that within most classroom settings, you are deliberately given clean, doable problems. In reality, the data you encounter will most likely be messy, confusing and often the questions you ask may be impossible to answer using the data at hand. Statisticians need to be comfortable exploring data without guidelines; they need to gain &quot;data wisdom&quot;.</p>
+<p>If this was not your experience, congratulations; perhaps you learned something useful. The problem with the disturbingly common approach described above (ignoring, for the moment, issues with p-values) is that it bears virtually no connection to what it is really like to analyze data (also this approach can be really, really boring). Firstly, in the real world, there is typically no one ti tell you what method to use and when. The general idea is to use what you know and then expand your search for a solution and learn new approaches. It is important to realize that within most classroom settings, you are deliberately given clean, doable problems. In reality, the data you encounter will most likely be messy, confusing and often the questions you ask may be impossible to answer using the data at hand. Statisticians need to be comfortable exploring data without guidelines; they need to gain &quot;data wisdom&quot;.</p>
 
 <h3>Data wisdom</h3>
 
@@ -147,9 +160,9 @@
 
 <p>Finally, the conclusions should be explicitly tested through validation methods, such as by testing the conclusions on other kinds of data.</p>
 
-<p>The concept of data wisdom is based on the notion of <em>uncontrolled inspiration</em>: the approach by which we solve problems by first attempting a solution, then, if this solution is unsatisfactory, spending some time reading (or even better, talking to people) the relvent domain and statistical literature to draw inspiration for a new or modified approach, and repeating this process until we have a &quot;satisfactory&quot; solution (keeping in mind that there may be no such thing). Statisticians must be able to learn as they go along.</p>
+<p>The concept of data wisdom is based on the notion of <em>uncontrolled inspiration</em>: the approach by which we solve problems by first attempting a solution, then, if this solution is unsatisfactory, spending some time reading (or even better, talking to people) the relevant domain and statistical literature to draw inspiration for a new or modified approach, and repeating this process until we have a &quot;satisfactory&quot; solution (keeping in mind that there may be no such thing). Statisticians must be able to learn as they go along.</p>
 
-<p>In this way, data analysis is like detective work: we first form a hypothesis and we then look for evidence in the data to support this hypothesis. Data analysis is also like peeling an onion. You peel one layer, and then another layer, and so on and so forth until you find what you&#39;re looking for. The only real difference between statistical data analysis and onions in that onions are guarenteed to have a finiite number of layers.</p>
+<p>In this way, data analysis is like detective work: we first form a hypothesis and we then look for evidence in the data to support this hypothesis. Data analysis is also like peeling an onion. You peel one layer, and then another layer, and so on and so forth until you find what you&#39;re looking for. The only real difference between statistical data analysis and onions in that onions are guaranteed to have a finite number of layers.</p>
 
 <p><FONT COLOR="red">Above are three nice analogies (uncontrolled inspiration, detective, onion) -- probably choose one<FONT></p>
 
