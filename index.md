@@ -13,11 +13,14 @@ This is an online version of *Statistical Models: Theory and Applications*, a bo
 * [Introduction][intro]
 * [How to be an applied statistician][how]
 * [The fruitfly project][fly]
+* [An introduction to causal inference][causal]
 * [Exploratory data analysis][eda]
 
-[intro]: introduction.html 
-[how]: philosophy.html
-[fly]: fruitfly.html 
-[eda]: eda.html 
+
+[intro]: 0-introduction.html 
+[how]: 1-philosophy.html
+[fly]: 2-fruitfly.html 
+[causal]: 3-causal.html
+[eda]: 4-eda.html 
 
 

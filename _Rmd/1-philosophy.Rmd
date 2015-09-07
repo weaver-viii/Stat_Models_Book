@@ -11,34 +11,24 @@ In essence, this book is about how to be an applied statistician. More precisely
 
 ## The importance of communication
 
-There is an unfortunate presupposition that statisticians (along with mathematicians, computer scientists, etc) are terrible at communication. It should be fairly obvious that if you have great ideas or are doing inspirational work while lacking the skills to adequately communicate it (not just to other statisticians, but also potential collaborators), then you will find it hard to make much of an impact. Moreover, there is a complete lack of awareness among statisticians on the importance of being communicative, approachable and even likable, particularly for those who wish to work with non-statistician collaborators. 
-
-Why is it useful:
-
-1. finding collaborators
-
-2. working with the found collaborators: explaining your approaches and being open to suggestions. Listen to them. They have all the domain knowledge!
-
-3. you learn from others by talking with them -- seeking them out!
+There is an unfortunate presumption that statisticians (along with mathematicians, computer scientists, etc) are terrible at communication. If you have great ideas or are doing inspirational work but lack the skills to adequately communicate it (not just to other statisticians, but also potential collaborators), then you will find it hard to make much of an impact. Modern mathematical and statitsical education has equipped a generation that lacks awareness on the importance of being communicative, approachable and even likable, particularly for those who wish to work with non-statistician collaborators. 
 
 
-* The importance of communication people skills -- you want to be someone people can work with. Even if you don't have the skills they need, the will still come to you if they like you -- get involved. Most people learn by talking with people with experience.
+Not only do we devalue verbal communication skills, but we also underappreciate the importance of written communication skills. We focus so much on mastering the "language of mathematics" that we completely undermine our ability to portray our work to the outside world. Even our mathematical writing should have a narrative: words and imagery are just as important as equations, since your readers are much more likely to remember graphics and the overall story than theorems and formulae.
 
 
 ## The human need to infer causation
 
-Many of you have no doubt heard the much lauded phrase "correlation does not imply causation". It is a well-known fact that although we continue to wag our fingers and utter the phrase, those less statistically informed (such as the media) continue to mistake correlation for causation. It is not hard to see why this fallacy is so common: there exists a fundamental human desire to infer causation as a result of our innate need to understand and explain the world in which we live. Our desire to draw causal conclusions begins from a young age; <FONT COLOR="red">give some example: touch something hot, it hurts -- you learn that touching something hot caused the pain even though don't understand the mechanism behind it. Rub plastic hand infer that the real hand is plastic....what was that example? Technically the evidence you have is only association but we believe causation</FONT>. 
+Many of you have no doubt heard the much lauded phrase "correlation does not imply causation". It is a well-known fact that although we continue to wag our fingers and utter the phrase, those less statistically informed (such as the media) continue to mistake correlation for causation. It is not hard to see why this fallacy is so common: there exists a fundamental human desire to infer causation as a result of our innate need to understand and explain the world in which we live. Our desire to draw causal conclusions begins from a young age; as a child you learn that you feel pain when you touch something hot. It is obvious that we don't understand the mechanism of why we felt pain when we touched something hot, but we inferred that it was the physical *touching* of the object that *caused* the pain. 
 
-Our past experiences lead us to infer causality, however the media has a tendency to abuse this fact. For example, most drug advertisements feature extraordinarily happy people, bright colors, and a passing description of what the drug is for. The idea behind these advertisements is that the human mind automatically infers causation from the association between the drug and happy people: the aim is to make people believe that the drug *causes* happiness (which if you listen closely to the speedily spoken side-effects at the end of the ad, is clearly the opposite of what the drug causes). Although the tendency of humans to explain associations via causation can certainly be seen certainly an evolutionary advantage, the same fallacy can be disastrous when introduced in the realm of science.
+It is clear that our subconscious need to infer causation is an evolutionary advantage, since although we don't have the means to explain *how* the cause and effect occured, most of the time, our intuition is correct. The problem arises when we continue to draw this need to infer causation into the complex realm of science. As an example, consider drug advertisements. Most drug advertisements feature extraordinarily happy people, bright colors, and a passing description of what the drug is for. The idea behind these advertisements is that the human mind automatically infers causation from the association between the drug and happy people: the aim is to make people believe that the drug *causes* happiness (which if you pay attention to the speedily spoken side-effects at the end of the ad, is clearly the opposite of what the drug causes). 
 
 ### The egg-yolk study
 
 Let's consider a study conducted in 
 Describe the egg yolk study and the reactions by the newspeople: "Sounds great right?!". What are the problems? 
 
-### Causal Inference
 
-So if correlation doesn't imply causation, what does? In the egg-yolk study, we concluded that we probably didn't have enough evidence for causality, but how could we have conceivably shown causation in a similar study? CAUSAL INFERENCE
 
 
 ## Sources of data

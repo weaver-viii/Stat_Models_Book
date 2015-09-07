@@ -27,3 +27,8 @@ These principles will be demonstrated in the context of an ongoing collaborative
 The reader of this book is assumed to be familiar with concepts typically introduced in upper division mathematical statistics and probability courses. Further, to get the most out of the labs, the reader is encouraged to have familiarity with writing functions, manipulating and cleaning data and creating graphics in a programming language such as R.
 
 This book is ideal for those who are looking to learn how to connect statistics to the real world, not those who are seeking the "optimal" method for broad classes of problems. If you are familiar with statistical concepts but would like to further develop your ability to use common sense, judgement and critical thinking in statistics, then this book is for you.
+
+
+# Recommended reading
+
+There exist a number of excellent texts for learning the intuition behind and the application of statistics. We will touch on a few here, namely <a href="http://www.amazon.com/Statistical-Models-Practice-David-Freedman/dp/0521743850">Statistical Models: Theory and Practice</a> by David A. Freedman, the sentiments of which we have tried to echo in this book. Another great read (not just for those new to statistics, but also for the most seasoned analysts) is <a href="http://www.amazon.com/Statistics-4th-Edition-David-Freedman/dp/8130915871">Statistics</a> by David A. Freedman, Robert Pisani and Roger Purves. This book does a fantastic job of teaching statistics through connections to reality while managing to completely stay away from the mathematics alltogether.

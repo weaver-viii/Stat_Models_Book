@@ -36,6 +36,12 @@
 
 
 <section>  
+<!-- add option for LaTeX> -->
+<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+<script type="text/javascript">
+LatexIT.add('p',true);
+</script>
+
 {{ content }}
 </section>
 
