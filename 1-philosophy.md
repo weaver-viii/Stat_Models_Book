@@ -1,7 +1,9 @@
 ---
 title: "How to be an applied statistician"
 author: "Rebecca Barter"
-output: html_document
+output:
+  html_document:
+    toc: yes
 ---
 
 # How to be an applied statistician (this section is currently a smörgåsbord of wisdoms we wish to impart)
@@ -15,20 +17,6 @@ There is an unfortunate presumption that statisticians (along with mathematician
 
 
 Not only do we devalue verbal communication skills, but we also underappreciate the importance of written communication skills. We focus so much on mastering the "language of mathematics" that we completely undermine our ability to portray our work to the outside world. Even our mathematical writing should have a narrative: words and imagery are just as important as equations, since your readers are much more likely to remember graphics and the overall story than theorems and formulae.
-
-
-## The human need to infer causation
-
-Many of you have no doubt heard the much lauded phrase "correlation does not imply causation". It is a well-known fact that although we continue to wag our fingers and utter the phrase, those less statistically informed (such as the media) continue to mistake correlation for causation. It is not hard to see why this fallacy is so common: there exists a fundamental human desire to infer causation as a result of our innate need to understand and explain the world in which we live. Our desire to draw causal conclusions begins from a young age; as a child you learn that you feel pain when you touch something hot. It is obvious that we don't understand the mechanism of why we felt pain when we touched something hot, but we inferred that it was the physical *touching* of the object that *caused* the pain. 
-
-It is clear that our subconscious need to infer causation is an evolutionary advantage, since although we don't have the means to explain *how* the cause and effect occured, most of the time, our intuition is correct. The problem arises when we continue to draw this need to infer causation into the complex realm of science. As an example, consider drug advertisements. Most drug advertisements feature extraordinarily happy people, bright colors, and a passing description of what the drug is for. The idea behind these advertisements is that the human mind automatically infers causation from the association between the drug and happy people: the aim is to make people believe that the drug *causes* happiness (which if you pay attention to the speedily spoken side-effects at the end of the ad, is clearly the opposite of what the drug causes). 
-
-### The egg-yolk study
-
-Let's consider a study conducted in 
-Describe the egg yolk study and the reactions by the newspeople: "Sounds great right?!". What are the problems? 
-
-
 
 
 ## Sources of data
@@ -72,6 +60,8 @@ If you've ever been in an applied statistics class, the chances are high that it
 1. Repeat steps 1-2 with new methods until the semester ends at which point you will be tested on whether you know how to derive the specific method and use each method when prompted on simple examples.
 
 If this was not your experience, congratulations; perhaps you learned something useful. The problem with the disturbingly common approach described above (ignoring, for the moment, issues with p-values) is that it bears virtually no connection to what it is really like to analyze data (also this approach can be really, really boring). Firstly, in the real world, there is typically no one ti tell you what method to use and when. The general idea is to use what you know and then expand your search for a solution and learn new approaches. It is important to realize that within most classroom settings, you are deliberately given clean, doable problems. In reality, the data you encounter will most likely be messy, confusing and often the questions you ask may be impossible to answer using the data at hand. Statisticians need to be comfortable exploring data without guidelines; they need to gain "data wisdom".
+
+
 
 ### Data wisdom
 
@@ -123,9 +113,13 @@ The concept of data wisdom is based on the notion of *uncontrolled inspiration*:
 
 In this way, data analysis is like detective work: we first form a hypothesis and we then look for evidence in the data to support this hypothesis. Data analysis is also like peeling an onion. You peel one layer, and then another layer, and so on and so forth until you find what you're looking for. The only real difference between statistical data analysis and onions in that onions are guaranteed to have a finite number of layers.
 
-<FONT COLOR="red">Above are three nice analogies (uncontrolled inspiration, detective, onion) -- probably choose one<FONT>
+<FONT COLOR="red">Above are three nice analogies (uncontrolled inspiration, detective, onion) -- probably choose one</FONT>
 
 
+
+# Notes
+
+The egg-yolk study, *egg yolk consumption and crotid plaque* was undertaken by Spence et al. (2012), and printed in the Elsevier journal of Atherosclerosis. 
 
 
 

@@ -1,12 +1,14 @@
 ---
 title: "The Fruitfly Project"
 author: "Rebecca Barter"
-output: html_document
+output:
+  html_document:
+    toc: yes
 ---
 
 # The *Drosophila* fruitfly project
 
-Throughout this book we will embed many of the concepts we are discussing within a real-life project, which we will call "the fruitfly project". The fruitfly project is a genomics project that I have been involved in with several of my students and my collaborators at Lawrence Berkeley National Laboratory (LBNL). <FONT COLOR="red">How did I get involved in this project? How was I introduced to Erwin and co?</FONT>. 
+Throughout this book we will embed many of the concepts we are discussing within a real-life project, which we will call "the fruitfly project". The fruitfly project is a genomics project that I have been involved in with several of my students and my collaborators at Lawrence Berkeley National Laboratory (LBNL).
 
 As most do, the fruitfly project began with a question: "Is spatial information useful for making gene-gene interaction discoveries?". To expand and de-code this question for the non-biologists, what the group was really asking is whether it is possible to use stained images (more specifically, images of Drosophila embryos) to identify whether genes interact with one another. For an individual embryo, the staining process involves using dye to stain specific products that are produced when a particular gene is being expressed (these products are typically proteins). The upshot of the staining process is that areas within the embryo where the stain is visible correspond to physical locations within the embryo where the gene of interest is being expressed. 
 
@@ -16,7 +18,78 @@ With this question in mind, the group of biologists at LBNL had generated 1640 s
 <img src="http://insitu.fruitfly.org/insitu_image_storage/img_dir_23/insitu23270.jpe" alt="Fruitfly Embryo" style="width:304px;height:228px;">
 
 
+
+## Our approach
+
+
 <FONT COLOR="red"> So the biologists had the data and the question but no idea how to answer it? They then invited Bin and co. to offer statistical insights whereby after much trial and error, we arrived at the non-negative matrix factorization approach. This approach allowed us to derive 21 principal patterns (PPs) using which we constructed spatially local correlation networks for all patterned transcroption factors during early Drosophila development
+</FONT>
+
+
+
+## The gap gene network
+
+The <a href="https://en.wikipedia.org/wiki/Gap_gene">gap gene network</a> consists of a group of interacting genes each of which are involved in the process of segment determination in the early development stages of the fruitfly. discovered by Nobel Prize winners <a href="https://en.wikipedia.org/wiki/Christiane_N%C3%BCsslein-Volhard">Christiane Nüsslein-Volhard</a> and <a href="https://en.wikipedia.org/wiki/Eric_F._Wieschaus">Eric Wieschaus</a> in 1980. The term "gap" arose as a result of the effect of mutations of these genes on the embryonic development: gap genes cause the loss of central segments from the embryo which results in gaps in the developing structure.
+
+Examples of these genes include *Krüppel*, whose early expression domain is in the center of the embryo, which, along with *knirps* and *giant* are among the earliest genes expressed during development. These genes subdivide the embryo along the anterior/posterior axis (the longest axis).
+
+<img src="gap_gene.jpg" alt="The gap gene network" style="width:304px;height:200px;">
+
+In the figure above, we see a network of 8 gap genes each of which have activation or repression effects on one another. For example, *gt* (giant) and *Kr* (Krüppel) repress one another in the sense that if *Kr* is being highly expressed, then *gt* will be less expressed. *hb* (hunchback) and *tll* (tailless), on the other hand, activate one another whereby increased expression of one of the genes activates increased expression of the other.
+
+<img src="embryos.jpg" alt="Stained embryos" style="width:304px;height:200px;">
+
+Here we present examples of embryos for which the product of the expression of each corresponding gap gene is dyed blue. That is, each image shows us the locations where (and extent to which) each gap gene is being expresed. We see that the *Kr* (Krüppel) gene is expressed in the mid-region of the embryo, while *hkb* (huckebein) gene is expressed only at the posterior and anterior ends. We also see that although there are regions of complementary expression, for example *gt* and *hb* have complementary expression patterns towards the right end of the embryo, implying that their local correlation is negative.
+
+
+## The experiment
+
+When we stained the products of the expression of *new genes* with unknown functions in our embryos, we were able to use the images to identify whether these new genes interacted with the known gap genes.
+
+<img src="embryos1.jpg" alt="Stained embryos1" style="width:600px;height:400px;">
+
+
+What we found was that our new genes (CG genes) interacted with the famous gap gene network. For example, two genes are positively correlated if they are expressed in the same location in the embryo (the genes have an activation relationship), and negative correlation if they are expressed in non-overlapping locations (the genes have a repressive relationship).
+
+So the question became, are these new genes (focusing on the CG13894 gene) part of the gap gene network?
+
+To answer this question, gene knock-out experiments were carried out by Ann Hammonds in Celniker's lab at LBNL. This is an experiment with an *intervention*: in some embryos, we "knock-out" the gene of interest and observe the difference between the development of these embryos and normal embryos. This can be seen as a randomized experiment from which we can try to draw [causal inferences][causal] <FONT COLOR="red">What are we trying to infer that knocking out this gene causes?</FONT>.
+
+Our local analysis preducted that knocking out CG13894 would cause a change in the gap between the first two stripes <FONT COLOR="red">(what are these stripes -- is this still staining gene expression or is this just segmentation)</FONT>
+
+
+We formulated this into a hypothesis that asked: "Will knocking out CG13894 cause a narrowing in the gap between the first two stripes?", a well formed question that we could assess using a randomized experiment: from our sample of embryos, we could randomly select a certain number to undergo the knock-out process (the treatment embryos) and allow the remainder to develop naturally (the control embryos). We could then compare the gab between the first two stripes between the two groups of embryos. Seems straight forward right? Maybe not... First of all, how can we quantitatively compare the gap between the stripes in a reliable way (i.e. other than by simply looking at them)?
+
+* **The first approach:** measure the gap between the stripes within the image. But embryos come in all different shapes and sizes! Recall our data wisdom section on ensuring comparability between our units of analysis <FONT COLOR="red">(put in a link)</FONT>. Comparibility is extremely important in this situation, otherwise we have a confounding factor <FONT COLOR="red">(put in a link)</FONT> which is the size of the embryo. 
+
+* **The second approach:** count the number of cells in the gap between the stipes. How could we automatically count the number of cells in images of this resolution? We had to manually count the number of cells which is tedious. Further, the count may be different at different ages, since as the development progresses, the cells divide, so we may just be counting the age of the embryo! Further, what if the change in the gap is a result of the cell size changing instead of the number of cells. Then this measure would be useless.
+
+Even in measuring this gap, there are a lot of judgement calls and assumptions that come into play. For example, should we normalize? Stripes from each embryo are of different thicknesses and perhaps we should be considering the size of the gap relative to the size of the stripes for each embryo. The histograms <FONT COLOR="red">(provide a link to histograms)</FONT> below show the distances first when we do not normalize and then after normalizing relative to the size of the first stripe (the ratio of the size of the gap to the size of the stripe).
+
+
+<img src="gap_width.jpg" alt="Histogram" style="width:500px;height:300px;">
+
+
+I now encourage you to think about a few data wisdom <FONT COLOR="red">(link)</FONT> questions for this project that you should always have in the back of your mind when looking at data
+ 
+ 1. What does a number in this dataset mean? It is often not discussed enough what numbers are you actually interested in. Do the numbers you have actually measure what you're interested in. If you're using the wrong numbers, then you either don't see anything or you see things that aren't really there. We discussed above different types of "numbers" that we could have used for the distance. Some would have been more effective than others for detecting a real difference between the knock-out embryos and the control embryos.
+ 
+ 1. Eventually you'll find a difference between the mutant and normal embryos. When this occurs, how can you test to see if this difference is real and not just an artefact of the data you have or the model you used? Instead of worrying about this problem at the end, it is always a good idea as soon as you've collected your data to set aside some subset (half?) of the data and don't use it for any of your analysis (this witheld subset of your data is called the *test data*). You don't want to "over-snoop" the data. When you have a finding based on your training data, you can test to see whether the results are also true in the test data.
+ 
+ 1. How was the randomization done in this experiment? We told you that the embryos were randomized to either undergo the knock-out procedure or not, but we didn't tell you how this occured. 
+ 
+ 1. What is our overall population? What are we assuming about the population? The embryos have all been bred in the lab and come from a particular genetic lineage. The population about which we are making inferences is not simply *all fruitflies* in the world, or even in Berkeley. Even amongst the fruitflies at the lab, there is not overall homogeneity. Each embryo is different.
+ 
+ 1. How was the knock-out "intervention" performed? It's certainly not possible to simply manipulate each individual fruitfly. Typically you perform the knock-out intervention in a few fruitflies and they pass the mutation on to their offspring. This process probably also resulted in many of the fruitflies dying, in which case, is there a difference between those who survived and those who died in terms of how extreme the gap difference would be?
+ 
+ 
+ 
+ 
+
+## The experiment: can we draw causal conclusions?
+
+J.Doona, E Charpentier and F. Zhang performed an experiment to knock out CG13894 using "molecular scissors" (CRISPR/Cas9 borrowed from the immune system of a particular type of bacteria) which cuts and replaces DNA in an organism's genome with exquisite precision and ease.
+
 
 
 
@@ -34,3 +107,9 @@ With this question in mind, the group of biologists at LBNL had generated 1640 s
 
 1. Could you explain clearly how we can use the spatial data to identify whether genes interact with one another?
 
+
+
+
+
+
+[causal]: 3-causal.html

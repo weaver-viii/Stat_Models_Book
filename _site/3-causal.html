@@ -1,6 +1,18 @@
 <!doctype html>
 <html>
 <head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 <title>Statistical Models: Theory and Applications</title>
@@ -36,15 +48,43 @@
 
 
 <section>  
-<!-- add option for LaTeX> -->
-<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-<script type="text/javascript">
-LatexIT.add('p',true);
-</script>
+
+
+
+<h2>The human need to infer causation</h2>
+
+<p>Many of you have no doubt heard the much lauded phrase &quot;correlation does not imply causation&quot;. It is a well-known fact that although we continue to wag our fingers and utter the phrase, those less statistically informed (such as the media) continue to mistake correlation for causation. It is not hard to see why this fallacy is so common: there exists a fundamental human desire to infer causation as a result of our innate need to understand and explain the world in which we live. Our desire to draw causal conclusions begins from a young age; as a child you learn that you feel pain when you touch something hot. It is obvious that we don&#39;t understand the mechanism of why we felt pain when we touched something hot, but we inferred that it was the physical <em>touching</em> of the object that <em>caused</em> the pain. </p>
+
+<p>It is clear that our subconscious need to infer causation is an evolutionary advantage, since although we don&#39;t have the means to explain <em>how</em> the cause and effect occured, most of the time, our intuition is correct. The problem arises when we continue to draw this need to infer causation into the complex realm of science. As an example, consider drug advertisements. Most drug advertisements feature extraordinarily happy people, bright colors, and a passing description of what the drug is for. The idea behind these advertisements is that the human mind automatically infers causation from the association between the drug and happy people: the aim is to make people believe that the drug <em>causes</em> happiness (which if you pay attention to the speedily spoken side-effects at the end of the ad, is clearly the opposite of what the drug causes). </p>
+
+<h3>The egg-yolk study</h3>
+
+<p>Let&#39;s consider a Canadian study by Spence et al. on <em>egg yolk consumption and cartoid plaque</em> which aimed to identify whether the atherosclerosis burden (as a marker of arterial damage) was related to regular consumption of egg-yolk. The results of the study were touted in the media using phrases such as &quot;A new study suggests eating egg yolks can accelerate heart disease almost as much as smoking&quot;, and &quot;No yolk: [is] eating the whole egg as dangerous as smoking?&quot;.</p>
+
+<p>The study was based on an 2831 consecutive patients attending vascular prevention clinics at University Hospital were asked to fill out a lifestyle questionnaire at the time of referral to the vascular prevention clinic. From the questionaire, the authors calculated for each patient pack-years of smoking (number of packs per day of cigarettes times the number of years of smoking) and egg-yolk years (number of egg yolks per week times the number of years consumed). For each patient, each plaque identified in the common, external and internal carotid artery on both sides was measured in a longitudinal view, in the plane in which it was biggest. The perimeter of each plaque was measured by tracing a cursor on a computer screen. Of the 2831 patients with data on egg yolk consumption, 1231 concented to use the data and had data on pack-years of smoking and carotid total plaque area. Data range checks were performed and data entry errors such as decimal errors were identified by scatterplots of age against each continuous variable. The author&#39;s interpretation of the results in their study is that the &quot;data sugegsts a strong association between egg consumption and carotid plaque burden&quot;, and they conclude that their &quot;findings suggest that regular consumption of egg yolk should be avoided by persons at risk of vardiovascular disease&quot;.</p>
+
+<p>Can you see any issues with this study? Are the conclusions drawn reasonable?</p>
+
+<p>There are in fact a number of issues:</p>
+
+<ol>
+<li><p>The study is only considering people who had been referred to a particular vascular prevention clinic, yet the conclusion is making claims about the general population.</p></li>
+<li><p>The study is observational AND they have no control group for comparison.</p></li>
+<li><p>Do the measurements of plaque area seem reasonable? To me they seem very crude and are potentially a large source of error. This was not discussed at all in the media reports of the study.</p></li>
+<li><p>&quot;All patients with complete data for each analysis were included&quot;: there is no explination of how many patients had incomplete data, nor potential reasons for this. For example, what if people who did not consume egg-yolks or smoke simply chose not to fill out the questionaire.</p></li>
+<li><p>Less than half of the original study population were actually used in the study (either as a result of lack of concent or missing data) -- we are offered no information on how those who were used in the study differ from those who were not.</p></li>
+<li><p>They jumped to causation in their conclusion by suggesting that &quot;regular consumption of egg yolk should be avoided by persons at risk of cardiovascular disease&quot;, which implies that consumption of egg yolk <em>causes</em> heart disease.</p></li>
+</ol>
+
+<p><FONT COLOR="red">Need to fill this out with a lot more information: make it clear why each point listed above is an issue.</FONT></p>
+
+<h3>Quality over quantity: is a large sample size always better?</h3>
+
+<p>Compare the relatively large egg-yolk study with the NZ filmmaker who put himself on a calorie controlled diate, but ensured that all of the calories came from high-fat junk food. Within 8 weeks he had gained an enormous amount of weight. This is a study with only one person (an incredibly small sample size), but which study would you believe more? Clearly sample size is not the only important thing; having a good design is <em>much</em> more important (quality over quantitiy).</p>
 
 <h1>An introduction to causal inference</h1>
 
-<p>Recall the egg-yolk study from the <a href="1-philosophy.html">how to be an applied statistician</a> section in which we discussed the many issues with the study and touched upon why the study didn&#39;t provide enough evidence to draw a causal conclusion. In this section, we describe the general principles for designing studies from which we could conceviebly draw causal conclusions. We will also introduce the Neyman-Rubin model for describing the causal inference framework.</p>
+<p>In the egg-yolk study described above, we discussed the many issues with the study and touched upon why the study didn&#39;t provide enough evidence to draw a causal conclusion. We now move on to describe the general principles for designing studies from which we could conceviebly draw causal conclusions. We will also introduce the Neyman-Rubin model for describing the causal inference framework.</p>
 
 <h2>Observational studies vs randomized controlled experiments</h2>
 
@@ -64,7 +104,11 @@ LatexIT.add('p',true);
 
 <p>In ideal situations, this is the only number we ever really need to look at. Why would we need to fit linear models or conduct hypothesis tests when the difference in average outcomes tells us everything we need to know. <FONT COLOR="red">Expand on this</FONT> </p>
 
-<p>Another point in favour of randomization of treatment assignment is that it makes the randomness in the problem explicit. As we will discuss when we introduce the Neyman-Rubin causal inference model, the only randomness in these types of problems comes from the assignment to treatment (in particular, the measured outcome is non-random). This is strikingly different to the traditional approach in which the outcome of interest is a random variable and the traditional approaches such as hypothesis testing and confidence intervals rest on properly defined probability distributions or sample spaces. This allows for more transparancy in the problem.</p>
+<p>Another point in favour of randomization of treatment assignment is that it makes the randomness in the problem explicit. More specifically, we know exactly how the randomness was created and it is easily replicable. As we will discuss when we introduce the Neyman-Rubin causal inference model, the only randomness in these types of problems comes from the assignment to treatment (in particular, the measured outcome is non-random). This is strikingly different to the traditional approach in which the outcome of interest is a random variable and the traditional approaches such as hypothesis testing and confidence intervals rest on properly defined probability distributions or sample spaces. This allows for more transparancy in the problem.</p>
+
+<p>Randomization is certainly the gold-standard in inferring causation (although it is important not to accept a study as perfect just because the experiment was randomized. See the fruitfly experiment as an example).</p>
+
+<p>Although the first people to truly emphasize the importance of randomization was R.A Fisher did so for experimental reasons. <FONT COLOR="red">a history of randomization</FONT>. These days, randomization has many uses beyond just experimental design. The modern approaches involve many randomized algorithms such as: compressed sensing, randomized algorithms for big data, Shannon&#39;s randomized channel code, random projections, non-parametric testing, etc.</p>
 
 <h2>Can we infer causation from observational studies?</h2>
 
@@ -79,13 +123,47 @@ LatexIT.add('p',true);
 
 <h2>The Neyman-Rubin model</h2>
 
-<p>Everything we have discussed in this chapter so far has a philosophical and non-rigorous flavour to it. The Neyman-Rubin framework represents the need to introduce rigour into the vague language of causal inference. The Neyman-Rubin model is named after Jerzy Neyman, who introduced the potential-outcomes framework for causality in 1923 and Donald Rubin who was a pioneer in extending the framework into the modern realm of causal inference in observational and randomized experiments.</p>
+<p>Everything we have discussed in this chapter so far has a philosophical and non-rigorous flavour to it. The Neyman-Rubin framework allows us to introduce rigour into the vague language of causal inference. The Neyman-Rubin model is named after Jerzy Neyman, who introduced the potential-outcomes framework for causality in 1923, and Donald Rubin who is a pioneer in extending this framework into the modern of causal inference in observational and randomized experiments.</p>
+
+<p>The model is rooted in the notion that each individual in a two-arm study (control and treatment) has two <em>potential outcomes</em>. To make our descriptions transparant, we will embed our description of the Neyman-Rubin model within an example: suppose that we are interested in testing the effectiveness of a new drug on reducing the incidence of monthly headaches (our response). The patients assigned to the control group are not provided with the drug (perhaps they are provided with a placebo to make the study blinded, but we won&#39;t worry about this now), while the patients in the treatment group are provided with the drug and are told to take it daily. Each patient in each group then reports the number of headaches they experience in a month.</p>
+
+<p>Let&#39;s think hypothetically about an individual patient (patient $i$). Suppose that when patient $i$ is assigned to the control group, they report experiencing 10 headaches. The notation we use is $Y_{i0} = 10$, where the 0 index corresponds to &quot;control&quot;. Alternatively, when patient $i$ is assigned to the treatment group, they report experiencing 8 headaches, and we write $Y_{i1} = 8$, where the 1 index corresponds to &quot;treatment&quot;. In reality, however, we can <em>only observe one</em> of these outcomes, since patient $i$ will be assigned <em>either</em> to the control group or to the treatment group, <em>but not both</em>. Hence we call $Y_{i0}$ and $Y_{i1}$ the <em>potential outcomes</em> for patient $i$. It is crucial to realize that both $Y_{i0}$ and $Y_{i1}$ are <em>fixed</em> values (i.e. they are not random!). The <em>observed</em> outcome (the outcome that we actually observe) for patient $i$ can be written as</p>
+
+<p>$$Y_i = (1 - T_i) Y_{i0} + T_i Y_{i1}$$</p>
+
+<p>where $T_i = 1$ if patient $i$ is assigned to the treatment group and $T_i = 0$ if patient $i$ is assigned to the control (recall that only one of these will occur). Note that if patient $i$ is assigned to the treatment group, we have</p>
+
+<p>$$Y_i = 0 \times Y_{i0} + 1 \times Y_{i1} = Y_{i1}$$</p>
+
+<p>whereas if patient $i$ is assigned to the control group, we have</p>
+
+<p>$$Y_i = 1 \times Y_{i0} + 0 \times Y_{i1} = Y_{i0}$$</p>
+
+<p>That is, we observe the potential outcome corresponding to which group patient $i$ is assigned.</p>
+
+<h3>Where is the randomness in the Neyman-Rubin model?</h3>
+
+<p>When presented with a new formulation or model, it is good practice to ask &quot;where does the randomness come from in this model?&quot;. In essence, we are asking &quot;what assumptions are we making about the randomness by using this model?&quot;.</p>
+
+<p>Recall that the potential outcomes, $Y_{i0}$ and $Y_{i1}$, are considered <em>fixed</em> (non-random) values. The observed outcome, $Y_i$, however, is considered to be random. But given that $Y_i$ is just a linear combination of the potential outcomes, where does the randomness come from? The answer is that the randomness comes from the treatment assignment variable, $T_i$. That is, under this formulation, the only reason that we consider the observed outcome to be random is because the decision to place the patient in the treatment group or control group was random.</p>
+
+<p>Thus the key difference between the Neyman-Rubin formulation and the traditional formulation is that in the Neyman-Rubin formulation a subject&#39;s outcome under each treatment is considered fixed, but the outcome that we observe is random (since it is random which treatment group the subject will be assigned to). In the traditional formulation, the response is considered to be random itself, but it is usually not explained where the randomness comes from. That is, the Neyman-Rubin model makes the randomness explicit!</p>
+
+<p><FONT COLOR="red">I need to explain what I mean by the &quot;traditional formulation&quot;</FONT></p>
+
+<p>Note that in the typical setting, we consider the randomness to come from the sampling procedure where we draw our sample from the population. Although this randomness also exists when we use the Neyman-Rubin model, we are not using this source of randomness for our analysis. In the Neyman-Rubin model, the primary source of randomness comes from the random assignment to the treatment or control group.</p>
+
+<h3>What is the population</h3>
+
+<h3>Can we extend the results to people not in the study?</h3>
+
+<h2>Conclusion</h2>
 
 <h2>Notes</h2>
 
-<p>There are a number of alternative approaches to the language of causal inference, the most prominent of which is that introduced by Judea Pearl.</p>
-
 <p>In this chapter, we have just touched on the deep field of causal inference. For those who would like to delve further into the Neyman-Rubin approach to causal inference and learn more about the existing methods for conducting and analysing experimental and observational experiments, Imbens and Rubin&#39;s book, <a href="http://www.amazon.com/Causal-Inference-Statistics-Biomedical-Sciences/dp/0521885884">Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction</a>, is an excellent resource.</p>
+
+<p>Further, it is worth noting that there are a number of alternative approaches to the language of causal inference, the most prominent of which is that of graphical models introduced by Judea Pearl.</p>
 
 </section>
 
