@@ -52,6 +52,8 @@ MathJax.Hub.Config({
 
 
 {{ content }}
+
+
 </section>
 
 <footer>

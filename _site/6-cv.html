@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Statistical Models: Theory and Applications</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">Statistical Models: Theory and Applications</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>Cross validation</h1>
+
+<p>Cross validation (CV) is an extremely useful technique initially developed for use in model validation, but with extremely broad uses. CV is a generalization of the idea of witholding a test set from analysis for the purpose of validating results using independent data. Let&#39;s consider an example of using CV to assess prediction performance.</p>
+
+<ol>
+<li><p>Divide the samples into $K$ equal (or as equal as possible) cross-validation folds (subsets of the data) at random.</p></li>
+<li><p>For each fold, $k = 1, 2, ..., K$, the set of observations in the $k$th fold is called the <em>test set</em>, while the remaining data is called the <em>training set</em>.</p>
+
+<p>a) Perform the analysis or fit the model using only the observations in the training set.</p>
+
+<p>b) Validate the analysis or assess the model fit (e.g. by calcualting prediction error) using the observations from the witheld test set.</p></li>
+<li><p>Calculate the average or sum of the values calculated (such as the prediction errors) over each test set fold.</p></li>
+</ol>
+
+<p>This procedure provides the user with an empirical estimate of their prediction error.</p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

@@ -15,6 +15,9 @@ This is an online version of *Statistical Models: Theory and Applications*, a bo
 * [The fruitfly project][fly]
 * [An introduction to causal inference][causal]
 * [Exploratory data analysis][eda]
+* [Hypothesis testing][test]
+* [Cross validation][cv]
+* [Linear Models][lin]
 
 
 [intro]: 0-introduction.html 
@@ -22,5 +25,6 @@ This is an online version of *Statistical Models: Theory and Applications*, a bo
 [fly]: 2-fruitfly.html 
 [causal]: 3-causal.html
 [eda]: 4-eda.html 
-
-
+[test]: 5-testing.html
+[cv]: 6-cv.html
+[lin]: 7-linear.html

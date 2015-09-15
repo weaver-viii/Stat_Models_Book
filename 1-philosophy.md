@@ -28,7 +28,11 @@ As exemplified above, it is extremely important to understand the experimental d
 
 
 
+### Sources of randomness in the data
 
+Whenever presented with a new dataset, it is good practice to begin by asking "where did the randomness come from?". Sometimes, the randomness is explicit; for example if it is from tossing a coin or simple random sampling, however, in most scenarios it is less black-and-white. Knowing the source of randomness can be extremely useful when the postulated model does not work.
+
+It might help to carry out a thought experiment whereby you try to replicate the data collection process in order to identify possible sources of randomness, especially if you intend to postulate an observed dataset as realizations of random variables (as is assumed by most statistical models). For example, you might want to ask how you would go about collecting another set of data that share the same distribution as the data that you have already, or how would you replicate the experiment that generated the data that you have.
 
 ## Why should we shift away from "optimality"?
 
