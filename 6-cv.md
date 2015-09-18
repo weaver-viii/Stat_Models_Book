@@ -25,3 +25,9 @@ Cross validation (CV) is an extremely useful technique initially developed for u
 This procedure provides the user with an empirical estimate of their prediction error.
 
 
+
+
+## Bias
+
+
+

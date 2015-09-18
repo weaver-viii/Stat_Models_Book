@@ -67,7 +67,7 @@ MathJax.Hub.Config({
 
 <p>As exemplified above, it is extremely important to understand the experimental design including all pre-processing steps when analyzing data. It is vital to understand what the numbers in your dataset mean and how they were obtained. Moreover, if the experimental design was poor, then the statistician will be able to take this knowledge into consideration for their analysis and will know to approach with caution and take the conclusions generated with a grain of salt. Numbers are not magical; they can be severely misleading if their origin is ignored. The upshot of this discussion is that we should be weary of analyses performed on data taken from sources without knowledge of the data collection process.</p>
 
-<h3>Sources of randomness in the data</h3>
+<h3>Sources of randomness in the data {#random}</h3>
 
 <p>Whenever presented with a new dataset, it is good practice to begin by asking &quot;where did the randomness come from?&quot;. Sometimes, the randomness is explicit; for example if it is from tossing a coin or simple random sampling, however, in most scenarios it is less black-and-white. Knowing the source of randomness can be extremely useful when the postulated model does not work.</p>
 
@@ -75,7 +75,7 @@ MathJax.Hub.Config({
 
 <h2>Why should we shift away from &quot;optimality&quot;?</h2>
 
-<p>It is an unfortunate truth that statistics has become a field obsessed with optimality. Although this may seem like a positive direction in theoretical statistics (why <em>wouldn&#39;t</em> we want to find the method with the lowest risk or the quickest run-time?), in the world of applied statistics this push for optimality is resulting in a statistical philosophy that searches for the &quot;biggest&quot;, &quot;best&quot; and &quot;fastest&quot; method, forgoing interpretability. Moreover, in the vast majority of situations in applied statistics there is no single optimal approach. By requiring optimality, even by defining optimality, we are constraining our freedom to solve the problem at hand. Firstly, how would one even define optimality in terms of an approach to an applied problem? It&#39;s not hard to identify good and bad approaches, but how can we specify that one single approach is &quot;optimal&quot;? In my experience, I have never seen a data problem for which I feel I have found the &quot;optimal&quot; approach. </p>
+<p>It is an unfortunate truth that statistics has become a field obsessed with optimality. Although this may seem like a positive direction in theoretical statistics (why <em>wouldn&#39;t</em> we want to find the method with the lowest risk or the quickest run-time?), in the world of applied statistics this push for optimality is resulting in a statistical philosophy that searches for the &quot;biggest&quot;, &quot;best&quot; and &quot;fastest&quot; method, forgoing interpretability. Moreover, in the vast majority of situations in applied statistics there is no single optimal approach. By requiring optimality, even by defining optimality, we are constraining our freedom to solve the problem at hand. Firstly, how would one even define optimality in terms of an approach to an applied problem? It&#39;s not hard to identify good and bad approaches, but how can we specify that one single approach is &quot;optimal&quot;? In my experience, I have never seen a data problem for which I feel I have found the &quot;optimal&quot; approach. Nothing is optimal in practice, we never truly satisfy the theoretical assumptions that guarentee optimality (for example, are our data ever really independent and identically distributed? probably not...). This lack of exactness in reality doesn&#39;t mean that we can&#39;t &quot;borrow&quot; some optimality from the theory, we just can&#39;t rely on it. It is important to look at the conditions; don&#39;t just look at the conclusions!</p>
 
 <p>Even in most realms of theoretical statistical optimization (perhaps with the exception of convex optimization), quite often the result is not a globally optimal approach, but rather a local one.</p>
 
@@ -83,9 +83,17 @@ MathJax.Hub.Config({
 
 <p>The need to move away from the search for an optimal solution may understandably leave you asking what type of solutions you should seek. This is where judgement comes in: it may seem contradictory to many of you with a traditional objective statistical education, but in reality many of the decisions made in applied statistical projects are brought about by thinking critically about the problem and making judgement calls.</p>
 
-<p>Many, if not most, applied statistical problems you will face in reality cannot necessarily be solved using straightforward traditional method. As an applied statistician, you will be faced with non-conventional problems which will require you to think critically and creatively, rather than automatically. Since no two problems are the same, the kind of skills required for true applied statistics will, for most people, be much harder to learn than formulaic mathematical skills. These skills are significantly more subjective and non-linear; traits that make many people uncomfortable (particularly those who would much rather prove theorems).</p>
+<p>Many, if not most, applied statistical problems you will face in reality cannot necessarily be solved using straightforward traditional methods. As an applied statistician, you will be faced with non-conventional problems which will require you to think critically and creatively, rather than automatically. Since no two problems are the same, the kind of skills required for true applied statistics will, for most people, be much harder to learn than formulaic mathematical skills. These skills are significantly more subjective and non-linear; traits that make many people uncomfortable (particularly those who would much rather prove theorems).</p>
 
 <p>Although this book focuses on taking a step back from the theory when tackling applied problems, it certainly not true that theory is useless! Far from it; good theorems are extremely useful, and are indepsensible to the development and advancement of statistics. In the modern academic realm, however, there is such an expectation to produce new theorems, that a large amount of theorems presented in papers today encompass a disconnect between the assumptions upon which they are based and the methods.</p>
+
+<p>The traditional statistical education route encourages blind model-fitting without truly considering the appropriateness of the model you are fitting and the assumptions that such an model may make about your data. As George Box said:</p>
+
+<blockquote>
+<p>&quot;All models are wrong, but some are useful.&quot;</p>
+</blockquote>
+
+<p>This is the view that we take in this book: there are no true models, but some can lead to insights and directions to take in our analysis. In general, the sample variance should override the model bias, otherwise the model becomes a misguiding force.</p>
 
 <h2>Using statistics in real life</h2>
 

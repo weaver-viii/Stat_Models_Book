@@ -126,9 +126,11 @@ Thus the key difference between the Neyman-Rubin formulation and the traditional
 
 <FONT COLOR="red">I need to explain what I mean by the "traditional formulation"</FONT>
 
-Note that in the typical setting, we consider the randomness to come from the sampling procedure where we draw our sample from the population. Although this randomness also exists when we use the Neyman-Rubin model, we are not using this source of randomness for our analysis. In the Neyman-Rubin model, the primary source of randomness comes from the random assignment to the treatment or control group.
+Note that in the typical setting, we consider the [randomness](1-philosophy.html#random) to come from the sampling procedure where we draw our sample from the population. Although this randomness also exists when we use the Neyman-Rubin model, we are not using this source of randomness for our analysis. In the Neyman-Rubin model, the primary source of randomness comes from the random assignment to the treatment or control group.
 
 ### What is the population
+
+
 
 
 ### Can we extend the results to people not in the study?
@@ -150,4 +152,4 @@ In this chapter, we have just touched on the deep field of causal inference. For
 
 Further, it is worth noting that there are a number of alternative approaches to the language of causal inference, the most prominent of which is that of graphical models introduced by Judea Pearl.
 
-
+[how]: 1-philosophy.html

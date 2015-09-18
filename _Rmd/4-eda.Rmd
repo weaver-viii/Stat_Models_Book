@@ -1,5 +1,5 @@
 ---
-title: "The Fruitfly Project"
+title: "Exploratory data analysis"
 author: "Rebecca Barter"
 output: html_document
 ---
@@ -71,76 +71,6 @@ However, not all graphics are created equal. Below we show another example of a 
 
 
 
-### Neuroscience: Hubel and Wiesel's cat experiment
-
-Hubel and Wiesel (1959) conducted some of the pioneering research in showing how the visual system constructs complex representations of visual information from simple stimulus features. In one of their most notable experiments, they anesthetized a cat and propped its eyes open, so that the cat was physically seeing things, but was not conscious. They inserted a microelectrode into the primary visual cortes of the cat and they projected bright patterns (circle, line) on a dark screen in front of the cat. What they found was that some neurons fired rapidly when presented with lines at one angle, while others responded best to another angle. 
-
-<img src="https://goodpsychology.files.wordpress.com/2013/03/hubel-experiment.jpg" alt="Cat" style="width:500px;height:300px;">
-
-This can be inerpreted as a causal inference problem: placing the bright object in the line of view of the cat *caused* the neurons to fire. This influential work was described by Professor David Ottoson of the Karolinsks Institue as
-
-> "The signal message that the eye sends to the brain can be regarded as a secret code to which only the brain possesses the key and can interpret the message. Hubel and Wiesel have succeeded in breaking the code"
-
-
-There has been a recent new wave of research interest in the area of understanding how the brain processes visual stimuli, particularly utilizing deep learning algorithms. A modern direction that developed from Hubel-Wiesel's work in the way in which we computationally preprocess images for analysis. We use *Gabor filters* to model simple cells in the visual cortex, so Gabor functions can be thought of as the mathematical representation of the perception in the human visual system.
-
-Gabor filters (see image below) correspond to functions which represent the particular spatial frequencies, locations and orientations that were discovered by Hubel and Wiesel's cat experiment in 1959. When analysing images, it is very common to decompose the image into the gabor functions for analysis.
-
-<img src="gabor.png" alt="Gabor" style="width:500px;height:300px;">
-
-
-
-### Movie reconstruction using fMRI data: The Gallant Lab
-
-
-This is a project that I was involved in with Jack Gallant's lab from the Redwood Center for Theoretical Neuroscience at UC Berkeley. The Gallant lab performed a number of functional magnetic resonance imaging (fMRI) exeriments, which measure oxygenated bloodflow in the brain. Measuring oxygenated blood flow can be considered as an indirect measurement of neural activity (the two processes are highly correlated). 
-
-fMRI takes measurements for each voxel (the brain is segmented into voxels which are $1 \times 1 \times 1$mm cubes used to segment a brain into voxels in an analagous way to which we can segment an image into pixels), each of which contains hundreds of thousands of neurons. Compare this modern aproach to Hubel and Wiesel's cat experiment which was measuring a single neuron firing, we can see that fMRI gives fairly imprecise measurements. However, given that we have billions of neurons, measuring a single neuron tells us little about how the entire brain functions.
-
-Again, the data is visual: from each fMRI experiment, we obtain cross sectional images of the brain and the blood flow in each voxel. We placed three different subjects in an fMRI machine and showed them videos while measuring their brain activity as shown in the image below.
-
-<img src="fmri.png" alt="fMRI" style="width:500px;height:300px;">
-
-For example, below displays an image viewed by a subject in the fMRI machine and a reconstruction of their brain activity at that moment. The blue regions of the brain shows regions of low activity in the brain and the red regions correspond to high activity <FONT COLOR="red">(is this right?)</FONT>.
-
-
-<img src="brain.png" alt="Brain" style="width:500px;height:200px;">
-
-
-
-Amazingly, we were able to use fMRI data to reconstruct short segments of film trailers shown to the subjects as the video below shows. There were 7200 seconds of training videos and 5400 seconds of test videos. Some people call this "mind-reading" although really it's just data visualization and prediction. 
-
-<FONT COLOR="red">give more details of how we did this. It wasn't clear to me from the lecture...</FONT>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/nsjDnYxJ0bo" frameborder="0" allowfullscreen></iframe>
-
-
-### Predicting brain activity in the visual cortex: The Gallant Lab
-
-Another project related to that of the fMRI movie reconstruction is the prediction of the brain's responses to visual images as measured in 20 voxels. Recall that fMRI records measurements for discretized 3D volumes of the brain (cube-like regions called voxels), much like an image can be spatially discretized into units of pixels.
-
-For this experiment, the subject is shown pictures of everyday objects, such as a baby, or a house etc. Each picture is a $128 \times 128$ pixel gray scale image, which can be represented by a vector of length $128^2 = 16384$. These image vectors can be reducted to length $10921$ though a transformation based on Gabor wavelets.
-
-Although the actual fMRI response to a given stimulus/image is a function of time, the response of each voxel to each image has been reduced to a single number. The question we are interested in answering using this data is "do these features/predictors drive the brain signals?". Once again, we seek a causal relationship.
-
-
-Given that we have for each voxel response, $10921$ possible predictors from each image, we used the Lasso<FONT COLOR="red">(put link!)</FONT> estimate together with [cross-validation](#cv) to identify the most important predictors. That is, for each of the 20 voxels, we are fitting a separate linear model where most of the variable coefficients have been shrunk to zero.
-
-<img src="voxel.png" alt="Brain" style="width:500px;height:200px;">
-
-
-For example, in the image above, the blue spots in the left-most correspond to the transformed pixels which are most important for predicting the response for voxel A, and similalry for the responses for Voxels B and C in the two subsequent images.
-
-We could simply accept the variables that the lasso did not shrink, but wouldn't it make sense to actually look at the models being selected over each cross-validation fold?
-
-
-<img src="voxelhist.png" alt="Brain" style="width:500px;height:200px;">
-
-
-The figure above shows two version of the same histogram describing the number of features selected by each model. It is clear that most of the models select approximately 50 features (by shrinking all other coefficients to 0). The histogram provides us with an overview (by combining all voxels into the same plot) of the models that we have fitted to this data. What have we assumed by visualizing all voxels simultaneously? Primarily, we are assuming that the voxels are comparable to one another, an assumption that seems reasonable. However, it would probably be a good idea to look at the voxels individually as well, since with this combined approach, we might be masking some interesting information corresponding to individual voxels. 
-
-
-
 ## Tools for visualizing data
 
 There are a wide array of tools availble in multiple programming languages for visualizing data. The examples we present are based on the R programming language. 
@@ -206,22 +136,37 @@ It is easy to implement kernel smoothing estimators in R, and the only hard part
 
 Note that we often call the bandwidth, $h$, a regularization parameter (we will see this again when discussing lasso and ridge linear models). Regularization parameters typically represent a tradeoff between bias and variance in our estimation. For example, from the image above, we see that the kernel density estimators with small bandwidth have very high variance (the curve jumps around a lot), but low bias (on average, the value of the kernel is close to the true value of the density). On the other hand, the kernel density estimators with large bandwidth have very low bias (the curve is very smooth and much less noisy) but have high bias (on average, the value of the kernel estimator might be quite far from the true value of the density). 
 
-#### The bias-variance tradeoff
+
+
 
 By using kernel density estimation we are in essence assuming that our data are realizations of a sequence of random variables, $X\_1, X\_2, ..., X\_n$. It is important to question whether this even makes sense for the data at hand. If the answer is yes, begin to pry information such as what is the sampling model? Where does the randomness come from?
 
 Let's change the notation for our kernel density estimation by assuming that our observations are in fact realizations of random variables, $X\_1, X\_2, ..., X\_n$, with a density function, $f$. Then kernel density estimation is trying to estimate $f$ using
 
-$$\hat{f}\_{n, h}(x) = \frac{1}{n} \sum_{i=1}^n K\_{h}(X\_i - x)$$
+$$\hat{f}\_{n, h}(X) = \frac{1}{n} \sum_{i=1}^n K\_{h}(X\_i - x)$$
 
 
 Is $\hat{f}\_{n,h}(x)$ a random variable? Yes is is, because it is a function of the random variables $X\_i$. Is $\hat{f}\_{n, h}(x)$ a good estimator for $f$? Firstly, the answer to that question depends on what we mean by "good": do we mean an estimator with low bias, an estimator with low variance, or perhaps a combination of the two?
+
+
+
+##### Regularization
+
+
 
 We mentioned above that short bandwidths correspond to an estimator, $\hat{f}\_{n, h}(x)$, of $f$ that has low bias, but high variance, whereas long bandwidths corresponds to an estimator that has high bias but low variance. Is one of these two extremes better than the other? Is it possible to obtain a happy midground between the two? This is where the bias/variance trade-off comes in: perhaps we would rather find an estimator that minimizes a combination of the bias and the variance, such as the mean squared error (MSE):
 
 $$\text{MSE} = \text{Bias}^2 + \text{Variance}$$
 
 In fact, in modern statistics, gains are often obtained by increasing bias, but reducing variance. We can add a regularization (or smoothing) parameter to control the trade-off between bias and variance (we will return to this concept when we discuss the lasso linear model).
+
+
+
+
+
+##### The bias-variance tradeoff for kernel density estimation
+
+
 
 In particular, the mean squared error for the kernel estimator can be approximated by
 
@@ -232,9 +177,67 @@ $$
 \end{aligned}
 $$
 
-which shows that the bias increases with the bandwidth, $h$, while the variance decreases with $h$.
+which shows that the bias increases with the bandwidth, $h$, while the variance decreases with $h$. 
 
 The mathematical steps are presented in the appendix at the end of this section for curious readers, but could easily be skipped without much loss of conceptual understanding.
+
+
+Next, the pointwise MSE risk function above can be shown to be optimized asymptotically by a bandwidth (depending on $x$) given by
+
+$$h^\*(x) = \left( \frac{c\_2(x)}{c\_1^2c\_3(x) n} \right)^{\frac15}$$
+
+where
+
+$$c\_1 = \int t^2 K(t) dt = \sigma^2\_K, ~~~~~~ c\_2(x) = \int K^2(t) dt f(x), ~~~~~~ c\_3(x) = \left(f^{\prime \prime}(x) \right)^2$$
+
+Kernel density estimation is well-known to perform poorly at the boundaries of your dataset where there is little data available. The algorithm tends to extrapolate out from the denser regions.
+
+#### The optimal kernel function
+
+
+
+
+Further, does there exist an optimal kernel function. In our introductory example, we used a normal density with variance 1, but how do we know that a normal density with variance 2 wouldn't be better? In the end, this wouldn't make any difference, it would just correspond to a scale change. In fact, Maron and Nolan's (1989) work showed that the optimal kernel was that which minimizes
+
+$$T(K) = \left\\{ \\| K \\|_2^8 \sigma^2\_K \right\\}^{\frac15}$$
+
+and that this optimal kernel is given by the Epanechnikov kernel:
+
+$$K(t) = \frac34 \frac{1}{5^{1/5}} \left( 1 - \left(\frac{t}{15^{1/5}}\right)^2\right) I\_{\left(\vert t \vert \leq 15^{1/5}\right)}$$
+
+However, the asymptotic efficiency lost for other kernels is minimal. In fact R uses the cosine kernel below, which has na efficiency ratio of 1.0004 relative tot he optimal:
+
+$$K(t) = \frac12 \cos(t) I\_{\left(\vert t \vert \leq \frac{\pi}{2}\right)}$$
+
+In the figure below, the black curve is the Epanechnikov kernel function and the red curve is the cosine kernel function.
+
+
+<img src="kernel.png" alt="Kernel" style="width:300px;height:200px;">
+
+
+The optimal (minimax) MSE rate for smooth density functions with $s$-derivatives is $O\left( n^{-\frac{2s}{2s + d}}\right)$, where $d$ is the dimension and $s$ is the smoothness. When $s$ gets large (so that the density function is really smooth), we get a rate close to $\frac{1}{n}$, which is the familiar parametric (assuming normality) rate. When $d$ is large (the data is high-dimensional), then $\frac{2s}{2s + d} \rightarrow 0$, implying a very slow rate. In essence: if your data does not have a low-dimensional structure, then estimating its density function is hopeless!
+
+For example, if your data has 26,000 dimensions (not uncommon in bioinformatics data), and $s = 1$ with $n = 2,000,000$, then our rate is $2,000,000^{-\frac{2}{26,000}} = 0.9988846$, which is very far from 0!
+
+
+
+In fact, it is an active research area to attempt to find informative low-dimensional structures that are embedded in high dimensions. In many cases where we have "big data", the datasets themselves are huge, but we are really interested in the hidden, low-dimensional structures contained within.
+
+
+##### Questions to ask yourself:
+
+1. How could you use cross-validation to select the bandwidth, $h$?
+
+
+### Boxplots
+
+The boxplot is a simplified histogram that is particularly good for comparing two samples. The boxplot contains a lot of information about the range and spread of the data. In the middle of the "box", we have a line corresponding to the median, and the edges of the box correspond to the upper (third) and lower (first) quartiles, $q\_{0.75}$ and $q\_{0.25}$, respectively. The inter-quartile range (IQR) is the difference between the third quartile and the first quartile. The box contains "whiskers", which extend $1.5 \times IQR$ from the edges of the box. Any "outlier" values larger than $q\_{0.75} + 1.5 \times IQR$ or smaller than $q\_{0.25} - 1.5 \times IQR$ are drawn as dots. The figure below uses side-by-side boxplots to show a comparison of two sets of observations. Here we are comparing the number of observations selected by two feature selection methods (one based on cross-validation (CV) and the other based on a stability-based cross-validation (SSCV) approach).
+
+<img src="boxplot.png" alt="Kernel" style="width:400px;height:400px;">
+
+It is clear that the SSCV method selects significantly fewer observations than the CV method. the CV method also exhibits more variability than the SSCV method.
+
+As a warning, such comparisons can be misleading if the two samples that we are comparing are not similarly normalized or are not directly comparable. Recall our discussion on normalization and comparability in the data wisdom excerpt. For example, suppose we have done a microarray gene expression experiment, where we have obtained the data in batches. Before comparing different samples, it might be a good idea to do some pre-processing to make the ssamples comparable, otherwise the differences that you are observing between the two samples may be a "batch effect" rather than actual differences in gene expression.
 
 ### Q-Q plots
 
@@ -245,6 +248,10 @@ The mathematical steps are presented in the appendix at the end of this section 
 
 
 ## ggplot2 in R
+
+
+
+
 
 
 ## Appendix: the bias-variance tradeoff for kernel estimation
@@ -300,7 +307,7 @@ since $\int K(u) du = 1$ and $\int u K(u) du = 0$, by definition. Thus the bias 
 
 $$\text{Bias} = E(\hat{f}(x)) - f(x) = \frac{f^{\prime \prime}(x)}{2} h^2 \int K(u) u^2 du  + \text{smaller order terms}$$
 
-
+Surprisingly, the bias does not depend on $n$, the number of samples. So no matter how large our sample is, the expected value of our density estimator will not get closer to the true density value.
 
 #### The variance of $\hat{f}$:
 
@@ -337,7 +344,17 @@ $$
 $$
 
 
+The variance depends on $\frac{1}{n}$ as well as $\frac{1}{h}$. So that the more samples we have, the smaller the variability of our estimator, and the larger the bandwidth, the smaller the variability of our estimator. You might say that $nh$ has become our effective sample size: this has nothing to do with getting the value that we want (recall that bias does not depend on $n$), but it has a lot to do with reducing the variance.
+
+
+
+
 #### Mean squared error calculation
+
+The question becomes, how to you choose $h$ so that the bias and variance are both small? Recall that a small $h$ will correspond to low bias but high variability, whereas a large $h$ corresponds to a high bias but low variability. The solution in general is to try to minimize a combination of the bias and variance, called the mean squared error (MSE), defined to be
+$$MSE(\hat{f}) = E\left(\hat{f} - f\right)^2$$
+
+(note that this looks a lot like the variance, $E\left(\hat{f} - E(\hat{f})\right)^2$, and in fact, the MSE is the variance when $\hat{f}$ is unbiased, i.e. $E(\hat{f}) = f$).
 
 Finally, putting the above calculations together, we obtain an expression for the mean squared error:
 
@@ -359,3 +376,11 @@ A number of excellent resources for data visualization exist. Some of the tradit
 
 For references on kernel density estimation, see M. Rosenblatt (1956)'s *Remarks on some nonparametric estimates of a density function* , and E. Parzen (1962)'s *On estiamtion of a probabilty density function and mode*.
 
+
+
+
+
+### Answers to the questions:
+
+1. **How could you use cross-validation to select the best bandwidth?** <p>First, we need to define a measure of how good a particular density estimator is performing. Recall our discussion on using the KL-divergence to measure the distance from the true distribution to the estimated distribution. We concluded that the best distribution will correspond to that with the parameter, $\theta$, which minimizes the negative log-likelihood. Thus we can use the negative log-likelihood as a measure of prediction performance. In particular, the density with bandwidth, $h$, that yields the largest negative log-likelihood corresponds to the density that is closest (in KL-distance) to the true density. </p>
+<p>How does cross-validation come into this? Suppose we have split our dataset into 10 subsets. We can temporarily remove the first subset, and calculate the density estimator function for various values of $h$. We can then use the witheld subset to calculate the negative log-likelihood for each $h$, (that is, calculate -$\hat{f}\_h(x\_{\text{witheld}})$) and identify which $h$ yields the largest value. This will be the $h$ that we select for that particular fold. We could then repeat this, witholding instead the second subset of the data, and come up with a new optimal $h$. Eventually, we will have 10 different optimal bandwidth values (hopefully they're not too different from one another), and we could average them to obtain our final bandwidth, $h$.</p>

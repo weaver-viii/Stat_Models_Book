@@ -1,0 +1,80 @@
+---
+title: "The Neuroscience Project.Rmd"
+author: "Rebecca Barter"
+output: html_document
+---
+
+# The neuroscience project
+
+
+### Neuroscience: Hubel and Wiesel's cat experiment
+
+Hubel and Wiesel (1959) conducted some of the pioneering research in showing how the visual system constructs complex representations of visual information from simple stimulus features. In one of their most notable experiments, they anesthetized a cat and propped its eyes open, so that the cat was physically seeing things, but was not conscious. They inserted a microelectrode into the primary visual cortes of the cat and they projected bright patterns (circle, line) on a dark screen in front of the cat. What they found was that some neurons fired rapidly when presented with lines at one angle, while others responded best to another angle. 
+
+<img src="https://goodpsychology.files.wordpress.com/2013/03/hubel-experiment.jpg" alt="Cat" style="width:500px;height:300px;">
+
+This can be inerpreted as a causal inference problem: placing the bright object in the line of view of the cat *caused* the neurons to fire. This influential work was described by Professor David Ottoson of the Karolinsks Institue as
+
+> "The signal message that the eye sends to the brain can be regarded as a secret code to which only the brain possesses the key and can interpret the message. Hubel and Wiesel have succeeded in breaking the code"
+
+
+There has been a recent new wave of research interest in the area of understanding how the brain processes visual stimuli, particularly utilizing deep learning algorithms. A modern direction that developed from Hubel-Wiesel's work in the way in which we computationally preprocess images for analysis. We use *Gabor filters* to model simple cells in the visual cortex, so Gabor functions can be thought of as the mathematical representation of the perception in the human visual system.
+
+Gabor filters (see image below) correspond to functions which represent the particular spatial frequencies, locations and orientations that were discovered by Hubel and Wiesel's cat experiment in 1959. When analysing images, it is very common to decompose the image into the gabor functions for analysis.
+
+<img src="gabor.png" alt="Gabor" style="width:500px;height:300px;">
+
+
+
+### Movie reconstruction using fMRI data: The Gallant Lab
+
+
+This is a project that I was involved in with Jack Gallant's lab from the Redwood Center for Theoretical Neuroscience at UC Berkeley. The Gallant lab performed a number of functional magnetic resonance imaging (fMRI) exeriments, which measure oxygenated bloodflow in the brain. Measuring oxygenated blood flow can be considered as an indirect measurement of neural activity (the two processes are highly correlated). 
+
+fMRI takes measurements for each voxel (the brain is segmented into voxels which are $1 \times 1 \times 1$mm cubes used to segment a brain into voxels in an analagous way to which we can segment an image into pixels), each of which contains hundreds of thousands of neurons. Compare this modern aproach to Hubel and Wiesel's cat experiment which was measuring a single neuron firing, we can see that fMRI gives fairly imprecise measurements. However, given that we have billions of neurons, measuring a single neuron tells us little about how the entire brain functions.
+
+Again, the data is visual: from each fMRI experiment, we obtain cross sectional images of the brain and the blood flow in each voxel. We placed three different subjects in an fMRI machine and showed them videos while measuring their brain activity as shown in the image below.
+
+<img src="fmri.png" alt="fMRI" style="width:500px;height:300px;">
+
+For example, below displays an image viewed by a subject in the fMRI machine and a reconstruction of their brain activity at that moment. The blue regions of the brain shows regions of low activity in the brain and the red regions correspond to high activity <FONT COLOR="red">(is this right?)</FONT>.
+
+
+<img src="brain.png" alt="Brain" style="width:500px;height:200px;">
+
+
+
+Amazingly, we were able to use fMRI data to reconstruct short segments of film trailers shown to the subjects as the video below shows. There were 7200 seconds of training videos and 5400 seconds of test videos. Some people call this "mind-reading" although really it's just data visualization and prediction. 
+
+<FONT COLOR="red">give more details of how we did this. It wasn't clear to me from the lecture...</FONT>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nsjDnYxJ0bo" frameborder="0" allowfullscreen></iframe>
+
+
+### Predicting brain activity in the visual cortex: The Gallant Lab
+
+Another project related to that of the fMRI movie reconstruction is the prediction of the brain's responses to visual images as measured in 20 voxels. Recall that fMRI records measurements for discretized 3D volumes of the brain (cube-like regions called voxels), much like an image can be spatially discretized into units of pixels.
+
+For this experiment, the subject is shown pictures of everyday objects, such as a baby, or a house etc. Each picture is a $128 \times 128$ pixel gray scale image, which can be represented by a vector of length $128^2 = 16384$. These image vectors can be reducted to length $10921$ though a transformation based on Gabor wavelets.
+
+Although the actual fMRI response to a given stimulus/image is a function of time, the response of each voxel to each image has been reduced to a single number. The question we are interested in answering using this data is "do these features/predictors drive the brain signals?". Once again, we seek a causal relationship.
+
+
+Given that we have for each voxel response, $10921$ possible predictors from each image, we used the Lasso<FONT COLOR="red">(put link!)</FONT> estimate together with [cross-validation](#cv) to identify the most important predictors. That is, for each of the 20 voxels, we are fitting a separate linear model where most of the variable coefficients have been shrunk to zero.
+
+<img src="voxel.png" alt="Brain" style="width:500px;height:200px;">
+
+
+For example, in the image above, the blue spots in the left-most correspond to the transformed pixels which are most important for predicting the response for voxel A, and similalry for the responses for Voxels B and C in the two subsequent images.
+
+We could simply accept the variables that the lasso did not shrink, but wouldn't it make sense to actually look at the models being selected over each cross-validation fold?
+
+
+<img src="voxelhist.png" alt="Brain" style="width:500px;height:200px;">
+
+
+The figure above shows two version of the same histogram describing the number of features selected by each model. It is clear that most of the models select approximately 50 features (by shrinking all other coefficients to 0). The histogram provides us with an overview (by combining all voxels into the same plot) of the models that we have fitted to this data. What have we assumed by visualizing all voxels simultaneously? Primarily, we are assuming that the voxels are comparable to one another, an assumption that seems reasonable. However, it would probably be a good idea to look at the voxels individually as well, since with this combined approach, we might be masking some interesting information corresponding to individual voxels. 
+
+It is probably not a reasonable assumption that the voxels are independent to one another, right? But as soon as we don't have independence, some of the most useful models are no longer applicable. Often we assume independence because we don't know how to model the dependence. Most assumptions that we make on our data are assumptions of convenience. Thus the question becomes, if the assumptions of our model are a little bit wrong, how much of an impact will this have on our conclusions drawn from these models? 
+
+

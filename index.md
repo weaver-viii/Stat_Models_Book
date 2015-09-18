@@ -9,14 +9,33 @@ This is an online version of *Statistical Models: Theory and Applications*, a bo
 
 # Contents #
 
+Introduction
 
 * [Introduction][intro]
 * [How to be an applied statistician][how]
+
+Ongoing projects
+
 * [The fruitfly project][fly]
-* [An introduction to causal inference][causal]
+* [The neuroscience project][neuro]
+
+Visualization
+
 * [Exploratory data analysis][eda]
+
+General topics/methods that you should know about
+
+* [The bias-variance tradeoff][trade]
 * [Hypothesis testing][test]
 * [Cross validation][cv]
+
+
+Causal Inference
+
+* [An introduction to causal inference][causal]
+
+Linear models
+
 * [Linear Models][lin]
 
 
@@ -25,6 +44,8 @@ This is an online version of *Statistical Models: Theory and Applications*, a bo
 [fly]: 2-fruitfly.html 
 [causal]: 3-causal.html
 [eda]: 4-eda.html 
-[test]: 5-testing.html
-[cv]: 6-cv.html
-[lin]: 7-linear.html
+[trade]: 5-tradeoff.html
+[test]: 6-testing.html
+[cv]: 7-cv.html
+[lin]: 8-linear.html
+[neuro]: 9-neuro.html

@@ -19,8 +19,6 @@ With this question in mind, the group of biologists at LBNL had generated 1640 s
 
 
 
-## Our approach
-
 
 <FONT COLOR="red"> So the biologists had the data and the question but no idea how to answer it? They then invited Bin and co. to offer statistical insights whereby after much trial and error, we arrived at the non-negative matrix factorization approach. This approach allowed us to derive 21 principal patterns (PPs) using which we constructed spatially local correlation networks for all patterned transcroption factors during early Drosophila development
 </FONT>
