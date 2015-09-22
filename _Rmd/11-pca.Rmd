@@ -32,3 +32,70 @@ Let's walk through the theoretical steps: <FONT COLOR="red"> Do it</FONT>
 
 
 
+
+### PCA on the fruitfly project
+
+Recall that for the fruitfly project, we have a number of images of drosophila embryos in each of which we have stained for certain genes. Since each embryo has a different size and shape, to make the embryos comparable, we must first find the outline of the embryo in the image and then warp it into a common ellipse as shown in the graphic below.
+
+<img src="fruitfly_ellipse.png" alt="Embryos" style="width:400px;height:200px;">
+
+We then used PCA on the data from approximately 7 images to obtain the principal components shown below, where the colour of each component corresponds high intensity (red) and low intensity (blue).
+
+<img src="pca_embryo.png" alt="Embryos" style="width:500px;height:150px;">
+
+
+
+#### Independent component analysis
+Unfortunately, these components didn't seem to be biologically interpretable. An alternative to PCA is Independent Component Analysis (ICA) which find the independent components by maximizing the independence of the estimated components by maximizing the non-Gaussianity. This has the effect of encouragins sparsity in the components. The resultant components for the fruitfly embros using ICA are significantly better than those obtained by PCA. We are finding the biologically meaningful stipes and segments known by biologists.
+
+<img src="ica_embryo.png" alt="Embryos" style="width:500px;height:150px;">
+
+The reason that PCA doesn't work well is that it doesn't take advantage of the natural sparsity of the problem.
+
+
+
+
+
+### PCA for the Enron Data
+
+In 2001, the US energy company *the Enron Corporation* was caught up in a corruption scandal that led to the bancruptcy of the company. The company used accounting loopholes, special purpose entities and poor financial reporting to hide billions of dollars in debt from failed deals and projects. As a result of the investigation, a large portion of the corporation's emails between November 1998 and June 2002 became public. 
+
+The emails create a directed network on 154 employees, so our data consists of a $154 \times 154$ matrix, $E$, consisting of Enron employees and their positions within the corporation. Let's define the adjacency matrix $A$ where $A\_{ij}$ is the number of emails from person $i$ to person $j$. Below we will use PCA on the matrix $A$ to explore the data and learn about the employees.
+
+If we conduct PCA on $A$, the sum of the variance captured by the first two principal components is 71.6\% of the total variability in the data (the top left screeplot belop shows that the first two components capture a substantial amount of the information). Employee 20 dominates the first principal component (the outlier in the upper right corner of the plot of PC1 against PC2), and the second principal component is dominated by Employee 57 (the outlier in the bottom left corner of the plot of PC1 against PC2).
+
+
+<img src="enron.png" alt="Embryos" style="width:500px;height:500px;">
+
+
+Are these results informative? In fact, employee 20 (Jeff Dasovich, the Legal Regulatory and Government Affairs Director, a senior employee) sent an extremely large numbers of emails to 4 or so people. This made him an outlider, which resulted in him dominate the first principal component due to his large $L^2$-norm. This illustrates that it is a good idea to remove outliers before performing PCA, since PCA assumes Gaussianity (by using the $L^2$-norm), which is easily swayed by outlying observations. Employee 57 (Tana Jones, the ENA Legal Specialist, a junior employee), also sent large numbers of emails to 4 or so people, but not as many as Jeff Dasovich. As a result, Tana Jones dominated the second principal component. 
+
+The other outliers on the first principal component, we find that these are also legal employees who have sent relatively large numbers of emails to the same group of people (which explains why the show up along the same direction as the first component). Employees 3 (a VP) and 59 (a manager at West Power) received many emails from all three legal employees.
+
+The second component contains a number of outliers, who again, sent many emails to a particular group of people.
+
+What if we instead centered and scaled the data, we found much more meaningful rsults. We obtain one large eigenvalue and many smaller eigenvalues with no big gaps. Taking the top 5 components, we explain 32\% of the variability, whereas taking the top 10 principal components we explain 50\% of the variability. The top two principal components don't appear to be a good representation of the data. However, if we consider the data that we have, it might make sense that $L^2$ is not a meaningful metric to use; perhaps $L^1$ scaling makes more sense since we are dealing with count data...
+
+
+<img src="enron2.png" alt="Embryos" style="width:500px;height:500px;">
+
+
+The outliers in the first component are employees 20, 37, 41, 61, 63, 65, 72 and 88 who do not share the same receivers of emails, moreover except for employee 20, the rest are all from trading or other departments. The outliers on the second component direction are employees 24, 37, 57, 63, 65 and 96, who are all from trading and other departments except for 57 whom we saw in our unscaled analysis.
+
+The above PCA analyses are suggestive to give leads for further follow-up studes, however they are not conclusive in any sense! We note, however, that Employee 20 (Jeff Dasovich) and Employee 57 (Tana Jones) both appeared in news reports related to the Enron investigation.
+
+
+### To normalize or not to normalize:
+
+As a rule of thumb, if you're not sure whether or not you should center and scale your data, do both and compare the results so that you can make a reasonable judgement call. However, in order to avoid one predictor having an undue influence on the principal components, it is common to first standardize the predictors to have mean zero and variance 1 before conducting PCA. Therefore PCA analysis has the following steps:
+
+1. Center the predictors to have mean 0
+
+1. Form the sample covariance matrix, $G$
+
+1. Carry out an eigenvalue decomposition of $G$ to get eigenvalues $d\_1 \geq ... \geq d\_p \geq 0$ and the corresponding eigenvectors $U\_j$
+
+1. Keep all the large principal components that account for most of the variation in the data. For example, starting with 20 predictors it might be the case that the first 4 components account for 90\% of the total variation, i.e. the sum of the first 4 eigenvalues is about 90\% of the totla sum of all eigenvalues.
+
+
+In the Enron study, we are looking for the outliers!

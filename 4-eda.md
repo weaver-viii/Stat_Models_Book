@@ -295,7 +295,7 @@ $$V\_n = \frac{\sigma^2(x)}{f(x) n h } \int K^2(t) dt$$
 
 Thus we have this term $b\_n$ which is directly related to the bandwidth $h$, which implies that the bias for both methods is increases to $h$.
 
-Can you see the similarity between smoothing and kernel density estimation?
+Can you see the similarity between smoothing and kernel density estimation? What are the differences?
 
 <FONT COLOR="red">This needs a lot of work and/or simplification</FONT>
 
