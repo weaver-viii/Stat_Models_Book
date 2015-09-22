@@ -28,6 +28,8 @@ General topics/methods that you should know about
 * [The bias-variance tradeoff][trade]
 * [Hypothesis testing][test]
 * [Cross validation][cv]
+* [Normalization][norm]
+* [Principal component analysis][pca]
 
 
 Causal Inference
@@ -49,3 +51,5 @@ Linear models
 [cv]: 7-cv.html
 [lin]: 8-linear.html
 [neuro]: 9-neuro.html
+[norm]: 10-normalization.html
+[pca]: 11-pca.html

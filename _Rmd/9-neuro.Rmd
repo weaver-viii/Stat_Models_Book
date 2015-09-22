@@ -1,5 +1,5 @@
 ---
-title: "The Neuroscience Project.Rmd"
+title: "The Neuroscience Project"
 author: "Rebecca Barter"
 output: html_document
 ---
@@ -75,6 +75,13 @@ We could simply accept the variables that the lasso did not shrink, but wouldn't
 
 The figure above shows two version of the same histogram describing the number of features selected by each model. It is clear that most of the models select approximately 50 features (by shrinking all other coefficients to 0). The histogram provides us with an overview (by combining all voxels into the same plot) of the models that we have fitted to this data. What have we assumed by visualizing all voxels simultaneously? Primarily, we are assuming that the voxels are comparable to one another, an assumption that seems reasonable. However, it would probably be a good idea to look at the voxels individually as well, since with this combined approach, we might be masking some interesting information corresponding to individual voxels. 
 
+#### Assumptions
+
 It is probably not a reasonable assumption that the voxels are independent to one another, right? But as soon as we don't have independence, some of the most useful models are no longer applicable. Often we assume independence because we don't know how to model the dependence. Most assumptions that we make on our data are assumptions of convenience. Thus the question becomes, if the assumptions of our model are a little bit wrong, how much of an impact will this have on our conclusions drawn from these models? 
 
 
+Further, what assumptions would we be making by combining the voxel responses from different people? We collected the voxel responses from a number of people, but we chose to analyze them separately. Why? The primary reason is that to combine the data from different people would mean that we had to ensure that the data were normalized (and thus comparable). But how could we do this? In a lot of applied problems, people simply collate their data from different sources together without considering whether this action makes sense.
+
+The issue of normalization is also extremely prevelent in areas of bioinformatics, whereby each run of an experiment has different sources of bias. When the microarray technology first appeared, it was the first time scientists were able to actually look at the expression levels of multiple genes at once. The process of microarray data generation is very physical; someone must fluorescently tag the genes with chemicals and wash away the genetic materials that are not of interest. The data requires so much pre-processing and can be so noisy. <FONT COLOR="red">Perhaps talk about normalization in terms of microarray data more</FONT>. 
+
+It is also common to center the data to have mean zero and standardize so that all observations have standard deviation 1. 

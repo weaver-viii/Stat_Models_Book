@@ -28,7 +28,8 @@ As exemplified above, it is extremely important to understand the experimental d
 
 
 
-### Sources of randomness in the data {#random}
+### Sources of randomness in the data 
+
 Whenever presented with a new dataset, it is good practice to begin by asking "where did the randomness come from?". Sometimes, the randomness is explicit; for example if it is from tossing a coin or simple random sampling, however, in most scenarios it is less black-and-white. Knowing the source of randomness can be extremely useful when the postulated model does not work.
 
 It might help to carry out a thought experiment whereby you try to replicate the data collection process in order to identify possible sources of randomness, especially if you intend to postulate an observed dataset as realizations of random variables (as is assumed by most statistical models). For example, you might want to ask how you would go about collecting another set of data that share the same distribution as the data that you have already, or how would you replicate the experiment that generated the data that you have.
@@ -41,9 +42,12 @@ Even in most realms of theoretical statistical optimization (perhaps with the ex
 
 
 
+
+
+
 ## Critical thinking
 
-The need to move away from the search for an optimal solution may understandably leave you asking what type of solutions you should seek. This is where judgement comes in: it may seem contradictory to many of you with a traditional objective statistical education, but in reality many of the decisions made in applied statistical projects are brought about by thinking critically about the problem and making judgement calls.
+The need to move away from the search for an optimal solution may understandably leave you asking what type of solutions you should seek. This is where judgement comes in: it may seem contradictory to many of you with a traditional objective statistical or mathematical education, but in reality many of the decisions made in applied statistical projects are brought about by thinking critically about the problem and making judgement calls. There is no clear answer or end-point like those in the theoretical problems.
 
 Many, if not most, applied statistical problems you will face in reality cannot necessarily be solved using straightforward traditional methods. As an applied statistician, you will be faced with non-conventional problems which will require you to think critically and creatively, rather than automatically. Since no two problems are the same, the kind of skills required for true applied statistics will, for most people, be much harder to learn than formulaic mathematical skills. These skills are significantly more subjective and non-linear; traits that make many people uncomfortable (particularly those who would much rather prove theorems).
 

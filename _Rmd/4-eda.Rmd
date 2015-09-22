@@ -6,7 +6,7 @@ output: html_document
 
 # Exploratory data analysis
 
-The term "exploratory data analysis" was brought into populat use by John W. Tukey via his <a href="http://www.amazon.com/Exploratory-Data-Analysis-John-Tukey/dp/0201076160">book of the same name</a>, although we would be misguided if we claimed that no-one plotted their data before Tukey came along. Visual data exploration dates back thousands of years <FONT COLOR="red">give a *brief* summary of the history</FONT>. Humans are very visual, a large part of our brain is based on processing and interpreting what we see and we are extremely good at making judgements based on visual prompts. 
+The term "exploratory data analysis" was brought into popular use by John W. Tukey via his <a href="http://www.amazon.com/Exploratory-Data-Analysis-John-Tukey/dp/0201076160">book of the same name</a>, although we would be misguided if we claimed that no-one plotted their data before Tukey came along. Visual data exploration dates back thousands of years <FONT COLOR="red">give a *brief* summary of the history</FONT>. Humans are very visual, a large part of our brain is based on processing and interpreting what we see and we are extremely good at making judgments based on visual prompts. 
 
 So what should we be visualizing?
 
@@ -43,21 +43,21 @@ In summary:
 
 ### Giuseppe Piazzi, Gauss and the discovery of Ceres
 
-In 1801, Giuseppe Piazzi, an Italian Catholic priest, mathematician and astronomer, observed three sightings of a new "planet", and he recorded its positions in the sky and the time at which he saw it. The image below from <a href="http://www.schillerinstitute.org/fid_97-01/982_orbit_ceres.pdf">Tennenbaum and Director, 1997</a> shows the three positions of Ceres observed by Piazzi. This is an example of visualization of data. It's not just boxplots and histograms (although they are informative too), we also want to simply *look* at what we are analyzing. What he observed was that this particular planet was moving slowly counter-clockwise against the "sphere of the fixed stars". This would have been very difficult to convey in text or numerical form, this visual preresentation is the most informative way of representing this data. We are given context such as the location of other stars relative to the new planet. 
+In 1801, Giuseppe Piazzi, an Italian Catholic priest, mathematician and astronomer, observed three sightings of a new "planet", and he recorded its positions in the sky and the time at which he saw it. The image below from <a href="http://www.schillerinstitute.org/fid_97-01/982_orbit_ceres.pdf">Tennenbaum and Director, 1997</a> shows the three positions of Ceres observed by Piazzi. This is an example of visualization of data. It's not just boxplots and histograms (although they are informative too), we also want to simply *look* at what we are analyzing. What he observed was that this particular planet was moving slowly counter-clockwise against the "sphere of the fixed stars". This would have been very difficult to convey in text or numerical form, this visual representation is the most informative way of representing this data. We are given context such as the location of other stars relative to the new planet. 
 
 <img src="ceres.jpg" alt="Ceres" style="width:500px;height:500px;">
 
 
 Piazzi was in fact making a lot of assumptions based on his observations. He assumed that the planets observed at the three different locations were the same, but why? There are a lot of alternative theories he could have come up with.
 
-In fact it was Carl Friedrich Gauss, a German mathematician and physical scentist who made significant contributions to many fields (including number thoery, algebra, statistics, analysis, differential geometry, geophysics, electrostatistics, astronomy and optics) who actually showed, using Piazzi's three data points, that the three planets observed by Piazzi were one in the same; Ceres. He sed Kepler's second law of planetary motion to describe the trajectory of Ceres.
+In fact it was Carl Friedrich Gauss, a German mathematician and physical scientist who made significant contributions to many fields (including number theory, algebra, statistics, analysis, differential geometry, geophysics, electrostatistics, astronomy and optics) who actually showed, using Piazzi's three data points, that the three planets observed by Piazzi were one in the same; Ceres. He used Kepler's second law of planetary motion to describe the trajectory of Ceres.
 
 In fact, Gauss was using *Least Squares* <FONT COLOR="red">(put in link)</FONT> to describe Ceres' trajectory. Isn't it amazing that these Gauss and Piazzi were able to get so much information from only *three data points*. They certainly didn't need "big data"! It's not really about how much data you have, but rather it's about how much information each observation contains.
 
 
 ### Napoleon's invasion of Russia
 
-You could write entire books to even summarize the events in Napoleon's invasion of Russia, but to obtain a concise, yet complete, summary, visualization offers far superior tools as Charles Minard's map (below) shows. Here, Minard is able to simultaneously plot in two dimensions six different types of data. The plot contains substantial amounts of information about the progression of Napoleon's army. There is geographic information (the distance travelled, the longitude and latitude), the direction of travel, the number of troops in Napoleon's army, the temperature and the location relative to specific dates.
+You could write entire books to even summarize the events in Napoleon's invasion of Russia, but to obtain a concise, yet complete, summary, visualization offers far superior tools as Charles Minard's map (below) shows. Here, Minard is able to simultaneously plot in two dimensions six different types of data. The plot contains substantial amounts of information about the progression of Napoleon's army. There is geographic information (the distance traveled, the longitude and latitude), the direction of travel, the number of troops in Napoleon's army, the temperature and the location relative to specific dates.
 
 
 <img src="napoleongood.png" alt="Minard" style="width:500px;height:300px;">
@@ -73,32 +73,41 @@ However, not all graphics are created equal. Below we show another example of a 
 
 ## Tools for visualizing data
 
-There are a wide array of tools availble in multiple programming languages for visualizing data. The examples we present are based on the R programming language. 
+There are a wide array of tools available in multiple programming languages for visualizing data. The examples we present are based on the R programming language. 
 
 There are a number of considerations that one should take into any plotting adventure. Here we list a few: <FONT COLOR="red">Fix up!</FONT>
 
-* Continuous values are better mapped into continuous gradient scales, whereas discrete colours should be used to represent different categories.
+* Continuous values are better mapped into continuous gradient scales, whereas discrete colors should be used to represent different categories.
 
-* Bright colours draw attention better than dull colours. For example, if you wish to have the viewers attention drawn to a particular point, colour it in a bright color!
+* Bright colors draw attention better than dull colors. For example, if you wish to have the viewers attention drawn to a particular point, color it in a bright color!
 
-* Transparancy and point size (for example in scatterplots) should be utilized for large datasets so that more information can be portrayed without overplotting becomming an issue.
+* Transparency and point size (for example in scatterplots) should be utilized for large datasets so that more information can be portrayed without overplotting becoming an issue.
 
-* A smoothing line provides information about the overall trend prsnt in scatterplots or time series plots, especially when there are many data points overplotted ontop of one another.
+* A smoothing line provides information about the overall trend present in scatterplots or time series plots, especially when there are many data points overplotted on top of one another.
 
 * Brushing can be used to effectively bring in other variables.
 
 * Motion (such as movies) an bring out structures that static representations cannot.
 
-If you're using R, you should really be using the data visualization package ggplot2 designed by Hadley Wickam rather than the base R plotting tools. Many of the above considerations can be irritatingly difficult to achieve in most plotting languages but are incredibly easy and natural (not to mention aesthetically pleasing!) with ggplot2. 
+If you're using R, you should really be using the data visualization package ggplot2 designed by Hadley Wickham rather than the base R plotting tools. Many of the above considerations can be irritatingly difficult to achieve in most plotting languages but are incredibly easy and natural (not to mention aesthetically pleasing!) with ggplot2. 
 
 Often the most effective visualization tools are the simple ones.
 
 ### Scatterplots and smoothing
 
-Scatterplots are likely to be one of the first types of exploratory data anlysis that you were exposed to. Traditional scatterplots involve plotting one variable against another, however as data is becomming more and more complex, many extensions to this traditional, yet useful, plot have begun to take hold. For example, making use of transparancy and colour is an extremely useful way to demonstrate concentrations of points as well as categorical information and may even add another continuous variable into the plot.
+Scatterplots are likely to be one of the first types of exploratory data analysis that you were exposed to. Traditional scatterplots involve plotting one variable against another, however as data is becoming more and more complex, many extensions to this traditional, yet useful, plot have begun to take hold. For example, making use of transparency and color is an extremely useful way to demonstrate concentrations of points as well as categorical information and may even add another continuous variable into the plot.
+
+For example, the plot below shows a number of scatterplots without transparency. There are so many points plotted on top of one another that it becomes difficult to visually determine the trend.
+
+<img src="pairs.png" alt="pairs" style="width:500px;height:500px;">
+
+When we add transparency, it becomes much easier to identify patterns in the data as well as regions where the data are more condensed.
+
+<img src="pairs2.png" alt="pairs2" style="width:500px;height:500px;">
 
 
-- still extremely useful, but try to use transparency
+Further, the above plots each contain a red smoothing line, which can be extremely useful to emphasize the trend of the data. We will come back to the notion of smoothing later.
+
 
 
 ### Histograms
@@ -114,19 +123,23 @@ What if, instead of looking at histograms, we estimated the density and plotted 
 
 The above example corresponds to Gaussian kernel density estimation for 10 data points (the red points plotted along the x-axis). For each data point, a Gaussian curve is plotted centered at the data point (these are the black curves). The spread of the curves is defined by the *bandwidth* (see blow). The Gaussian kernel density estimate (the red curve) is then obtained by adding the height of the black curves.
 
+
+
+
+
 Although in the example above, we have used Gaussian curves, there is no need to make this restriction. To define the general kernel density estimator, we first define a 1-dimensional kernel function, $K(\cdot)$, which satisfies
 $$\int K(t) dt = 1 ~~~~~~~ \int t K(t) dt = 0$$
 
 That is, we can think of the kernel function as a density that integrates to 1 and that corresponds to distribution has expected value 0. For the Gaussian example above, this would be the Gaussian density function.
 
-We next define the rescaled kernel function with bandwidth $h$ (the bandwidth describes the spread of each individual curve) to be
+We next define the re-scaled kernel function with bandwidth $h$ (the bandwidth describes the spread of each individual curve) to be
 $$K\_h(t) = \frac{1}{h} K\left( \frac{t}{h} \right)$$
 
 so that a kernel density function of data (where we can notationally define the data by $x\_1, x\_2, ..., x\_n$) is defined to be 
 $$g\_{n, h}(x) = \frac{1}{n} \sum\_{i=1}^n K\_h(x\_i - x)$$
 
 
-From the formula above, we can see that the height of the kernel density estimator curve at a given $x$ is influenced by the height of each inidividual kernel curve at our data point $x\_i$ for $i = 1, ..., n$ (note that $x$ is our parameter, which we vary to trace out the kernel density curve, while the $x_i$ are the individual data points). In particular, assuming that the individual kernel functions, $K\_h$, are centered at $x\_i$, then the closer our location, $x$, is to a given point $x\_i$, the more height the kernel function for $x\_i$ will contribute.
+From the formula above, we can see that the height of the kernel density estimator curve at a given $x$ is influenced by the height of each individual kernel curve at our data point $x\_i$ for $i = 1, ..., n$ (note that $x$ is our parameter, which we vary to trace out the kernel density curve, while the $x_i$ are the individual data points). In particular, assuming that the individual kernel functions, $K\_h$, are centered at $x\_i$, then the closer our location, $x$, is to a given point $x\_i$, the more height the kernel function for $x\_i$ will contribute.
 
 The tuning parameter is the bandwidth, $h$. A small $h$ corresponds to very condensed spread (as if you're squeezing the kernel function), and a large $h$ corresponds to an elongated spread. 
 
@@ -154,7 +167,7 @@ Is $\hat{f}\_{n,h}(x)$ a random variable? Yes is is, because it is a function of
 
 
 
-We mentioned above that short bandwidths correspond to an estimator, $\hat{f}\_{n, h}(x)$, of $f$ that has low bias, but high variance, whereas long bandwidths corresponds to an estimator that has high bias but low variance. Is one of these two extremes better than the other? Is it possible to obtain a happy midground between the two? This is where the bias/variance trade-off comes in: perhaps we would rather find an estimator that minimizes a combination of the bias and the variance, such as the mean squared error (MSE):
+We mentioned above that short bandwidths correspond to an estimator, $\hat{f}\_{n, h}(x)$, of $f$ that has low bias, but high variance, whereas long bandwidths corresponds to an estimator that has high bias but low variance. Is one of these two extremes better than the other? Is it possible to obtain a happy mid-ground between the two? This is where the bias/variance trade-off comes in: perhaps we would rather find an estimator that minimizes a combination of the bias and the variance, such as the mean squared error (MSE):
 
 $$\text{MSE} = \text{Bias}^2 + \text{Variance}$$
 
@@ -205,7 +218,7 @@ and that this optimal kernel is given by the Epanechnikov kernel:
 
 $$K(t) = \frac34 \frac{1}{5^{1/5}} \left( 1 - \left(\frac{t}{15^{1/5}}\right)^2\right) I\_{\left(\vert t \vert \leq 15^{1/5}\right)}$$
 
-However, the asymptotic efficiency lost for other kernels is minimal. In fact R uses the cosine kernel below, which has na efficiency ratio of 1.0004 relative tot he optimal:
+However, the asymptotic efficiency lost for other kernels is minimal. In fact R uses the cosine kernel below, which has an efficiency ratio of 1.0004 relative tot he optimal:
 
 $$K(t) = \frac12 \cos(t) I\_{\left(\vert t \vert \leq \frac{\pi}{2}\right)}$$
 
@@ -229,6 +242,64 @@ In fact, it is an active research area to attempt to find informative low-dimens
 1. How could you use cross-validation to select the bandwidth, $h$?
 
 
+
+
+
+
+### Scatterplots and smoothing
+
+We mentioned that it is often a good idea to add a smoothing line to scatterplots. But how do we come up with the smoothing line? There are actually a number of methods, but we can use kernel density estimation.
+
+For example, given pairs of data points $(x\_i, y\_i)$, $i = 1, ..., n$, where $x\_i$ might be a father's height and $y\_i$ might be his son's height. Suppose that we are interested in predicting the son's height based on the father's height. Then we might fit a model which predicts $y$ based on $x$ using the Nadaraya-Watson kernel smoother with bandwidth $h$:
+
+$$\hat{y}(x) = g\_h(x) = \frac{\sum\_{i=1}^n K\_h(x\_i - x) y\_i}{\sum\_{i=1}^n K\_h(x\_i - x)}$$
+
+This equation corresponds to a predicting $\hat{y}$ given some value $x$ to be the weighted average of the $y\_i$'s where $y\_i$'s which have correxponding $x\_i$'s that are close to our $x$ of interest have larger weights and thus contribute more (since $K\_h$ is centered about $0$). 
+
+For any fixed $x$ value, the above prediction for $\hat{y}$ corresponds to finding the (local) constant minimizer of a weighted least-squares over $\theta$:
+
+$$\hat{y} = \underset{\theta}{\text{argmin}} \sum\_{i=1}^n (y\_i - \theta)^2 w\_i(x) ~~~~~~ \text{where} ~~~~~ w\_i(x) = K\_h(x\_i - x)$$
+
+
+That is, for each fixed $x$, we want to find the value, $\hat{y}$, which is the closest (in terms of the squared distance) to the $y\_i$'s whose corresponding $x\_i$'s are close to our $x$ of interest. <FONT COLOR="red">This needs to be re-worded!</FONT>. We can call this function a "smoothing" function, since it is taking into account all possible values that we have observed and averaging them based on how close their $x\_i$'s are.
+<FONT COLOR="red">Make Figures!</FONT>
+
+
+Instead of finding a constant fit, we could instead do a local polynomial fit, for example, finding
+
+
+$$\hat{y} = \underset{\theta}{\text{argmin}} \sum\_{i=1}^n \left(y\_i - \sum\_{j=1}^p \beta\_j(x\_i - x)^j\right)^2 w\_i(x) ~~~~~~ \text{where} ~~~~~~ w\_i(x) = K\_h(x\_i - x)$$
+
+where $p=0$ gives the NW kernel smoother, $p=1$ gives the local linear smoother. The idea is that you want to fit a local polynomial to a subset of the data near the point whose response is being estimted. The polynomial is fitted using least squares, giving more weight to the points near the point whose response is being estimated, and less weight to points further away. <FONT COLOR="red">Give examples of polynomial smoothing for different weights and different degrees</FONT>. 
+
+
+Similar to our discussion of kernel density estimation above, we can use Taylor expansion to obtain the bias and variances of these kernel smoothers:
+
+
+Suppose that we are estimating a function $f$ using a non-parametric regression model
+
+$$Y\_i = m(X\_i) + \epsilon\_i$$
+
+where $m$ is a "smooth" mean function and $\epsilon$ is the error term with mean zero. Assume that $X\_i$ and $Y\_i$ are IId and $X\_i$ jas a density $f$ and $Var(Y | X = x) = \sigma^2$, then under necessary regularity conditions we have the following (pointwise) bias-variance tradeoff:
+
+For the Nadaraya-Watson kernel the bias is given by
+$$\text{Bias}\_{\text{NW}} = \left(m^{\prime \prime} + \frac{2 m^\prime(x) f^\prime(x)}{f(x)} \right) b\_n$$ 
+
+which means that for the local-linear estimator (where $f(x)$ is constant), we have
+
+$$ \text{Bias}\_{\text{linear}} = \left(m^{\prime \prime}\right) b\_n$$
+
+where $b\_n = \frac12 \sigma\_K^2 h^2$ and the variance for both methods is 
+$$V\_n = \frac{\sigma^2(x)}{f(x) n h } \int K^2(t) dt$$
+
+
+Thus we have this term $b\_n$ which is directly related to the bandwidth $h$, which implies that the bias for both methods is increases to $h$.
+
+Can you see the similarity between smoothing and kernel density estimation?
+
+<FONT COLOR="red">This needs a lot of work and/or simplification</FONT>
+
+
 ### Boxplots
 
 The boxplot is a simplified histogram that is particularly good for comparing two samples. The boxplot contains a lot of information about the range and spread of the data. In the middle of the "box", we have a line corresponding to the median, and the edges of the box correspond to the upper (third) and lower (first) quartiles, $q\_{0.75}$ and $q\_{0.25}$, respectively. The inter-quartile range (IQR) is the difference between the third quartile and the first quartile. The box contains "whiskers", which extend $1.5 \times IQR$ from the edges of the box. Any "outlier" values larger than $q\_{0.75} + 1.5 \times IQR$ or smaller than $q\_{0.25} - 1.5 \times IQR$ are drawn as dots. The figure below uses side-by-side boxplots to show a comparison of two sets of observations. Here we are comparing the number of observations selected by two feature selection methods (one based on cross-validation (CV) and the other based on a stability-based cross-validation (SSCV) approach).
@@ -237,12 +308,21 @@ The boxplot is a simplified histogram that is particularly good for comparing tw
 
 It is clear that the SSCV method selects significantly fewer observations than the CV method. the CV method also exhibits more variability than the SSCV method.
 
-As a warning, such comparisons can be misleading if the two samples that we are comparing are not similarly normalized or are not directly comparable. Recall our discussion on normalization and comparability in the data wisdom excerpt. For example, suppose we have done a microarray gene expression experiment, where we have obtained the data in batches. Before comparing different samples, it might be a good idea to do some pre-processing to make the ssamples comparable, otherwise the differences that you are observing between the two samples may be a "batch effect" rather than actual differences in gene expression.
+As a warning, such comparisons can be misleading if the two samples that we are comparing are not similarly normalized or are not directly comparable. Recall our discussion on normalization and comparability in the data wisdom excerpt. For example, suppose we have done a microarray gene expression experiment, where we have obtained the data in batches. Before comparing different samples, it might be a good idea to do some pre-processing to make the samples comparable, otherwise the differences that you are observing between the two samples may be a "batch effect" rather than actual differences in gene expression.
 
 ### Q-Q plots
 
+Q-Q plots are kind of fancy! They really take advantage of our visual desire to seek straight lines. We are much better at detecting straight lines than we are at detecting, say, polynomials.
 
-* fancier than histograms
+Suppose that we have a dataset and we want to check whether or not it follows a particular distribution. The general idea is to compare the quantiles in your data from the quantiles of the distribution. If these match (i.e. the plot of one versus the other follows a straight diagonal line), then you can be reasonably certain that your data follows the distribution of interest.
+
+For example, the gap data from the fruitfly project before (top) and after (bottom) taking a log-transform.
+
+<img src="gap-qq.png" alt="QQ plot log-transformed gap data" style="width:600px;height:800px;">
+
+
+We can see that the two bottom plots correspond much more to a straight line than do the top two (pre-transformed plots). This tells us that the transformed variables more accurately follow a normal distribution (the diagonal line is a lot more straight) than do the pre-transformed variables.
+
 
 
 
@@ -290,7 +370,7 @@ E(\hat{f}(x)) & = \int K\left( u \right) f(x + hu) du \\\
 \end{aligned}
 $$
 
-which implies that the expected value of $\hat{f}$ is an average of $f$ locally around $x$, howver this integral is not analytically solvable so we use a Taylor expansion of $f(x + hu)$ in the argument $hu$, which is valid as $h \rightarrow 0$:
+which implies that the expected value of $\hat{f}$ is an average of $f$ locally around $x$, however this integral is not analytically solvable so we use a Taylor expansion of $f(x + hu)$ in the argument $hu$, which is valid as $h \rightarrow 0$:
 
 $$f(x + hu) = f(x) + f^{\prime}(x) hu + \frac12 f^{\prime\prime}(x) h^2 u^2 + \text{smaller order terms} $$
 
@@ -312,7 +392,7 @@ Surprisingly, the bias does not depend on $n$, the number of samples. So no matt
 #### The variance of $\hat{f}$:
 
 
-Similar calcualtions show that the variance of $\hat{f}$ is
+Similar calculations show that the variance of $\hat{f}$ is
 
 $$
 \begin{aligned}
@@ -383,4 +463,4 @@ For references on kernel density estimation, see M. Rosenblatt (1956)'s *Remarks
 ### Answers to the questions:
 
 1. **How could you use cross-validation to select the best bandwidth?** <p>First, we need to define a measure of how good a particular density estimator is performing. Recall our discussion on using the KL-divergence to measure the distance from the true distribution to the estimated distribution. We concluded that the best distribution will correspond to that with the parameter, $\theta$, which minimizes the negative log-likelihood. Thus we can use the negative log-likelihood as a measure of prediction performance. In particular, the density with bandwidth, $h$, that yields the largest negative log-likelihood corresponds to the density that is closest (in KL-distance) to the true density. </p>
-<p>How does cross-validation come into this? Suppose we have split our dataset into 10 subsets. We can temporarily remove the first subset, and calculate the density estimator function for various values of $h$. We can then use the witheld subset to calculate the negative log-likelihood for each $h$, (that is, calculate -$\hat{f}\_h(x\_{\text{witheld}})$) and identify which $h$ yields the largest value. This will be the $h$ that we select for that particular fold. We could then repeat this, witholding instead the second subset of the data, and come up with a new optimal $h$. Eventually, we will have 10 different optimal bandwidth values (hopefully they're not too different from one another), and we could average them to obtain our final bandwidth, $h$.</p>
+<p>How does cross-validation come into this? Suppose we have split our dataset into 10 subsets. We can temporarily remove the first subset, and calculate the density estimator function for various values of $h$. We can then use the withheld subset to calculate the negative log-likelihood for each $h$, (that is, calculate -$\hat{f}\_h(x\_{\text{witheld}})$) and identify which $h$ yields the largest value. This will be the $h$ that we select for that particular fold. We could then repeat this, withholding instead the second subset of the data, and come up with a new optimal $h$. Eventually, we will have 10 different optimal bandwidth values (hopefully they're not too different from one another), and we could average them to obtain our final bandwidth, $h$.</p>
