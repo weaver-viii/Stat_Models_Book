@@ -14,27 +14,35 @@ Introduction
 * [Introduction][intro]
 * [How to be an applied statistician][how]
 
+
 Ongoing projects
 
 * [The fruitfly project][fly]
 * [The neuroscience project][neuro]
 
-Visualization
 
-* [Exploratory data analysis][eda]
+Causal Inference
 
-General topics/methods that you should know about
+* [An introduction to causal inference][causal]
+
+
+General topics/methods that you should know about before moving on
 
 * [The bias-variance tradeoff][trade]
 * [Hypothesis testing][test]
 * [Cross validation][cv]
 * [Normalization][norm]
+
+
+Visualization
+
+* [Exploratory data analysis][eda]
+
+
+Clustering
+
 * [Principal component analysis][pca]
-
-
-Causal Inference
-
-* [An introduction to causal inference][causal]
+* [Clustering][clust]
 
 Linear models
 
@@ -53,3 +61,4 @@ Linear models
 [neuro]: 9-neuro.html
 [norm]: 10-normalization.html
 [pca]: 11-pca.html
+[clust]: 12-clust.html

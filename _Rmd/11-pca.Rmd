@@ -31,32 +31,11 @@ Let's walk through the theoretical steps: <FONT COLOR="red"> Do it</FONT>
 * talk about looking at how much variability each PC captures (screeplot -- plot the eigenvalues in decreasing order -- inspect to find a gap to decide how many principal components to keep)
 
 
-
-
-### PCA on the fruitfly project
-
-Recall that for the fruitfly project, we have a number of images of drosophila embryos in each of which we have stained for certain genes. Since each embryo has a different size and shape, to make the embryos comparable, we must first find the outline of the embryo in the image and then warp it into a common ellipse as shown in the graphic below.
-
-<img src="fruitfly_ellipse.png" alt="Embryos" style="width:400px;height:200px;">
-
-We then used PCA on the data from approximately 7 images to obtain the principal components shown below, where the colour of each component corresponds high intensity (red) and low intensity (blue).
-
-<img src="pca_embryo.png" alt="Embryos" style="width:500px;height:150px;">
+PCA has a huge array of uses in the realm of dimensionality reduction. It is widely used and is ideal for multivariate Gaussian data with degeneracy. It is incredibly useful for visualization of complex datasets. 
 
 
 
-#### Independent component analysis
-Unfortunately, these components didn't seem to be biologically interpretable. An alternative to PCA is Independent Component Analysis (ICA) which find the independent components by maximizing the independence of the estimated components by maximizing the non-Gaussianity. This has the effect of encouragins sparsity in the components. The resultant components for the fruitfly embros using ICA are significantly better than those obtained by PCA. We are finding the biologically meaningful stipes and segments known by biologists.
-
-<img src="ica_embryo.png" alt="Embryos" style="width:500px;height:150px;">
-
-The reason that PCA doesn't work well is that it doesn't take advantage of the natural sparsity of the problem.
-
-
-
-
-
-### PCA for the Enron Data
+#### PCA for the Enron Data
 
 In 2001, the US energy company *the Enron Corporation* was caught up in a corruption scandal that led to the bancruptcy of the company. The company used accounting loopholes, special purpose entities and poor financial reporting to hide billions of dollars in debt from failed deals and projects. As a result of the investigation, a large portion of the corporation's emails between November 1998 and June 2002 became public. 
 
@@ -85,6 +64,8 @@ The outliers in the first component are employees 20, 37, 41, 61, 63, 65, 72 and
 The above PCA analyses are suggestive to give leads for further follow-up studes, however they are not conclusive in any sense! We note, however, that Employee 20 (Jeff Dasovich) and Employee 57 (Tana Jones) both appeared in news reports related to the Enron investigation.
 
 
+
+
 ### To normalize or not to normalize:
 
 As a rule of thumb, if you're not sure whether or not you should center and scale your data, do both and compare the results so that you can make a reasonable judgement call. However, in order to avoid one predictor having an undue influence on the principal components, it is common to first standardize the predictors to have mean zero and variance 1 before conducting PCA. Therefore PCA analysis has the following steps:
@@ -95,7 +76,40 @@ As a rule of thumb, if you're not sure whether or not you should center and scal
 
 1. Carry out an eigenvalue decomposition of $G$ to get eigenvalues $d\_1 \geq ... \geq d\_p \geq 0$ and the corresponding eigenvectors $U\_j$
 
-1. Keep all the large principal components that account for most of the variation in the data. For example, starting with 20 predictors it might be the case that the first 4 components account for 90\% of the total variation, i.e. the sum of the first 4 eigenvalues is about 90\% of the totla sum of all eigenvalues.
+1. Keep all the large principal components that account for most of the variation in the data. For example, starting with 20 predictors it might be the case that the first 4 components account for $90\%$ of the total variation, i.e. the sum of the first 4 eigenvalues is about $90\%$ of the totla sum of all eigenvalues.
 
 
 In the Enron study, we are looking for the outliers!
+
+
+#### PCA on the fruitfly project
+
+Recall that for the fruitfly project, we have a number of images of drosophila embryos in each of which we have stained for certain genes. Since each embryo has a different size and shape, to make the embryos comparable, we must first find the outline of the embryo in the image and then warp it into a common ellipse as shown in the graphic below.
+
+<img src="fruitfly_ellipse.png" alt="Embryos" style="width:400px;height:200px;">
+
+We then used PCA on the data from approximately 7 images to obtain the principal components shown below, where the colour of each component corresponds high intensity (red) and low intensity (blue).
+
+<img src="pca_embryo.png" alt="Embryos" style="width:500px;height:150px;">
+
+
+
+## Independent component analysis
+Unfortunately, the components identified by PCA for the fruitfly data didn't seem to be biologically interpretable. An alternative to PCA is Independent Component Analysis (ICA) which find the independent components by maximizing the independence of the estimated components by maximizing the non-Gaussianity. This has the effect of encouragins sparsity in the components. The resultant components for the fruitfly embros using ICA are significantly better than those obtained by PCA. We are finding the biologically meaningful stipes and segments known by biologists.
+
+<img src="ica_embryo.png" alt="Embryos" style="width:500px;height:150px;">
+
+The reason that PCA doesn't work well is that it doesn't take advantage of the natural sparsity of the problem.
+
+## Sparse PCA
+
+Regular prinicipal component analysis typically finds linear combinations of all variables, which resutls in the disadvantage that the resutant components are often hard to interpret. Sparse PCA attempts to ameliorate this issue by finding linear combinations of just a few input variables.
+
+## Non-negative matrix factorization
+
+We will discover that another alternative is non-negative matrix factorization
+
+
+## A comparison of PCA, ICA and NMF
+
+We have introduced in this section several alternative (but related) approaches to the same problem: prinicpal component analysis, independent component analysis and non-negative matrix factorization. Why do these different approaches exist? Well it turns out they all work best under different circumstances, although under which circumstance your data problem lies might be hard to identify. It might be an idea to try all three approaches on your dataset, and if you find that the results are different, then you will learn a lot by asking *why* each method obtains different results. In fact, this is a good general rule for approaches with several possible methods, let's call it "method stability". If you are drawing a conclusion, you can gain confidence about the strength of the conclusion you're drawing if you can show that the results are robust to the specific method being used. In other words, conclusions are more believable if they hold when using many different analytical methods. This is a great way of showing that your conclusions are not simply an artefact of the method used. To compare results, it will be an even better idea to set aside a "validation set", say one third of your data, for "independent" comparison.

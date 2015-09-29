@@ -108,7 +108,9 @@ When we add transparency, it becomes much easier to identify patterns in the dat
 
 Further, the above plots each contain a red smoothing line, which can be extremely useful to emphasize the trend of the data. We will come back to the notion of smoothing later.
 
+#### Questions to ask yourself
 
+1. What are the differences between kernel density estimation and local kernel smoothing
 
 ### Histograms
 
@@ -239,7 +241,7 @@ In fact, it is an active research area to attempt to find informative low-dimens
 
 ##### Questions to ask yourself:
 
-1. How could you use cross-validation to select the bandwidth, $h$?
+2. How could you use cross-validation to select the bandwidth, $h$?
 
 
 
@@ -461,6 +463,9 @@ For references on kernel density estimation, see M. Rosenblatt (1956)'s *Remarks
 
 
 ### Answers to the questions:
+
+1. **What are the similarities and differences between kernel density estimation, kernel regression estimation and local regression?** <p>First, in all situations the problem is both to estimate $y$ given $x$. Further, kernel regression is a special case of local regression. All three aim to exploit the tradeoff between bias and variance though a smoothing or regulatization parameter. The first two approaches manipulate the bandwidth of a kernel function whereas the smoothing spline for local regression also trades of bias and variance using a smoothing parameter (which controls the global smoothness of the function). What about some differences? The main difference is that the kernel density estimator generates its estimates using only the information from $x$, while kernel regression utilises both $x$ and $y$.</p>
+
 
 1. **How could you use cross-validation to select the best bandwidth?** <p>First, we need to define a measure of how good a particular density estimator is performing. Recall our discussion on using the KL-divergence to measure the distance from the true distribution to the estimated distribution. We concluded that the best distribution will correspond to that with the parameter, $\theta$, which minimizes the negative log-likelihood. Thus we can use the negative log-likelihood as a measure of prediction performance. In particular, the density with bandwidth, $h$, that yields the largest negative log-likelihood corresponds to the density that is closest (in KL-distance) to the true density. </p>
 <p>How does cross-validation come into this? Suppose we have split our dataset into 10 subsets. We can temporarily remove the first subset, and calculate the density estimator function for various values of $h$. We can then use the withheld subset to calculate the negative log-likelihood for each $h$, (that is, calculate -$\hat{f}\_h(x\_{\text{witheld}})$) and identify which $h$ yields the largest value. This will be the $h$ that we select for that particular fold. We could then repeat this, withholding instead the second subset of the data, and come up with a new optimal $h$. Eventually, we will have 10 different optimal bandwidth values (hopefully they're not too different from one another), and we could average them to obtain our final bandwidth, $h$.</p>

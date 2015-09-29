@@ -77,25 +77,9 @@ MathJax.Hub.Config({
 <li>talk about looking at how much variability each PC captures (screeplot -- plot the eigenvalues in decreasing order -- inspect to find a gap to decide how many principal components to keep)</li>
 </ul>
 
-<h3>PCA on the fruitfly project</h3>
+<p>PCA has a huge array of uses in the realm of dimensionality reduction. It is widely used and is ideal for multivariate Gaussian data with degeneracy. It is incredibly useful for visualization of complex datasets. </p>
 
-<p>Recall that for the fruitfly project, we have a number of images of drosophila embryos in each of which we have stained for certain genes. Since each embryo has a different size and shape, to make the embryos comparable, we must first find the outline of the embryo in the image and then warp it into a common ellipse as shown in the graphic below.</p>
-
-<p><img src="fruitfly_ellipse.png" alt="Embryos" style="width:400px;height:200px;"></p>
-
-<p>We then used PCA on the data from approximately 7 images to obtain the principal components shown below, where the colour of each component corresponds high intensity (red) and low intensity (blue).</p>
-
-<p><img src="pca_embryo.png" alt="Embryos" style="width:500px;height:150px;"></p>
-
-<h4>Independent component analysis</h4>
-
-<p>Unfortunately, these components didn&#39;t seem to be biologically interpretable. An alternative to PCA is Independent Component Analysis (ICA) which find the independent components by maximizing the independence of the estimated components by maximizing the non-Gaussianity. This has the effect of encouragins sparsity in the components. The resultant components for the fruitfly embros using ICA are significantly better than those obtained by PCA. We are finding the biologically meaningful stipes and segments known by biologists.</p>
-
-<p><img src="ica_embryo.png" alt="Embryos" style="width:500px;height:150px;"></p>
-
-<p>The reason that PCA doesn&#39;t work well is that it doesn&#39;t take advantage of the natural sparsity of the problem.</p>
-
-<h3>PCA for the Enron Data</h3>
+<h4>PCA for the Enron Data</h4>
 
 <p>In 2001, the US energy company <em>the Enron Corporation</em> was caught up in a corruption scandal that led to the bancruptcy of the company. The company used accounting loopholes, special purpose entities and poor financial reporting to hide billions of dollars in debt from failed deals and projects. As a result of the investigation, a large portion of the corporation&#39;s emails between November 1998 and June 2002 became public. </p>
 
@@ -127,10 +111,40 @@ MathJax.Hub.Config({
 <li><p>Center the predictors to have mean 0</p></li>
 <li><p>Form the sample covariance matrix, $G$</p></li>
 <li><p>Carry out an eigenvalue decomposition of $G$ to get eigenvalues $d_1 \geq ... \geq d_p \geq 0$ and the corresponding eigenvectors $U_j$</p></li>
-<li><p>Keep all the large principal components that account for most of the variation in the data. For example, starting with 20 predictors it might be the case that the first 4 components account for 90\% of the total variation, i.e. the sum of the first 4 eigenvalues is about 90\% of the totla sum of all eigenvalues.</p></li>
+<li><p>Keep all the large principal components that account for most of the variation in the data. For example, starting with 20 predictors it might be the case that the first 4 components account for $90\%$ of the total variation, i.e. the sum of the first 4 eigenvalues is about $90\%$ of the totla sum of all eigenvalues.</p></li>
 </ol>
 
 <p>In the Enron study, we are looking for the outliers!</p>
+
+<h4>PCA on the fruitfly project</h4>
+
+<p>Recall that for the fruitfly project, we have a number of images of drosophila embryos in each of which we have stained for certain genes. Since each embryo has a different size and shape, to make the embryos comparable, we must first find the outline of the embryo in the image and then warp it into a common ellipse as shown in the graphic below.</p>
+
+<p><img src="fruitfly_ellipse.png" alt="Embryos" style="width:400px;height:200px;"></p>
+
+<p>We then used PCA on the data from approximately 7 images to obtain the principal components shown below, where the colour of each component corresponds high intensity (red) and low intensity (blue).</p>
+
+<p><img src="pca_embryo.png" alt="Embryos" style="width:500px;height:150px;"></p>
+
+<h2>Independent component analysis</h2>
+
+<p>Unfortunately, the components identified by PCA for the fruitfly data didn&#39;t seem to be biologically interpretable. An alternative to PCA is Independent Component Analysis (ICA) which find the independent components by maximizing the independence of the estimated components by maximizing the non-Gaussianity. This has the effect of encouragins sparsity in the components. The resultant components for the fruitfly embros using ICA are significantly better than those obtained by PCA. We are finding the biologically meaningful stipes and segments known by biologists.</p>
+
+<p><img src="ica_embryo.png" alt="Embryos" style="width:500px;height:150px;"></p>
+
+<p>The reason that PCA doesn&#39;t work well is that it doesn&#39;t take advantage of the natural sparsity of the problem.</p>
+
+<h2>Sparse PCA</h2>
+
+<p>Regular prinicipal component analysis typically finds linear combinations of all variables, which resutls in the disadvantage that the resutant components are often hard to interpret. Sparse PCA attempts to ameliorate this issue by finding linear combinations of just a few input variables.</p>
+
+<h2>Non-negative matrix factorization</h2>
+
+<p>We will discover that another alternative is non-negative matrix factorization</p>
+
+<h2>A comparison of PCA, ICA and NMF</h2>
+
+<p>We have introduced in this section several alternative (but related) approaches to the same problem: prinicpal component analysis, independent component analysis and non-negative matrix factorization. Why do these different approaches exist? Well it turns out they all work best under different circumstances, although under which circumstance your data problem lies might be hard to identify. It might be an idea to try all three approaches on your dataset, and if you find that the results are different, then you will learn a lot by asking <em>why</em> each method obtains different results. In fact, this is a good general rule for approaches with several possible methods, let&#39;s call it &quot;method stability&quot;. If you are drawing a conclusion, you can gain confidence about the strength of the conclusion you&#39;re drawing if you can show that the results are robust to the specific method being used. In other words, conclusions are more believable if they hold when using many different analytical methods. This is a great way of showing that your conclusions are not simply an artefact of the method used. To compare results, it will be an even better idea to set aside a &quot;validation set&quot;, say one third of your data, for &quot;independent&quot; comparison.</p>
 
 
 
