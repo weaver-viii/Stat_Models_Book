@@ -17,7 +17,42 @@ Clustering is very much related to network analysis which are extremely prominan
 
 ## K-means
 
-Suppose that we want to find $k$ unique clusters. We can re-write K-means in a more modern setting as follows
+
+One of the most intuitive clustering algorithms is the K-means algorithm (often called the Lloyd-Max algorithm). The K-means algorithm finds $k\_c$ clusters (this number must be specified by the user) by first choosing $k\_c$ data points at random as the initial cluster centers ("centroids") and subsequently assigning each data point to the cluster whose center it is closest to. Each centroid is then replaced by the mean of all data points assigned to that cluster, and the process is iterated until no data point is reassigned to a different cluster. The end result is a partition of the index set $\\{1, ..., n\\}$ into clusters $I\_1, ..., I\_{k\_c}$ and cluster centers (or centroids), $C\_1, ..., C\_{k\_c}$ that minimize the following global objective function (for any distance metric, $d$):
+
+$$(C\_1, ..., C\_{k\_c}) = \underset{(C\_1, ..., C\_{k\_c})}{\text{argmax}} \sum\_{i=1}^{k\_c} \sum\_{x\_j : j \in I\_i} d(x\_j, C\_i)$$
+
+For example, if our distance metric is the regular $L^2$ norm, then this is simply
+
+$$(C\_1, ..., C\_{k\_c}) = \underset{(C\_1, ..., C\_{k\_c})}{\text{argmax}} \sum\_{i=1}^{k\_c} \sum\_{x\_j : j \in I\_i} (x\_j - C\_i)^2$$
+
+<img src="kmeans.png" alt="K-means" style="width:500px;height:400px;">
+
+The specific K-means algorithm can be described as follows:
+
+1. **The initial step**: Specify $k\_c$ initial cluster/group centers (for example by randomly selecting $k\_c$ points without replacement from our $n$ observations). Denote these centers as
+$$C\_1^0, ..., C\_{k\_c}^0$$
+Then generate a partition of our observations (which we will identify by the index set $\\{1, ..., n\\}$) into non-overlapping subsets of the index set
+$$I\_1^0, ..., I\_{k\_c}^0$$
+based on the following assignment rule: observation $i$ belongs to $I\_k^0$ iff $i$ is closer to $C\_k^0$ than all other centers in $d$-distance.
+
+1. Determine new centers
+$$C\_1^1, ..., C\_{k\_c}^1$$
+by find the point such that the sum of its distances to all other points in the corresponding clusters $I^0\_0, ..., I^0\_{k\_c}$ is minimized. If $d$ is the usual Euclidean $L^2$-norm, then this corresponds to taking the mean of the points in a cluster to find the new center. If $d$ is the $L^1$ norm, then we are finding the median point.
+Partition the observations into new clusters
+$$I\_0^1, ..., I\_{k\_c}^1$$
+by the assignment rule from the previous point.
+
+1. Repeat the above step by finding the centers of our new clusters, and then reclustering based on assignment rule for the new cluster centers.
+
+1. Stop the process if two successive iterations lead to the same partition or when a stopping criterion is satisfied (for example, the decrease in within-groups variance falls below a certain threshold, or a preset maximum number of iterations is achieved).
+
+
+
+
+
+
+As an aside, suppose that we want to find $k$ unique clusters. We can re-write K-means in a more modern setting as follows
 
 $$\hat{\mu} = \underset{M \in \mathcal{R}(n, k)}{\text{arg}~\text{min}} \\| X - M\\|\_F^2$$
 
@@ -33,8 +68,19 @@ To understand what the above formulation is saying: note that K-means aims to mi
 
 ## PAM
 
+The Partitioning Around Medoids (PAM) clustering method (often called the K-medoids algorithm) is a modified version of K-means whereby it attempts to minimize the global sum of squares (as in K-means with the Euclidean $L^2$ metric), but subject to the constraint that the centers $C\_1, ... C\_{k\_c}$ must be an actual data point (rather than just the average of data points, which may not itself be a data point). 
+
+One way to minimize this constrained objective function is to modify the K-means or Lloyd-Max algorithm by first finding the mean location within the group (as per usual), and then replacing each center by the data point closest to it. 
+
 
 ## Hierarchical clustering
+
+To conduct hierarchical clustering, we begin with each observation being in its own lonely cluster. For example, we have $\\{1\\}, \\{2\\}, \\{3\\}, \\{4\\}$. Next, we find the two points that are the closest, and combine their clusters. So that, if the first an the second observations were the "closest" pair of points, our new partitioning is $\\{1, 2\\}, \\{3\\}, \\{4\\}$. We now have $n-1$ points to cluster. Let's repeat this process: find the next two closest points and aggregate their clusters. If the next smallest pairwise distance was between observations $1$ and $3$, then our new partitioning would be $\\{1, 2, 3\\}, \\{4\\}$, but if it were between observations $3$ and $4$, then our new partitioning would be $\\{1, 2\\}, \\{3, 4\\}$.
+
+The idea is to continue this process until all observations are in a single cluster (which would require only one more step in the example above). This process generates a hierarchical clustering tree: at each level, we have a different number of clusters. We can choose to cut the tree at any point to get different numbers of clusters, and the number of custers increases as the cut-point approaches the initial point.
+
+This hierarchical representation is particular nice since it generates *many* possible clusters: the result is a set of $n$ nested partitions containig anywhere from $1$ to $n$ clusters.
+
 
 
 ## Spectral clustering
@@ -139,15 +185,55 @@ The directed spectral clustering algorithm creates two sets of clusters.
 <FONT COLOR="red">In 15-lec8.1 there is a description of SVD that I need to put in somewhere, probably in the PCA file</FONT>
 
 
-#### Directed spectral clustering on then Enron data:
+#### Directed spectral clustering example on the Enron data:
 
-First, we computed the left and right singular vectors of the directed graph Laplacian. Suppose that we restrict to only the second, third, fourth and fifth vectors, then we have two matrices with 154 rows and 4 columns. Two rows in the matrix of left singular vectors are "close" if those two employees *sent* many messages to the same people. Whereas two rows inthe matrix of the right singular vectors are close if those two employees *received* many messages from the sample people. 
+First, we computed the left and right singular vectors of the directed graph Laplacian. Suppose that we restrict to only the second, third, fourth and fifth vectors (see the image below), then we have two matrices with 154 rows and 4 columns: the left singular vectors $U \in \mathbb{R}^{154 \times 4}$ and the right singular vectors $V \in \mathbb{R}^{154 \times 4}$. Two rows in the matrix of left singular vectors are "close" if those two employees *sent* many messages to the same people. Whereas two rows inthe matrix of the right singular vectors are close if those two employees *received* many messages from the sample people. 
 
-<FONT COLOR="red"> FINISH ME! </FONT>
 
+<img src="singular.png" alt="Minard" style="width:300px;height:300px;">
+
+
+The question is, how different (or similar) are the left and right singular vectors in the Enron data?
+
+To compare the rows of $U$ to the rows of $V$, we need to make sure that they are "aligned". Recall that the matrix $O$ consists of the numbers of offspring/out-links for each node in the graph. If we define
+$$O^* = \underset{O : O^TO = I}{\text{argmin}} \\|U - VO\\|\_F$$
+Then it becomes meaningful to measure the Euclidean distance between the rows of $U$ and the rows of $VO^\*$, since $VO^\*$ is aligned with $U$. The 154 distances are represented in the histogram below:
+
+<img src="dist.png" alt="Minard" style="width:400px;height:200px;">
+
+
+The outlier on the far-right corresponds to employee Bill Williams, who sent a lot of emails, but did not recieve many. Note that Williams was not identified in the symmetric PCA analysis.
 
 ## The EM algorithm
 
+The expectation-maximization (EM) algorithm is an iterative algorithm which aims to compute the maximum likelihood estimate (whereby our goal is to estimate the model parameters for which the observed data are most likely) in the presence of missing or hidden data. It is related to techniques such as Newton-Rhapson and gradient descent. Each iteration consists of two steps: the E-step (expectation step) and the M-step (maximization step). In the E-step, the missing data (for example, the cluster membership) are estimated via a conditional expectation given the observed data and current estimate of the model parameters. In the M-step, the likelihood function is maximized under the assumption that the missing data are known, where the estimate of the missing data from the E-step are used in place of the actual missing data (since, obviously, this data is still missing!).
+
+It is actually not hard to show that K-means in actually a variant of the EM algorithm. In the context of K-means, we might think of the E-step as the step which assigns each object to a centroid which corresponds to the most likely clustering, and the M-step as the recalculation of the model (recalculate the centroids using least squares optimization). 
+
+The figure below from Dempster et al. (1977) provides a graphical interpretation of a single iteration of the EM algorithm.
+
+<img src="EM.png" alt="Minard" style="width:400px;height:300px;">
+
+A <a href="http://www.cs.utah.edu/~piyush/teaching/EM_algorithm.pdf">clear and concise tutorial</a> on the technical aspects of the EM algorithm is available by Sean Borman. We present only a concise summary here. Let's suppose that we have an unknown parameter, $\theta$, which indexes a distribution from which our observed data, $X$, was drawn. Suppose also that we have some missing data denoted by the hidden random vector, $Z$. As an example, suppose that our data, $X$, comes from a mixture of two Gaussians. In this case, each observation $X\_i$ comes from one of two Gaussian distributions: $N(\mu\_0, \sigma\_0^2)$ or $N(\mu\_1, \sigma\_1^2)$ (in which case we assume that $\theta = (\mu\_0, \sigma\_0^2, \mu\_1, \sigma\_1^2)$), but the problem is that not only do we not know which distribution a given data point came from, we don't even know what the distributions are since $\theta$ is unknown! Can you imagine what our missing variable, $Z$, corresponds to? Well, given that the information that is missing is from which distribution our data was drawn, we might encode our latent variable to be
+$$Z\_i = \begin{cases} 1 &\text{if } X\_i \sim N(\mu\_1, \sigma\_1^2)\\\ 0 &\text{if } X\_i \sim N(\mu\_0, \sigma\_0^2)\end{cases}$$
+
+We can thus rewrite out distribution as
+
+$$X|Z \sim ZN(\mu\_1, \sigma\_1^2) + (1 - Z) N(\mu\_0, \sigma\_0^2)$$
+
+and stress that this is a significant abuse of notation, and that you should never write something like this (*especially* not in a book!). 
+
+That is, $Z\_i$ is an unobserved random variable that tells us which distribution our observation $X\_i$ came from. This is clearly a clustering problem! We observe a bunch of (normally distributed?) data points, for which we have reason to believe that there exist two main clusters of observations, and we would like to know what they are: we want to find $Z$! 
+
+The idea is that, given a current estimate, $\theta\_n$ of $\theta$ (where the subscript $n$ corresponds to the $n$th iteration, not the number of data points), we can iterate through the following steps:
+
+1. Estimate the cluster membership, $z$, for the data point using conditional expectation given the observed values of the data point, $x$, and the current parameter estimates, $\theta\_n$. That is, calculate $\hat{z}\_n = E(z | x, \theta\_n)$.
+
+2. Calculate the value of $\theta\_{n+1}$ that is most likely given $x$ and our estimated missing values (cluster membership), $\hat{z}\_n$. This corresponds to calculating the maximum likelihood of $\theta$ at this iteration.
+
+Thus, as the EM algorithm converges (which it is guarenteed to do), not only does our estimate of $\theta$ get closer and closer to the "true" value, but the estimates of our cluster memberships (or missing values, $z$) get closer and closer to the true values. So our final cluster membership estimates correspponds to our final calculation of the E-step!
+
+<FONT COLOR="red">Give some of the more technical details as well as an example</FONT>
 
 
 ## Two types of community detection algorithms: parametric and algorithmic
@@ -167,9 +253,28 @@ The typical computer-science approach to such questions is to show that particul
 
 In contrast, the statistical approach asks: how does the algorithm perform on tractable stochastic models with clearly defined population clusters? Do we get close to the truth (that we build into the model)? To understand what this means, we first need to define the Stochastic Block Model (SBM). In an SBM, each node belongs to a "block", edges are randomly placed between nodes based on independent Bernoulli random variables and the probability of an edge between two nodes depends only on the block membership of those two nodes. In particular, we can think of the blocks as the "true" clusters and make the probability of an edge high between nodes in the same block and the probability of an edge low between nodes in different blocks. 
 
-<img src="SBM.png" alt="Minard" style="width:500px;height:300px;">
+<img src="SBM.png" alt="SBM" style="width:300px;height:400px;">
 
 If we can show that a clustering algorithm can accurately detect these blocks (the clustering algorithm estimates the block membership for each node) then we should be fairly confident that the algorithm performs well. But is this enough to be sure that the algorithm performs well in all circumstances?
 
 
 ## How to choose the number of clusters?
+
+So in all of the examples presented above, we have always assumed that we are trying to identify $k$ clusters, and we treated this number as something that you should just know! But this wasn't really fair... in most situations, we don't know how many clusters there are in our data. So how can we figure out the right value of $k$? There are a number of methods out there, but methods for which you simply plug in your data and it spits out a number of clusters are unreliable. A much better alternative is to visualize your data, and there are a number of tools available for the specific purpose of identifying the most appropriate number of clusters in your data. One such method is the Sihlouette plot.
+
+### Silhouette
+
+Silhouette was first introduced by Peter J. Rousseeuw in 1986. Assume that we have clustered our data into $k$ groups, and for any given data point, $i$, we define:
+
+* $a\_i$ to be a measure of how well observation $i$ fits into its cluster (for example by calculating the average pairwise distance of points in cluster $i$).
+
+* $b\_i$ to be a measure of how different observation $i$ is from other clusters (for example by calculating the smallest average distance of observation $i$ to other clusters).
+
+Then we can define a value
+
+$$s\_i = \frac{b\_i - a\_i}{\max(b\_i, a\_i)}$$
+
+which is a value between -1 and 1. In particular, $s\_i$ is close to $1$ if observation $i$ is in a tight cluster and is far away from other clusters, and is close to $-1$ if it is in a loose cluster and is close to other clusters. Our goal is to find the value of $k$ that maximizes the mean of the $s\_i$'s.
+
+
+### Cross-validation
