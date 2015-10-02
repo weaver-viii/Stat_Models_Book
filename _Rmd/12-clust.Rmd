@@ -81,7 +81,7 @@ The idea is to continue this process until all observations are in a single clus
 
 This hierarchical representation is particular nice since it generates *many* possible clusters: the result is a set of $n$ nested partitions containig anywhere from $1$ to $n$ clusters.
 
-
+## Minimum spanning treees (MST)
 
 ## Spectral clustering
 
@@ -270,11 +270,38 @@ Silhouette was first introduced by Peter J. Rousseeuw in 1986. Assume that we ha
 
 * $b\_i$ to be a measure of how different observation $i$ is from other clusters (for example by calculating the smallest average distance of observation $i$ to other clusters).
 
-Then we can define a value
+Then we can define a value, called the *silhouette width* to be
 
 $$s\_i = \frac{b\_i - a\_i}{\max(b\_i, a\_i)}$$
 
 which is a value between -1 and 1. In particular, $s\_i$ is close to $1$ if observation $i$ is in a tight cluster and is far away from other clusters, and is close to $-1$ if it is in a loose cluster and is close to other clusters. Our goal is to find the value of $k$ that maximizes the mean of the $s\_i$'s.
 
+Since humans like to visualize things, we can use the Silhouette plot (plot the $s\_i$'s in decreasing order for each cluster), and note that we want to see many large $s\_i$ values. Below, we plot a Silhouette for an example with two clusters and compare when we instead used three clusters.
+
+<img src="silhouette2.png" alt="Silhouette with two clusters" style="width:300px;height:400px;">
+
+<img src="silhouette3.png" alt="Silhouette with three clusters" style="width:300px;height:400px;">
+
+We see that the average silhouette width (the average $s\_i$ values) remains approximately the same at 0.75 with two clusters and 0.74 with three clusters. However, since there appears to be no major difference in the quality of the clustering, since we encourage simplicity, we would prefer to use the two-cluster result.
+
+
+#### Silhouette with the Enron data
+
+Below, we present Silhouette plots of 3- and 4-clusters from the Enron email data.
+<img src="enron_silhouette.png" alt="Silhouette for the Enron data" style="width:700px;height:300px;">
+
+
+It is clear from the Silhouette plot that there is one extremely large cluster and the other clusters in both cases are very small and consist of only a few people (we note that these small clusters correspond to the lawyers in the company that we saw earlier in our discussion of PCA, for example employees 20 and 57). The average silhouette width is slightly smaller at 0.73 when we have 4 clusters than the average width of 0.77 when we have 3 clusters. In this situation, we must make a judgement call as to whether we prefer 3 or 4 clusters, however we concede that given the small difference it probably doesn't matter which one we choose.
+
 
 ### Cross-validation
+
+We have seen cross-validation several times already, but here we present another use for it. The idea is that we want to find the number of clusters for which we can minimize some objective function over different subsets of the data. The basic idea behind $V$-fold cross validation is to
+
+1. Divide the data into $V$ batches
+
+1. Given $k$, the number of clusters, remove the batches one by one and at each instance use the other $V-1$ batches to cluster by K-means
+
+1. Calcualte the K-means objective function value on the removed batch 
+
+1. After performing the above steps on each of the $V$ batches, add up the $V$ objective function values and find the value of $k$ that yielded the smallest final value.

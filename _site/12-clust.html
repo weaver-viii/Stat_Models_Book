@@ -112,6 +112,8 @@ $$\underset{M \in \mathcal{R}(n,k)}{\min} \|X - M\|_F^2 = \underset{\{m_1, ..., 
 
 <p>This hierarchical representation is particular nice since it generates <em>many</em> possible clusters: the result is a set of $n$ nested partitions containig anywhere from $1$ to $n$ clusters.</p>
 
+<h2>Minimum spanning treees (MST)</h2>
+
 <h2>Spectral clustering</h2>
 
 <p>Recall our discussion on PCA. Luckily for you, spectral clustering, though it might seem scary at first, is essentially just PCA (the &quot;spectrum&quot; of a matrix refers to its eigenvalues) combined with K-means. The method actualy is actually very prominantly used in network analysis. To make life easier below, we will begin with some network notation. A network (or &quot;graph&quot;), $G$ consists of a <em>vertex set</em> $V$ (for example, each vertex might correspond to a person or a gene) and an <em>edge set</em>, $E$, which contains the set of edges between pairs of vertices (for example, there might be an edge between individual $1$ and $7$ because they are best friends, but there might not be an edge between individual $1$ and $3$ if they severely dislike one another). We often use the notation
@@ -293,13 +295,37 @@ $$Z_i = \begin{cases} 1 &amp;\text{if } X_i \sim N(\mu_1, \sigma_1^2)\\ 0 &amp;\
 <li><p>$b_i$ to be a measure of how different observation $i$ is from other clusters (for example by calculating the smallest average distance of observation $i$ to other clusters).</p></li>
 </ul>
 
-<p>Then we can define a value</p>
+<p>Then we can define a value, called the <em>silhouette width</em> to be</p>
 
 <p>$$s_i = \frac{b_i - a_i}{\max(b_i, a_i)}$$</p>
 
 <p>which is a value between -1 and 1. In particular, $s_i$ is close to $1$ if observation $i$ is in a tight cluster and is far away from other clusters, and is close to $-1$ if it is in a loose cluster and is close to other clusters. Our goal is to find the value of $k$ that maximizes the mean of the $s_i$&#39;s.</p>
 
+<p>Since humans like to visualize things, we can use the Silhouette plot (plot the $s_i$&#39;s in decreasing order for each cluster), and note that we want to see many large $s_i$ values. Below, we plot a Silhouette for an example with two clusters and compare when we instead used three clusters.</p>
+
+<p><img src="silhouette2.png" alt="Silhouette with two clusters" style="width:300px;height:400px;"></p>
+
+<p><img src="silhouette3.png" alt="Silhouette with three clusters" style="width:300px;height:400px;"></p>
+
+<p>We see that the average silhouette width (the average $s_i$ values) remains approximately the same at 0.75 with two clusters and 0.74 with three clusters. However, since there appears to be no major difference in the quality of the clustering, since we encourage simplicity, we would prefer to use the two-cluster result.</p>
+
+<h4>Silhouette with the Enron data</h4>
+
+<p>Below, we present Silhouette plots of 3- and 4-clusters from the Enron email data.
+<img src="enron_silhouette.png" alt="Silhouette for the Enron data" style="width:700px;height:300px;"></p>
+
+<p>It is clear from the Silhouette plot that there is one extremely large cluster and the other clusters in both cases are very small and consist of only a few people (we note that these small clusters correspond to the lawyers in the company that we saw earlier in our discussion of PCA, for example employees 20 and 57). The average silhouette width is slightly smaller at 0.73 when we have 4 clusters than the average width of 0.77 when we have 3 clusters. In this situation, we must make a judgement call as to whether we prefer 3 or 4 clusters, however we concede that given the small difference it probably doesn&#39;t matter which one we choose.</p>
+
 <h3>Cross-validation</h3>
+
+<p>We have seen cross-validation several times already, but here we present another use for it. The idea is that we want to find the number of clusters for which we can minimize some objective function over different subsets of the data. The basic idea behind $V$-fold cross validation is to</p>
+
+<ol>
+<li><p>Divide the data into $V$ batches</p></li>
+<li><p>Given $k$, the number of clusters, remove the batches one by one and at each instance use the other $V-1$ batches to cluster by K-means</p></li>
+<li><p>Calcualte the K-means objective function value on the removed batch </p></li>
+<li><p>After performing the above steps on each of the $V$ batches, add up the $V$ objective function values and find the value of $k$ that yielded the smallest final value.</p></li>
+</ol>
 
 
 

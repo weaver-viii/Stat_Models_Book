@@ -44,8 +44,9 @@ Clustering
 * [Principal component analysis][pca]
 * [Clustering][clust]
 
-Linear models
+Prediction
 
+* [Prediction][pred]
 * [Linear Models][lin]
 
 
@@ -62,3 +63,4 @@ Linear models
 [norm]: 10-normalization.html
 [pca]: 11-pca.html
 [clust]: 12-clust.html
+[pred]: 13-pred.html
