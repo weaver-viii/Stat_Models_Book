@@ -6,8 +6,169 @@ output: html_document
 
 # Linear models
 
+Suppose that we were interested in predicting height using measurements of weight as a predictor. A simple way to do this might be to come up with an equation of the form
+$$\text{height} = a + b \times \text{weight}$$
+for some constants $a$ and $b$. You might be revolted at such a gross oversimplification of the relationship between height and weight: surely we all *know* that measurements height and weight don't fall on a perfectly straight line; there are all sorts of deviations! If you took the time to take a random sample of people, measure their heights and weights, and then plotted the height measurements against the weight measurements, you'll notice that there certainly are deviations from the straight line, but that the overall trend is linear. Thus, perhaps our model above will be more accurate if we add a term that can represent these deviations:
 
-### Regression towards the mean (the regression fallacy)
+$$\text{height} = a + b \times \text{weight} + \epsilon$$
+
+where $\epsilon$ is some random number that, on average is zero, but varies randomly about zero. A representation such as this is what we call a simple linear model: linear models can be used to describe a continuous response variable in terms of a linear combination of one or more predictor variables plus some noise. 
+
+We can start to get fancy by adding other variables such as gender and age, and even perhaps some interaction terms, but we might be getting ahead of ourselves. There is an important question to ask first. What are the values of $a$ and $b$? The answer is, unfortunately, that we can never know. If this model is to be believed, these values exist for an overall population which is most likely so large that we can never measure the height and weight of every individual in the population. We can, however, observe a sample from this population, and we can use these sample individuals to *estimate* the values of $a$ and $b$.
+
+To motivate some notation, suppose that we want to fit a linear model to a response $y$ and we have $p$ predictor variables, $x\_1, x\_2,..., x\_p$ then we can write this linear model as
+
+$$y\_i = \beta\_0 + \beta\_1x\_{1,i} + \beta\_2 x\_{2,i} + ... + \beta\_px\_{p,i} + \epsilon\_i$$
+
+where the subscript $i$ specifies that we are talking about the model for individual $i$ from our sample. Notice that every individual has the same values of $\beta\_1$, ..., $\beta\_p$ (since these don't depend on $i$), but different values for $y\_i, x\_{1, i}, x\_{2, i}, ..., x\_{p, i}, \epsilon\_i$. To frame this in the setting of the example above, each individual has different weights, ages, genders, etc but the same linear relationship exists between height and these predictor variables for each indiviudal.
+
+
+Suppose that we have a sample of $n$ individuals from a population. We can write the above model in **matrix form** as follows
+
+$$Y = X \beta + \epsilon$$
+
+where 
+
+$$Y =\left[ \begin{array}{c}y\_1\\\ y\_2 \\\   \vdots\\\   y\_n\end{array} \right]$$ 
+
+is a $n \times 1$ **response vector** for our $n$ individuals, 
+
+$$X =\left[ \begin{array}{cccc}
+x\_{1, 1} & x\_{1, 2} & \dots & x\_{1, p}\\\
+x\_{2, 1} & x\_{2, 2} & \dots & x\_{2, p}\\\
+ \vdots & \vdots & \ddots & \vdots \\\
+ x\_{n, 1} & x\_{n, 2} & \dots & x\_{n, p} \end{array}\right]$$
+
+
+is a $n \times p$ **design matrix** for our $n$ observations (the first row corresponds to the 4p$ variable measurements for individual 1, and so on),
+
+$$\beta = \left[ \begin{array}{c}\beta\_1\\\ \beta\_2 \\\   \vdots\\\   \beta\_p\end{array} \right]$$ 
+
+is our $p \times 1$ **coefficient vector**, and
+
+$$\epsilon = \left[ \begin{array}{c}\epsilon\_1\\\ \epsilon\_2 \\\   \vdots\\\   \epsilon\_n\end{array} \right]$$
+
+is our random $n \times 1$ **error vector**, whose entries specify the deviations of each indivuals response from the specified linear form. We typically assume that $E(\epsilon | X) = 0$ and $Var(\epsilon | X) = \sigma^2 I$, but we do not necessarily *need* normality. As a result of these assumptions, we have that the expected response is given by
+
+$$E(Y | X) = E(X \beta + \epsilon | X) = E(X \beta| X) + E(\epsilon | X) = X \beta$$
+
+The model, $Y = X \beta + \epsilon$ is commonly referred to as a *linear regression* model. However, recall that both $\beta$ and $\epsilon$ are unknown! If we knew $\beta$, we could make predictions of the form $\hat{Y} = X\beta$. Thus, to make a linear regression model useful, we need to *estimate* the paremteters, $\beta$. 
+
+
+#### Fitting a linear model: OLS
+
+
+How do we come up with an estimator $\hat{\beta}$ of the population coefficients $\beta$? In general, we want to find the value of $\hat{\beta}$ such that the predicted $Y$ values, $\hat{Y} = X \hat{\beta}$ are as close to the true values, $Y$, as possible. If we use the $L^2$ measure of "closeness", then we want to find the value of $\beta$ that minimizes the quadratic loss function:
+
+$$\hat{\beta} = \underset{\beta}{\text{arg}~\text{min}} \\| Y - X \beta\\|\_2^2 =  \underset{\beta}{\text{arg}~\text{min}} \sum\_{i = 1}^n (y_i - X\_i \beta)^2$$
+
+where $X\_i = [x\_{i,1}~ x\_{i, 2} ~... ~x\_{i, p}]$ is the $i$th row of the design matrix (the predictor vector for observation $i$). In the image below, this corresponds to finding the line such that the vertical distances between the observations and the line are minimized.
+
+<img src="ols.png" alt="OLS" style="width:500px;height:300px;">
+
+If our design matrix, $X$, is full rank, then the value of $\beta$ that minimizes the above expression can be written as 
+$$\hat{\beta}\_{OLS} = \left(X^TX\right)^{-1}X^T Y $$
+
+and this is what we call the **ordinary least squares** (OLS) estimator (because it is the minimizer of the *squared loss* function). If you have never encountered this calculation before, we encourage you to try it yourself (we promise it's not too hard - just set the derivative to zero and solve for $\beta$!). Note that if $X$ is not full rank, it is possible to calcualte a generalized inverse using singular value decomposition, however in this case, the solution (the minimizer) is not unique, as we will explore below. 
+
+
+If this is the first time you've seen linear regression, we encourage you to do some external research, because we will be assuming familiarity with general linear models from this point.
+
+
+#### Sources of randomness 
+
+Let's ask a question: is $\hat{\beta}$ random? What about $\beta$? To answer this question, let's ask, where does the randomness in the model come from? We usually consider $X$ to be fixed (but this is not a requirement), and $\beta$ is a *constant* (but unobservable) population variable. **The only source of randomness in the regression model $Y = X \beta + \epsilon$ is in the random error, $\epsilon$** ($Y$ is random only because it depends on $\epsilon$). Keep this in mind, because it is very important! So we ask again: is $\hat{\beta}$ random? Look again at the formula $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$. The $X$ matrices are fixed, but $Y$ is random (due to its dependency on $\epsilon$). Thus, the answer is: yes, $\hat{\beta}$ is random! In fact, if we were to draw another sample and re-estimate $\beta$ using the new $X^\*$ and $Y^\*$, then we would get a different value for our estimator $\hat{\beta}^\* = \left(X^{\*T}X^\*\right)^{-1}X^{\*T} Y^\*$ despite the fact thatboth $\hat{\beta}$ and $\hat{\beta}^\*$ estimates of $\beta$: they can both be considered as realizations of the same **random variable**, $\hat{\beta}$. 
+
+
+#### Using OLS for categorical data
+
+As a side note, although it is uncommon to use OLS to generate a linear model for two-class (binary) problems (a more modern approach is to use logistic regression, which we will discuss later), it remains a perfectly reasonable thing to do. If we had three-class or other multi-class problems, however, OLS is no longer reasonable, primarily because the labelling of these categorical classes as the numbers $1, 2, 3, 4, ...$ implies that class $1$ is more similar to class $2$ than it is to class $4$ (simply because the numbers $1$ and $2$ are closer together than the numbers $1$ and $4$), which is, in most cases, monstrously incorrect! Thus, typically when we consider linear regression, we are assuming that our response variable, $Y$, is *continuous*.
+
+
+#### The hat matrix: generating predictions
+
+In summary if we use OLS to estimate, $\beta$, the equation that we get (and thus the predictions from the linear model that we obtain) can be given by
+
+$$\hat{Y} = X\hat{\beta}_{OLS} = X\left(X^TX\right)^{-1}X^TY = HY$$
+
+where $H$ is called the **hat matrix** (a cute name that arose due to the fact that $H$ puts a "hat" on Y). To be more technical, the hat matrix, $H$, is a projection matrix onto the linear space spanned by the columns of $X$. Note that $X$ is a matrix, so try your hardest to resist the temptation to cancel the $X$'s in the above expression (we cannot rearrange matrices like we can scalars: $ X\left(X^TX\right)^{-1}X^T \neq  \left(X^TX\right)^{-1}X^TX = I$).
+
+
+#### Residuals
+
+
+We can rearrange the above equation as
+
+$$Y = X \hat{\beta}_{OLS} + e$$
+
+where $e = Y - X \hat{\beta}_{OLS}$ are called the **residuals**. The $i$th residual, $e\_i$, measures how far the predicted response $\hat{y}\_i$ is from the true value, $y\_i$. However, it is a common misconception that the formula presented above is the regression model. This merely represents a relationship that is always true: that the observed values are equal to the predicted values plus the residuals (the difference between the observed and predicted values). There is no description in the above formula of the sources of randomness assumed by the model. The linear regression model is the formula containing the explicit random error variable $\epsilon$, $Y = X \beta + \epsilon$.
+
+So given that we have a **fitted linear model**, $\hat{Y} = X \hat{\beta}$, how can we figure out how well the model is fitting the data? It makes sense to look at how close the fitted/predicted values are to the true values: that is, it makes sense to look at the residuals. In fact, a common measure of adequacy of model fit is given by the residual sum of squares (RSS):
+
+$$RSS = \sum\_{i=1}^n (y\_i - \hat{y}\_i)^2 = \sum\_{i=1}^n e\_i^2$$
+
+
+#### Leverage
+
+
+It is an unfortunate fact that OLS estimates of $\beta$ are extremely sensitive to outliers in the data. How does one measure the "outlierness" of a given data point? One common approach (outside of the imprecise art of eyeballing) is to use a quantity called **leverage**, an extremely useful concept from regression diagnostics and robust statistics. It turns out that for observation $i$, the $i$th diagonal element of the hat matrix, $H$, is its **leverage score**, $h\_i$. That is,
+$$h\_i = H\_{ii}$$
+
+Interestingly, **leverage doesn't measure "outlierness" in terms of the response, $Y$, it only measures extreme values in terms of our predictor space**. To see this, recall that $H =  X\left(X^TX\right)^{-1}X^T$.
+
+
+
+#### Least squares when $X$ is not full rank
+
+To obtain the estimate $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$, we needed to be able to invert the matrix $X^TX$. When $X$ is not full-rank (as is the case when we have more predictor variables than observations; a very common phenomenon in the modern world), this is not possible. Fortunately, however, it is still possible to generate a solution to the least squares problem (i.e. to obtain an estimate of $\beta$), although such a solution is no longer unique.  
+
+In the non-full-rank case, to obtain an estimate of $\beta$, instead of attempting to calcualte the uncalculatable inverse of $X^TX$, we instead calculate the pseudo-inverse of $X^TX$ using Singular Value Decomposition (SVD). 
+
+Let's begin with a useful definition:
+
+* A square matrix, $U$, is **unitary** if and only if $U^{-1} = U^T$.
+
+SVD tells us that we can decompose a matrix, $X$ into the following form
+
+$$X = U S V^T$$
+
+where
+
+* $U$ is a unitary $n \times n$ left-eigenvector matrix whose columns correspond to the eigenvectors of $XX^T$, 
+
+* $S$ is a diagonal $n \times p$ matrix whose non-zero eigenvalues are the square-root of the eigenvalues of $XX^T$ or $X^TX$, and 
+
+* $V$ is a unitary $p \times p$ right-eigenvector matrix whose columns correspond to the eigenvectors of $X^TX$.
+
+
+The **pseudo-inverse** of $X$ is then given by
+
+$$X^{-} = V \cdot 1/S \cdot U^T$$
+
+where $1/S$ is the diagonal matrix whose diagnoal entries are the reciprocal of the non-zero elements of $S$ (the zero-entries are set to zero).
+
+In the case of OLS, we can use $\left(X^TX\right)^{-}$ in place of the traditional inverse $\left(X^TX\right)^{-1}$ to find a particular (but non-unique) solution to the LS problem. The resultant fitted value is the projection of $Y$ onto the space spanned by the columns of $X$ and it is unique.
+
+
+<!---
+### Example: Enron data
+
+Recall the Enron data in which we have measurements of the number and recipients of emails sent between employees of the Enron coorporation. Recall that in our discussion of PCA, we were able to isolate legal employees from other types of employees. Perhaps we can come up with some features based on the email data that could predict whether or not a given employee was a lawyer or not. 
+
+We note that in this example, we have a binary response that can be represented by $y\_i \in \\{0, 1\\}$, where $y\_i = 0$ if employee $i$ was not from the legal department and $y\_i = 1$ if employee $i$ was from the legal department Although these days it is uncommon to use LS to generate a model for two-class (binary) problems (a more modern approach is to use logistic regression, which we will discuss later), it remains a perfectly reasonable thing to do. If we had three-class or other multi-class problems, however, LS is no longer reasonable, primarily because the labelling of these categorical classes as the numbers $1, 2, 3, 4, ...$ implies that class $1$ is more similar to class $2$ than it is to class $4$ (simply because the numbers $1$ and $2$ are closer together than the numbers $1$ and $4$), which is, in most cases, monstrously incorrect!
+
+Suppose that we only want to use 10 of the 154 predictor variables to train the model. How do we choose these 10 individuals? Random selection? These randomly selected 
+
+<img src="LS_enron.png" alt="QQ plot log-transformed gap data" style="width:500px;height:500px;">
+
+
+
+
+-->
+
+
+
+## Regression towards the mean (the regression fallacy)
 
 Consider students in a class where the assessment includes a midterm in the middle of the semester and a final exam at the end of the semester. If we look at the students who do really well in the midterm and then examine their final exam grade. With a very high probability, although these students will still do very well in the final exam, they will do worse in the final exam than in the midterm. Similarly, if we look at the students who did not do well in the midterm, then there is a very high chance that they will do better in the final exam than they did in the final exam.
 
