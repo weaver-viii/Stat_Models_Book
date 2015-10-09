@@ -64,7 +64,7 @@ $$\hat{\beta} = \underset{\beta}{\text{arg}~\text{min}} \\| Y - X \beta\\|\_2^2 
 
 where $X\_i = [x\_{i,1}~ x\_{i, 2} ~... ~x\_{i, p}]$ is the $i$th row of the design matrix (the predictor vector for observation $i$). In the image below, this corresponds to finding the line such that the vertical distances between the observations and the line are minimized.
 
-<img src="ols.png" alt="OLS" style="width:500px;height:300px;">
+<img src="OLS.png" alt="OLS" style="width:500px;height:300px;">
 
 If our design matrix, $X$, is full rank, then the value of $\beta$ that minimizes the above expression can be written as 
 $$\hat{\beta}\_{OLS} = \left(X^TX\right)^{-1}X^T Y $$
