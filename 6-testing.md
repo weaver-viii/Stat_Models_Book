@@ -33,5 +33,7 @@ In summary: these classical approaches can still be useful, but we need to worry
 
 ### Issues with p-values
 
+There is an asymmetry in terms of the null and alternative hypothesis. When we "accept" the null, that doesn't mean that we have *proved* the null! In fact, in most cases, we need to have quite a large departure from the null in order to reject it.
+
 
 

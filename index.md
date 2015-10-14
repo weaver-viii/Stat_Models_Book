@@ -3,7 +3,7 @@ layout: post
 title: Sample ebook
 ---
 
-This is an online version of *Statistical Models: Theory and Applications*, a book based on STAT 215A, a graduate-level applied statistics class at UC Berkeley taught by Prof. Bin Yu.
+This is an online version of *The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning*, a book based on STAT 215A, a graduate-level applied statistics class at UC Berkeley currently taught by Prof. Bin Yu.
 
 
 
@@ -32,6 +32,7 @@ General topics/methods that you should know about before moving on
 * [Hypothesis testing][test]
 * [Cross validation][cv]
 * [Normalization][norm]
+* [Model Validation][valid]
 
 
 Visualization
@@ -64,3 +65,4 @@ Prediction
 [pca]: 11-pca.html
 [clust]: 12-clust.html
 [pred]: 13-pred.html
+[valid]: 14-valid.html

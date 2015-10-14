@@ -44,6 +44,11 @@ Even in most realms of theoretical statistical optimization (perhaps with the ex
 
 
 
+### The accessability of statistics as a field
+
+With the emergence of data science as a field distinct from statistics, we should take this opportunity to ask why data science is not simply considered to be applied statistics. When people think of statistics, they think of t-tests, exhuberant probability distributions, and limiting results with assumptions that never hold in reality. One of the aims of this book is to change this perspective, with the key message that, more than anything else, statisticians are problem solvers. One of the key issues is that, as a field, we tend to get so caught up in the assumptions and techinical details of our theorems and models, sometimes to the extent that if we cannot prove what we are trying to show, we simply continue to make assumptions about the data until we can. If this is our attitude, then why don't we just *assume* that the conclusion is true? Further, these technical details tend to be so restrictive and incomprehensible that we push away anyone who might potentially want to use our results, simply because they don't understand it! Just because something has a lot of theorems, notation and fancy equations, that doesn't mean that it is "good". What use is the theory if no one outside of the niche field in which it was produced can understand it?
+
+
 
 ## Critical thinking
 
@@ -73,6 +78,8 @@ If you've ever been in an applied statistics class, the chances are high that it
 1. Repeat steps 1-2 with new methods until the semester ends at which point you will be tested on whether you know how to derive the specific method and use each method when prompted on simple examples.
 
 If this was not your experience, congratulations; perhaps you learned something useful. The problem with the disturbingly common approach described above (ignoring, for the moment, issues with p-values) is that it bears virtually no connection to what it is really like to analyze data (also this approach can be really, really boring). Firstly, in the real world, there is typically no one ti tell you what method to use and when. The general idea is to use what you know and then expand your search for a solution and learn new approaches. It is important to realize that within most classroom settings, you are deliberately given clean, doable problems. In reality, the data you encounter will most likely be messy, confusing and often the questions you ask may be impossible to answer using the data at hand. Statisticians need to be comfortable exploring data without guidelines; they need to gain "data wisdom".
+
+
 
 
 

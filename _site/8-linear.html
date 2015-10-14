@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>Statistical Models: Theory and Applications</title>
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
 
 <link rel="stylesheet" href="stylesheets/styles.css">
 <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -28,7 +28,7 @@ MathJax.Hub.Config({
 <body>
 <div class="wrapper">
 <header>
-<h1><a href="index.html">Statistical Models: Theory and Applications</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
 <p></p>
 
 <p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
@@ -67,7 +67,7 @@ for some constants $a$ and $b$. You might be revolted at such a gross oversimpli
 
 <p>$$y_i = \beta_0 + \beta_1x_{1,i} + \beta_2 x_{2,i} + ... + \beta_px_{p,i} + \epsilon_i$$</p>
 
-<p>where the subscript $i$ specifies that we are talking about the model for individual $i$ from our sample. Notice that every individual has the same values of $\beta_1$, ..., $\beta_p$ (since these don&#39;t depend on $i$), but different values for $y_i, x_{1, i}, x_{2, i}, ..., x_{p, i}, \epsilon_i$. To frame this in the setting of the example above, each individual has different weights, ages, genders, etc but the same linear relationship exists between height and these predictor variables for each indiviudal.</p>
+<p>where the subscript $i$ specifies that we are talking about the model for individual $i$ from our sample. Notice that every individual has the same values of $\beta_1$, ..., $\beta_p$ (since these don&#39;t depend on $i$), but different values for $y_i, x_{1, i}, x_{2, i}, ..., x_{p, i}, \epsilon_i$. To frame this in the setting of the example above, each individual has different weights, ages, genders, etc but the same linear relationship exists between height and these predictor variables for each individual. </p>
 
 <p>Suppose that we have a sample of $n$ individuals from a population. We can write the above model in <strong>matrix form</strong> as follows</p>
 
@@ -93,13 +93,20 @@ x_{2, 1} &amp; x_{2, 2} &amp; \dots &amp; x_{2, p}\\
 
 <p>$$\epsilon = \left[ \begin{array}{c}\epsilon_1\\ \epsilon_2 \\   \vdots\\   \epsilon_n\end{array} \right]$$</p>
 
-<p>is our random $n \times 1$ <strong>error vector</strong>, whose entries specify the deviations of each indivuals response from the specified linear form. We typically assume that $E(\epsilon | X) = 0$ and $Var(\epsilon | X) = \sigma^2 I$, but we do not necessarily <em>need</em> normality. As a result of these assumptions, we have that the expected response is given by</p>
+<p>is our random $n \times 1$ <strong>error vector</strong>, whose entries specify the deviations of each individuals response from the specified linear form. We typically assume that $E(\epsilon | X) = 0$ and $Var(\epsilon | X) = \sigma^2 I$, but we do not necessarily <em>need</em> normality. As a result of these assumptions, we have that the expected response is given by</p>
 
 <p>$$E(Y | X) = E(X \beta + \epsilon | X) = E(X \beta| X) + E(\epsilon | X) = X \beta$$</p>
 
-<p>The model, $Y = X \beta + \epsilon$ is commonly referred to as a <em>linear regression</em> model. However, recall that both $\beta$ and $\epsilon$ are unknown! If we knew $\beta$, we could make predictions of the form $\hat{Y} = X\beta$. Thus, to make a linear regression model useful, we need to <em>estimate</em> the paremteters, $\beta$. </p>
+<p>The model, $Y = X \beta + \epsilon$ is commonly referred to as a <em>linear regression</em> model. However, recall that both $\beta$ and $\epsilon$ are unknown! If we knew $\beta$, we could make predictions of the form $\hat{Y} = X\beta$. Thus, to make a linear regression model useful, we need to <em>estimate</em> the parameters, $\beta$. To recap, the primary assumptions underlying the linear regression model (beside from the obvious assumption of linearity) are</p>
 
-<h4>Fitting a linear model: OLS</h4>
+<ul>
+<li><p>The errors $\epsilon_i$ are independent and identically distributed (iid) with mean 0 and variance $\sigma^2$.</p></li>
+<li><p>If the $X$ are random, we assume that $\epsilon$ is independent of $X$.</p></li>
+</ul>
+
+<p>Note that nowhere have we explicitly assumed a Gaussian distribution for the errors!</p>
+
+<h3>Fitting a linear model using OLS</h3>
 
 <p>How do we come up with an estimator $\hat{\beta}$ of the population coefficients $\beta$? In general, we want to find the value of $\hat{\beta}$ such that the predicted $Y$ values, $\hat{Y} = X \hat{\beta}$ are as close to the true values, $Y$, as possible. If we use the $L^2$ measure of &quot;closeness&quot;, then we want to find the value of $\beta$ that minimizes the quadratic loss function:</p>
 
@@ -107,24 +114,20 @@ x_{2, 1} &amp; x_{2, 2} &amp; \dots &amp; x_{2, p}\\
 
 <p>where $X_i = [x_{i,1}~ x_{i, 2} ~... ~x_{i, p}]$ is the $i$th row of the design matrix (the predictor vector for observation $i$). In the image below, this corresponds to finding the line such that the vertical distances between the observations and the line are minimized.</p>
 
-<p><img src="ols.png" alt="OLS" style="width:500px;height:300px;"></p>
+<p><img src="OLS.png" alt="OLS" style="width:500px;height:300px;"></p>
 
 <p>If our design matrix, $X$, is full rank, then the value of $\beta$ that minimizes the above expression can be written as 
 $$\hat{\beta}_{OLS} = \left(X^TX\right)^{-1}X^T Y $$</p>
 
-<p>and this is what we call the <strong>ordinary least squares</strong> (OLS) estimator (because it is the minimizer of the <em>squared loss</em> function). If you have never encountered this calculation before, we encourage you to try it yourself (we promise it&#39;s not too hard - just set the derivative to zero and solve for $\beta$!). Note that if $X$ is not full rank, it is possible to calcualte a generalized inverse using singular value decomposition, however in this case, the solution (the minimizer) is not unique, as we will explore below. </p>
+<p>and this is what we call the <strong>ordinary least squares</strong> (OLS) estimator (because it is the minimizer of the <em>squared loss</em> function). If you have never encountered this calculation before, we encourage you to try it yourself (we promise it&#39;s not too hard - just set the derivative to zero and solve for $\beta$!). Note that if $X$ is not full rank, it is possible to calculate a generalized inverse using singular value decomposition, however in this case, the solution (the minimizer) is not unique, as we will explore below. </p>
 
 <p>If this is the first time you&#39;ve seen linear regression, we encourage you to do some external research, because we will be assuming familiarity with general linear models from this point.</p>
 
-<h4>Sources of randomness</h4>
+<h3>Sources of randomness</h3>
 
-<p>Let&#39;s ask a question: is $\hat{\beta}$ random? What about $\beta$? To answer this question, let&#39;s ask, where does the randomness in the model come from? We usually consider $X$ to be fixed (but this is not a requirement), and $\beta$ is a <em>constant</em> (but unobservable) population variable. <strong>The only source of randomness in the regression model $Y = X \beta + \epsilon$ is in the random error, $\epsilon$</strong> ($Y$ is random only because it depends on $\epsilon$). Keep this in mind, because it is very important! So we ask again: is $\hat{\beta}$ random? Look again at the formula $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$. The $X$ matrices are fixed, but $Y$ is random (due to its dependency on $\epsilon$). Thus, the answer is: yes, $\hat{\beta}$ is random! In fact, if we were to draw another sample and re-estimate $\beta$ using the new $X^*$ and $Y^*$, then we would get a different value for our estimator $\hat{\beta}^* = \left(X^{*T}X^*\right)^{-1}X^{*T} Y^*$ despite the fact thatboth $\hat{\beta}$ and $\hat{\beta}^*$ estimates of $\beta$: they can both be considered as realizations of the same <strong>random variable</strong>, $\hat{\beta}$. </p>
+<p>Let&#39;s ask a question: is $\hat{\beta}$ random? What about $\beta$? To answer this question, let&#39;s ask, where does the randomness in the model come from? We usually consider $X$ to be fixed (but this is not a requirement), and $\beta$ is a <em>constant</em> (but unobservable) population variable. <strong>The only source of randomness in the regression model $Y = X \beta + \epsilon$ is in the random error, $\epsilon$</strong> ($Y$ is random only because it depends on $\epsilon$). Keep this in mind, because it is very important! So we ask again: is $\hat{\beta}$ random? Look again at the formula $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$. The $X$ matrices are fixed, but $Y$ is random (due to its dependency on $\epsilon$). Thus, the answer is: yes, $\hat{\beta}$ is random! In fact, if we were to draw another sample and re-estimate $\beta$ using the new $X^*$ and $Y^*$, then we would get a different value for our estimator $\hat{\beta}^* = \left(X^{*T}X^*\right)^{-1}X^{*T} Y^*$ despite the fact that both $\hat{\beta}$ and $\hat{\beta}^*$ estimates of $\beta$: they can both be considered as realizations of the same <strong>random variable</strong>, $\hat{\beta}$. </p>
 
-<h4>Using OLS for categorical data</h4>
-
-<p>As a side note, although it is uncommon to use OLS to generate a linear model for two-class (binary) problems (a more modern approach is to use logistic regression, which we will discuss later), it remains a perfectly reasonable thing to do. If we had three-class or other multi-class problems, however, OLS is no longer reasonable, primarily because the labelling of these categorical classes as the numbers $1, 2, 3, 4, ...$ implies that class $1$ is more similar to class $2$ than it is to class $4$ (simply because the numbers $1$ and $2$ are closer together than the numbers $1$ and $4$), which is, in most cases, monstrously incorrect! Thus, typically when we consider linear regression, we are assuming that our response variable, $Y$, is <em>continuous</em>.</p>
-
-<h4>The hat matrix: generating predictions</h4>
+<h3>The hat matrix: generating predictions</h3>
 
 <p>In summary if we use OLS to estimate, $\beta$, the equation that we get (and thus the predictions from the linear model that we obtain) can be given by</p>
 
@@ -132,7 +135,7 @@ $$\hat{\beta}_{OLS} = \left(X^TX\right)^{-1}X^T Y $$</p>
 
 <p>where $H$ is called the <strong>hat matrix</strong> (a cute name that arose due to the fact that $H$ puts a &quot;hat&quot; on Y). To be more technical, the hat matrix, $H$, is a projection matrix onto the linear space spanned by the columns of $X$. Note that $X$ is a matrix, so try your hardest to resist the temptation to cancel the $X$&#39;s in the above expression (we cannot rearrange matrices like we can scalars: $ X\left(X^TX\right)^{-1}X^T \neq  \left(X^TX\right)^{-1}X^TX = I$).</p>
 
-<h4>Residuals</h4>
+<h3>Residuals</h3>
 
 <p>We can rearrange the above equation as</p>
 
@@ -144,18 +147,118 @@ $$\hat{\beta}_{OLS} = \left(X^TX\right)^{-1}X^T Y $$</p>
 
 <p>$$RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \sum_{i=1}^n e_i^2$$</p>
 
-<h4>Leverage</h4>
+<h3>Properties of the OLS estimator $\hat{\beta}$</h3>
+
+<p>Note that OLS was just one approach (in particular, minimizing the squared, or $L^2$, loss: $\sum_{i=1}^n(Y_i - X_i \beta)^2$) to estimating the coefficient vector, $\beta$. There are a number of alternative approaches such as the least absolute difference (LAD) which minimizes the $L^1$-loss $\sum_{i=1}^n|Y_i - X_i \beta|$. However, there are a number of properties that the OLS approach possesses that makes it particularly attractive as an estimator. Namely, the OLS estimator is unbiased and has an asymptotic Gaussian distribution. We will explore these properties below.</p>
+
+<h4>Unbiasedness</h4>
+
+<p>It is not hard to show that the OLS estimator, $\hat{\beta}_{OLS}$, is <em>unbiased</em>. That is, on average, over random samples from our population, our estimate, $\hat{\beta}_{OLS}$, will be equal to the &quot;true&quot; population value, $\beta$:</p>
+
+<p>\begin{aligned}
+E\left(\hat{\beta}_{OLS} \Big| X\right) &amp;= E\left( (X^TX)^{-1}X^TY \Big| X \right)\\
+&amp; = (X^TX)^{-1}X^T E(Y | X)\\
+&amp; = (X^TX)^{-1}X^T X\beta\\
+&amp; = \beta
+\end{aligned}</p>
+
+<h4>Variance</h4>
+
+<p>Recall that the only source of randomness in the linear model is the random error, $\epsilon$. In particular, we assumed that the $\epsilon_i$ were iid with variance $\sigma^2$. This implies that the variance-covariance matrix of the vector $\epsilon = (\epsilon_1, ..., \epsilon_n)$ is given by
+$$Cov(\epsilon | X) = \sigma^2 I _{n \times n} = \left[ \begin{array}{cccc} \sigma^2 &amp; 0 &amp; \dots &amp; 0\\
+0 &amp; \sigma^2 &amp; \dots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \dots &amp; \sigma^2 \end{array} \right]$$
+The variance-covariance matrix of the OLS estimator, $\hat{\beta}_{OLS}$, is given by:</p>
+
+<p>\begin{aligned}
+Cov\left( \hat{\beta}_{OLS} \Big| X \right) &amp; = Cov\left( (X^TX)^{-1}X^TY \Big| X \right)\\
+&amp; = (X^TX)^{-1}X^T ~Cov(Y | X)~ X(X^TX)^{-1}\\
+&amp; = (X^TX)^{-1}X^T ~Cov(X\beta + \epsilon | X)~ X(X^TX)^{-1}\\
+&amp; = (X^TX)^{-1}X^T ~Cov(\epsilon | X)~ X(X^TX)^{-1}\\
+&amp; = (X^TX)^{-1}X^T~\sigma^2 I_{n \times n}~X(X^TX)^{-1}\\
+&amp; = (X^TX)^{-1}\sigma^2
+\end{aligned}</p>
+
+<h5>Example:</h5>
+
+<p>For a simple example, suppose that we have a simple linear model $y_i = \beta_0 + \beta x_i + \epsilon_i$, then 
+$$X = [1 ~~~ x] = \left[ \begin{array}{cc} 1 &amp; x_1\\ 1 &amp; x_2 \\ \vdots &amp; \vdots \\ 1 &amp; x_n \end{array}\right]$$</p>
+
+<p>which implies that 
+$$(X^TX)^{-1} = \frac{1}{\sum_{i=1}^n x_i^2 - \left( \sum_{i=1}^n x_i\right)^2}\left[ \begin{array}{cc} \frac{1}{n} \sum_{i=1}^n x_i^2 &amp; - \bar{x}\\ - \bar{x} &amp; 1 \end{array} \right]$$</p>
+
+<p>so our estimate is given by</p>
+
+<p>$$\beta = (X^TX)^{-1}X^Ty = \left[\bar{y} - \frac{Cov(x, y)}{Var(x)} \bar{x}~,~~ \frac{Cov(x, y)}{Var(x)} \right].$$</p>
+
+<p>From here, it is easy to calculate the variance of $\beta_0$ and $\beta_1$:
+$$Var(\beta_0) = \sigma^2\frac{\frac{1}{n} \sum_{i=1}^n x_i^2}{\sum_{i=1}^n x_i^2 - \left( \sum_{i=1}^n x_i\right)^2},$$</p>
+
+<p>and</p>
+
+<p>$$Var(\beta_1) = \sigma^2\frac{1}{\sum_{i=1}^n x_i^2 - \left( \sum_{i=1}^n x_i\right)^2}.$$</p>
+
+<h4>Asymptotic normality</h4>
+
+<p>Since the OLS estimate of $\beta$ corresponds to the <em>maximum likelihood estimate</em>, theoretical results tell us that when we have a large sample size, the distribution of our estimator, $\hat{\beta}$ should be approximately Gaussian. What should the mean and variance of this distribution be? We found the mean and variance of $\hat{\beta}$ above, so our distributional result is</p>
+
+<p>$$\hat{\beta}_{OLS} \overset{n \rightarrow \infty}{\sim} N\left( \beta, \sigma^2 (X^TX)^{-1} \right)$$</p>
+
+<p>In fact this asymptotic result follows from the <strong>central limit theorem</strong> (CLT) which tells us that if we have a sequence of iid random variables, $X_1, ..., X_n$, drawn from <em>any distribution</em>, and if $E(X_i) = \mu$ and $Var(X_i) = \sigma^2 &lt; \infty$ for each $i$, then the distribution of the sample average, $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$, tends to a normal distribution. More specifically, the result tells us that </p>
+
+<p>$$ \bar{X} \overset{d}{\rightarrow} N\left(\mu, \frac{\sigma^2}{n}\right)$$</p>
+
+<p>which is quite remarkable, given that our sample of $X_i$&#39;s could have come from any distribution at all (we just need the samples to be iid)! Most existing proofs of this fact are fairly tedious and fail to lead to an improved sense of intuition. An outline of the more interesting and intuitive proofs are discussed in <a href="https://terrytao.wordpress.com/2010/01/05/254a-notes-2-the-central-limit-theorem/">an enlightening blog post</a> by Terence Tao.</p>
+
+<h4>Estimating $\sigma^2$</h4>
+
+<p>Note that the variance of $\hat{\beta}_{OLS} = \sigma^2 (X^TX)^{-1}$ depends on $\sigma^2$, the common variance of $\epsilon_i$. If we want to get an idea of how variable our estimate, $\hat{\beta}_{OLS}$ is, then it is important that we have some idea of what $\sigma^2$ is equal to. Unfortunately, we rarely do! Thus we need to estimate $\sigma^2$ somehow. As a first approach, perhaps we could estimate $\sigma^2$ by looking, not at the variance of $\epsilon_i$ (since these are unobserved), but rather at the variance of the resuls, $e_i$, which can be thought of as realizations of the error terms $\epsilon_i$ (in fact, they would be realizations of $\epsilon$ if the proposed linear model was the &quot;truth&quot;). Recall that</p>
+
+<p>\begin{aligned}
+e &amp;= Y - HY = (I - H)Y\\
+&amp; = (I- H)(X\beta + \epsilon)\\
+&amp; = (I - H) \epsilon
+\end{aligned}</p>
+
+<p>Then perhaps, since $\sigma^2 = Var(\epsilon_i) = E(\epsilon_i^2) \approx \frac{\sum_{i=1}^n e_i^2}{n}$, a reasonable estimate might be</p>
+
+<p>$$\hat{\sigma}^2 = \frac{\|e\|_2^2}{n} = \frac{\sum_{i=1}^n e_i^2}{n}$$</p>
+
+<p>This estimator, though not far from what we are searching for, turns out to be biased:</p>
+
+<p>\begin{aligned}
+E\left[ ||e||^2 \Big| X \right] &amp; = E \left[ ||(I - H) \epsilon||^2 \Big | X\right]\\
+&amp; = E\left[ \epsilon^T (I - H) \epsilon \Big| X\right] &amp;&amp; (I - H)^2 = I - H \text{ and } ||a||^2 = a^Ta\\
+&amp; = E \left[ tr(\epsilon^T(I - H) \epsilon )\Big| X \right] &amp;&amp; tr(a) = a \text{ for }a \in \mathbb{R} \\
+&amp; = E\left[ tr((I - H) \epsilon \epsilon^T) \Big| X \right] &amp;&amp; tr(AB) = tr(BA)\\
+&amp; = tr\left[ E\left((I - H) \epsilon \epsilon^T \Big| X \right)\right]\\
+&amp; = tr\left[(I - H) E\left(\epsilon \epsilon^T \Big| X \right)\right]\\
+&amp; = tr\left[(I - H) Cov( \epsilon) \right]\\
+&amp; = \sigma^2 tr(I - H)\\
+&amp; = \sigma^2 (n  -p) &amp;&amp;\text{(trace of a proj. matrix is its rank)}
+\end{aligned}</p>
+
+<p>Thus an unbiased estimate of $\sigma^2$ is given by</p>
+
+<p>$$\hat{\sigma}^2 = \frac{\sum_{i=1}^ne_i^2}{n-p}$$</p>
+
+<h3>Using OLS for categorical data</h3>
+
+<p>As a side note, although it is uncommon to use OLS to generate a linear model for two-class (binary) problems (a more modern approach is to use logistic regression, which we will discuss later), it remains a perfectly reasonable thing to do. If we had three-class or other multi-class problems, however, OLS is no longer reasonable, primarily because the labeling of these categorical classes as the numbers $1, 2, 3, 4, ...$ implies that class $1$ is more similar to class $2$ than it is to class $4$ (simply because the numbers $1$ and $2$ are closer together than the numbers $1$ and $4$), which is, in most cases, monstrously incorrect! Thus, typically when we consider linear regression, we are assuming that our response variable, $Y$, is <em>continuous</em>.</p>
+
+<h3>Leverage</h3>
 
 <p>It is an unfortunate fact that OLS estimates of $\beta$ are extremely sensitive to outliers in the data. How does one measure the &quot;outlierness&quot; of a given data point? One common approach (outside of the imprecise art of eyeballing) is to use a quantity called <strong>leverage</strong>, an extremely useful concept from regression diagnostics and robust statistics. It turns out that for observation $i$, the $i$th diagonal element of the hat matrix, $H$, is its <strong>leverage score</strong>, $h_i$. That is,
 $$h_i = H_{ii}$$</p>
 
 <p>Interestingly, <strong>leverage doesn&#39;t measure &quot;outlierness&quot; in terms of the response, $Y$, it only measures extreme values in terms of our predictor space</strong>. To see this, recall that $H =  X\left(X^TX\right)^{-1}X^T$.</p>
 
-<h4>Least squares when $X$ is not full rank</h4>
+<h3>Least squares when $X$ is not full rank</h3>
 
 <p>To obtain the estimate $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$, we needed to be able to invert the matrix $X^TX$. When $X$ is not full-rank (as is the case when we have more predictor variables than observations; a very common phenomenon in the modern world), this is not possible. Fortunately, however, it is still possible to generate a solution to the least squares problem (i.e. to obtain an estimate of $\beta$), although such a solution is no longer unique.  </p>
 
-<p>In the non-full-rank case, to obtain an estimate of $\beta$, instead of attempting to calcualte the uncalculatable inverse of $X^TX$, we instead calculate the pseudo-inverse of $X^TX$ using Singular Value Decomposition (SVD). </p>
+<p>In the non-full-rank case, to obtain an estimate of $\beta$, instead of attempting to calculate the uncalculatable inverse of $X^TX$, we instead calculate the pseudo-inverse of $X^TX$ using Singular Value Decomposition (SVD). </p>
 
 <p>Let&#39;s begin with a useful definition:</p>
 
@@ -179,7 +282,7 @@ $$h_i = H_{ii}$$</p>
 
 <p>$$X^{-} = V \cdot 1/S \cdot U^T$$</p>
 
-<p>where $1/S$ is the diagonal matrix whose diagnoal entries are the reciprocal of the non-zero elements of $S$ (the zero-entries are set to zero).</p>
+<p>where $1/S$ is the diagonal matrix whose diagonal entries are the reciprocal of the non-zero elements of $S$ (the zero-entries are set to zero).</p>
 
 <p>In the case of OLS, we can use $\left(X^TX\right)^{-}$ in place of the traditional inverse $\left(X^TX\right)^{-1}$ to find a particular (but non-unique) solution to the LS problem. The resultant fitted value is the projection of $Y$ onto the space spanned by the columns of $X$ and it is unique.</p>
 
@@ -199,11 +302,37 @@ Suppose that we only want to use 10 of the 154 predictor variables to train the 
 
 -->
 
+<h2>Using regression in Causal Inference</h2>
+
+<p>Recall our discussion on <a href="http://rlbarter.github.io/Stat_Models_Book/3-causal.html">causal inference</a>. In this section, we introduced the Neyman-Rubin model of potential outcomes where we have two possible outcomes: the outcome if subject $i$ is assigned to treatment, $Y_{i1}$, and the outcome if subject $i$ is assigned to control $Y_{i0}$. For any given subject, we can only observe <em>one</em> of these two outcomes, and we can write the response that we do observe as
+$$Y_i = ( 1- T_i) Y_{i0} + T_i Y_{i1}$$</p>
+
+<p>where $T_i$ is the treatment indicator (and is a <em>random variable</em>) whereby $T_i = 1$ is subject $i$ is assigned to treatment and $T_i = 0$ if subject $i$ is assigned to control. We are interested in estimating the causal effect:
+$$\frac{1}{N}\sum_{i=1}^N (Y_{i1} - Y_{i0})$$
+which is an unobservable quantity that we typically estimate by the observed average outcome difference between the treatment and control groups:
+$$\tau = \frac{1}{n_1} \sum_{i : T_i = 1} Y_i - \frac{1}{n_0} \sum_{i : T_i = 0} Y_i$$</p>
+
+<p>It turns out that we can very naturally relate causal effect and linear regression. Suppose that we fit a linear model to the outcome using treatment assignment as the sole predictor:</p>
+
+<p>$$Y_i = \beta_0 + \beta_1 T_i + \epsilon_i$$</p>
+
+<p>Then $\beta$ can be thought of as the treatment effect on the outcome, and we can estimate it using OLS as described above. It can be shown that this estimate of the treatment effect is more or less equivalent to the simple estimator of the sample average treatment effect (SATE) of the form:</p>
+
+<p>$$\tau = \frac{1}{n_1} \sum_{i : T_i = 1} Y_i - \frac{1}{n_0} \sum_{i : T_i = 0} Y_i$$</p>
+
+<p>It is common to &quot;adjust for covariates&quot; by adding them into the regression equation</p>
+
+<p>$$Y_i = \beta_0 + \beta_1 T_i + \beta_2 x_i +  \epsilon_i$$</p>
+
+<p>however, the only reason we should ever even be <em>tempted</em> to do this is if we believe that the covariate, $x$, is imbalanced between treatment and control in some way. This approach involving estimating the causal effect of the treatment by estimating $\beta_1$ using regression in which we adjust for covariates seems simple, and at first glance, very reasonable; in fact, this is the reason that this approach is so widely used (and misused!). There are however a huge number of critiques of this approach, primarily in the case of observational studies. One of the main issues is the assumption of <em>linearity</em>. If this assumption is unjustified, then our OLS estimates will be significantly worse than the simple difference in means SATE estimates! Moreover, if we adjust for covariates in our linear model, it is often the case that we will introduce extra bias into our estimate of treatment effect! For example, Berk et al. (2010) claim that &quot;Random assignment does not justify any form of regression with covariates. If regression adjustments are introduced nevertheless, there is likely to be bias in any estimates of treatment effects and badly biased standard errors&quot;. There are examples of adjustments for which this disparaging view of using regression to adjust for covariates is not justified (see, for an example, <a href="http://www.stat.berkeley.edu/%7Ewinston/agnostic.pdf">Lin (2010)</a>), but these models should still be used with caution.</p>
+
+<p>In general, the only reason we would want to use regression to estimate our causal effect is to adjust for covariates; if we did not feel that any of our covariates differed between the treatment and control group, then we might as well simply calculate the more general SATE estimator, $\tau$. If, however, we did feel concerned about covariate imbalance, then perhaps this adjusted regression is justified, however, there are a number of other approaches to consider: notable we might perform <em>matching</em> which involves comparing subjects in the treatment to comparable subjects in the control group (where two subjects are comparable if they have similar covariate measurements).</p>
+
 <h2>Regression towards the mean (the regression fallacy)</h2>
 
 <p>Consider students in a class where the assessment includes a midterm in the middle of the semester and a final exam at the end of the semester. If we look at the students who do really well in the midterm and then examine their final exam grade. With a very high probability, although these students will still do very well in the final exam, they will do worse in the final exam than in the midterm. Similarly, if we look at the students who did not do well in the midterm, then there is a very high chance that they will do better in the final exam than they did in the final exam.</p>
 
-<p>We can propose many plausable mechanisms for why this may happen: for example, the students who did very well in the midterm felt that they could relax and didn&#39;t study as hard for the final exam as they otherwise might have if they were dissapointed with their grade. Similarly, the students who performed poorly in the midterm were worried about their grade and studied very hard for the final exam with the end result that they did better on the final exam than they did on the midterm.</p>
+<p>We can propose many plausible mechanisms for why this may happen: for example, the students who did very well in the midterm felt that they could relax and didn&#39;t study as hard for the final exam as they otherwise might have if they were disappointing with their grade. Similarly, the students who performed poorly in the midterm were worried about their grade and studied very hard for the final exam with the end result that they did better on the final exam than they did on the midterm.</p>
 
 <p><img src="http://www.math.uah.edu/stat/sample/SampleRegressionMean.png" alt="QQ plot log-transformed gap data" style="width:300px;height:300px;"></p>
 

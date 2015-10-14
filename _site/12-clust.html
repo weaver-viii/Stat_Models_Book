@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>Statistical Models: Theory and Applications</title>
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
 
 <link rel="stylesheet" href="stylesheets/styles.css">
 <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -28,7 +28,7 @@ MathJax.Hub.Config({
 <body>
 <div class="wrapper">
 <header>
-<h1><a href="index.html">Statistical Models: Theory and Applications</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
 <p></p>
 
 <p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
