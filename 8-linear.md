@@ -73,18 +73,7 @@ where $X\_i = [x\_{i,1}~ x\_{i, 2} ~... ~x\_{i, p}]$ is the $i$th row of the des
 If our design matrix, $X$, is full rank, then the value of $\beta$ that minimizes the above expression can be written as 
 $$\hat{\beta}\_{OLS} = \left(X^TX\right)^{-1}X^T Y $$
 
-and this is what we call the **ordinary least squares** (OLS) estimator (because it is the minimizer of the *squared loss* function). If you have never encountered this calculation before, we encourage you to try it yourself (we promise it's not too hard - just set the derivative to zero and solve for $\beta$!). Note that if $X$ is not full rank, it is possible to calculate a generalized inverse using singular value decomposition, however in this case, the solution (the minimizer) is not unique, as we will explore below. 
-
-
-If this is the first time you've seen linear regression, we encourage you to do some external research, because we will be assuming familiarity with general linear models from this point.
-
-
-
-### Sources of randomness 
-
-Let's ask a question: is $\hat{\beta}$ random? What about $\beta$? To answer this question, let's ask, where does the randomness in the model come from? We usually consider $X$ to be fixed (but this is not a requirement), and $\beta$ is a *constant* (but unobservable) population variable. **The only source of randomness in the regression model $Y = X \beta + \epsilon$ is in the random error, $\epsilon$** ($Y$ is random only because it depends on $\epsilon$). Keep this in mind, because it is very important! So we ask again: is $\hat{\beta}$ random? Look again at the formula $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$. The $X$ matrices are fixed, but $Y$ is random (due to its dependency on $\epsilon$). Thus, the answer is: yes, $\hat{\beta}$ is random! In fact, if we were to draw another sample and re-estimate $\beta$ using the new $X^\*$ and $Y^\*$, then we would get a different value for our estimator $\hat{\beta}^\* = \left(X^{\*T}X^\*\right)^{-1}X^{\*T} Y^\*$ despite the fact that both $\hat{\beta}$ and $\hat{\beta}^\*$ estimates of $\beta$: they can both be considered as realizations of the same **random variable**, $\hat{\beta}$. 
-
-
+and this is what we call the **ordinary least squares** (OLS) estimator (because it is the minimizer of the *squared loss* function). Note that if $X$ is not full rank, it is possible to calculate a generalized inverse using singular value decomposition, however in this case, the solution (the minimizer) is not unique, as we will explore below. 
 
 ### The hat matrix: generating predictions
 
@@ -93,6 +82,35 @@ In summary if we use OLS to estimate, $\beta$, the equation that we get (and thu
 $$\hat{Y} = X\hat{\beta}_{OLS} = X\left(X^TX\right)^{-1}X^TY = HY$$
 
 where $H$ is called the **hat matrix** (a cute name that arose due to the fact that $H$ puts a "hat" on Y). To be more technical, the hat matrix, $H$, is a projection matrix onto the linear space spanned by the columns of $X$. Note that $X$ is a matrix, so try your hardest to resist the temptation to cancel the $X$'s in the above expression (we cannot rearrange matrices like we can scalars: $ X\left(X^TX\right)^{-1}X^T \neq  \left(X^TX\right)^{-1}X^TX = I$).
+
+
+A projection-based proof of the OLS formulation of $\hat{\beta}$ is as follows:
+
+The idea is to use the hat matrix, $H = X(X^TX)^{-1}X^T$, to show that $HY$ is the projection of $Y$ onto the column space of $X$. To begin, it is straightforward to check that 
+
+1. $H$ is idempotent: $HH = H$,
+
+1. and thus that $(I - H)H = 0$, and
+
+1. $X$ is invariant under $H$: $HXb = Xb$ for any $b \in \mathbb{R}^n$. 
+
+To show that $H$ is the projection matrix onto the column space of $X$, we can thus proceed as follows:
+
+\begin{aligned}
+\\|Y - X\beta\\|\_2^2 & = \\|Y - HY + HY - X\beta\\|\_2^2\\\
+& = \\|Y - HY + H(Y - X\beta)\\|\_2^2 && \text{from (3)}\\\
+& = \\|Y - HY \\|\_2^2 + \\|H(Y - X\beta)\\|\_2^2 + 2Y^T(I - H)H(Y-X\beta)\\\
+& = \\|Y - HY \\|\_2^2 + \\|H(Y - X\beta)\\|\_2^2 && \text{from (2)}\\\
+& \geq \\|Y - HY\\|\_2^2
+\end{aligned}
+
+This implies that the (L^2) distance from our response $Y$ to the "true" regression line, $X\beta$ is greater or equal to the distance from our response $Y$ to $HY$. Thus, since $HY = X(X^TX)^{-1}X^TY = X\hat{\beta}\_{OLS}$, it must follow that this fitted line is the best that we can do in terms of estimating the line $X\beta$ by minimizing the distance between the fitted line and our response $Y$.
+
+
+
+### Sources of randomness 
+
+Let's ask a question: is $\hat{\beta}$ random? What about $\beta$? To answer this question, let's ask, where does the randomness in the model come from? We usually consider $X$ to be fixed (but this is not a requirement), and $\beta$ is a *constant* (but unobservable) population variable. **The only source of randomness in the regression model $Y = X \beta + \epsilon$ is in the random error, $\epsilon$** ($Y$ is random only because it depends on $\epsilon$). Keep this in mind, because it is very important! So we ask again: is $\hat{\beta}$ random? Look again at the formula $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$. The $X$ matrices are fixed, but $Y$ is random (due to its dependency on $\epsilon$). Thus, the answer is: yes, $\hat{\beta}$ is random! In fact, if we were to draw another sample and re-estimate $\beta$ using the new $X^\*$ and $Y^\*$, then we would get a different value for our estimator $\hat{\beta}^\* = \left(X^{\*T}X^\*\right)^{-1}X^{\*T} Y^\*$ despite the fact that both $\hat{\beta}$ and $\hat{\beta}^\*$ estimates of $\beta$: they can both be considered as realizations of the same **random variable**, $\hat{\beta}$. 
 
 
 ### Residuals
@@ -153,15 +171,15 @@ $$(X^TX)^{-1} = \frac{1}{\sum\_{i=1}^n x\_i^2 - \left( \sum\_{i=1}^n x\_i\right)
 
 so our estimate is given by
 
-$$\beta = (X^TX)^{-1}X^Ty = \left[\bar{y} - \frac{Cov(x, y)}{Var(x)} \bar{x}~,~~ \frac{Cov(x, y)}{Var(x)} \right].$$
+$$\hat{\beta} = (X^TX)^{-1}X^Ty = \left[\bar{y} - \frac{Cov(x, y)}{Var(x)} \bar{x}~,~~ \frac{Cov(x, y)}{Var(x)} \right].$$
 
 
-From here, it is easy to calculate the variance of $\beta\_0$ and $\beta\_1$:
-$$Var(\beta\_0) = \sigma^2\frac{\frac{1}{n} \sum\_{i=1}^n x\_i^2}{\sum\_{i=1}^n x\_i^2 - \left( \sum\_{i=1}^n x\_i\right)^2},$$
+From here, it is easy to calculate the variance of $\hat{\beta}\_0$ and $\hat{\beta}\_1$:
+$$Var(\hat{\beta}\_0) = \sigma^2\frac{\frac{1}{n} \sum\_{i=1}^n x\_i^2}{\sum\_{i=1}^n x\_i^2 - \left( \sum\_{i=1}^n x\_i\right)^2},$$
 
 and
 
-$$Var(\beta\_1) = \sigma^2\frac{1}{\sum\_{i=1}^n x\_i^2 - \left( \sum\_{i=1}^n x\_i\right)^2}.$$
+$$Var(\hat{\beta}\_1) = \sigma^2\frac{1}{\sum\_{i=1}^n x\_i^2 - \left( \sum\_{i=1}^n x\_i\right)^2}.$$
 
 
 
@@ -182,7 +200,7 @@ which is quite remarkable, given that our sample of $X\_i$'s could have come fro
 
 #### Estimating $\sigma^2$
 
-Note that the variance of $\hat{\beta}_{OLS} = \sigma^2 (X^TX)^{-1}$ depends on $\sigma^2$, the common variance of $\epsilon\_i$. If we want to get an idea of how variable our estimate, $\hat{\beta}\_{OLS}$ is, then it is important that we have some idea of what $\sigma^2$ is equal to. Unfortunately, we rarely do! Thus we need to estimate $\sigma^2$ somehow. As a first approach, perhaps we could estimate $\sigma^2$ by looking, not at the variance of $\epsilon\_i$ (since these are unobserved), but rather at the variance of the resuls, $e\_i$, which can be thought of as realizations of the error terms $\epsilon\_i$ (in fact, they would be realizations of $\epsilon$ if the proposed linear model was the "truth"). Recall that
+Note that the variance of $\hat{\beta}_{OLS} = \sigma^2 (X^TX)^{-1}$ depends on $\sigma^2$, the common variance of $\epsilon\_i$. If we want to get an idea of how variable our estimate, $\hat{\beta}\_{OLS}$ is, then it is important that we have some idea of what $\sigma^2$ is equal to. Unfortunately, we rarely do! Thus we need to estimate $\sigma^2$ somehow. As a first approach, perhaps we could estimate $\sigma^2$ by looking, not at the variance of $\epsilon\_i$ (since these are unobserved), but rather at the variance of the residuals, $e\_i$, which can be thought of as realizations of the error terms $\epsilon\_i$ (in fact, they would be realizations of $\epsilon$ if the proposed linear model was the "truth"). Recall that
 
 \begin{aligned}
 e &= Y - HY = (I - H)Y\\\
@@ -202,9 +220,9 @@ E\left[ ||e||^2 \Big| X \right] & = E \left[ ||(I - H) \epsilon||^2 \Big | X\rig
 & = E\left[ \epsilon^T (I - H) \epsilon \Big| X\right] && (I - H)^2 = I - H \text{ and } ||a||^2 = a^Ta\\\
 & = E \left[ tr(\epsilon^T(I - H) \epsilon )\Big| X \right] && tr(a) = a \text{ for }a \in \mathbb{R} \\\
 & = E\left[ tr((I - H) \epsilon \epsilon^T) \Big| X \right] && tr(AB) = tr(BA)\\\
-& = tr\left[ E\left((I - H) \epsilon \epsilon^T \Big| X \right)\right]\\\
-& = tr\left[(I - H) E\left(\epsilon \epsilon^T \Big| X \right)\right]\\\
-& = tr\left[(I - H) Cov( \epsilon) \right]\\\
+& = tr\left( E\left[(I - H) \epsilon \epsilon^T \Big| X \right]\right)\\\
+& = tr\left((I - H) E\left[\epsilon \epsilon^T \Big| X \right]\right)\\\
+& = tr\left((I - H) Cov( \epsilon) \right)\\\
 & = \sigma^2 tr(I - H)\\\
 & = \sigma^2 (n  -p) &&\text{(trace of a proj. matrix is its rank)}
 \end{aligned}
@@ -212,6 +230,32 @@ E\left[ ||e||^2 \Big| X \right] & = E \left[ ||(I - H) \epsilon||^2 \Big | X\rig
 Thus an unbiased estimate of $\sigma^2$ is given by
 
 $$\hat{\sigma}^2 = \frac{\sum\_{i=1}^ne\_i^2}{n-p}$$
+
+
+### Interpreting the linear model
+
+Suppose that we have a linear model
+
+$$y = \beta\_1 x\_1 + \beta\_2 x\_2$$
+
+and that we have estimated $\hat{\beta}\_1 = 2$ and $\hat{\beta}\_2 = 2.1$. How would we identify which predictor, $x\_1$ or $x\_2$, is "important" or "suggestive" of the response $y$? A naive answer is to claim that $x\_2$ has more predictive power than $x\_1$ simply because it has a larger coefficient. Unfortunately, although this is the most common interpretation of the coefficients of a linear model, it is often incorrect. It is important to normalize the coefficients by the standard error of the estimator i.e. don't simply use the *size* of $\hat{\beta}$ alone to reflect the "importance" of a predictor. We should instead be examining the standardized values:
+$$\frac{\hat{\beta}\_j}{\hat{\text{SE}}{\hat{\beta}\_j}}$$
+
+To understand why, recall that these coefficient estimates, $\hat{\beta}\_1 = 2$ and $\hat{\beta}\_2 = 2.1$ are simply realizations of *random variables*, and these values do not capture the variability of these estimates of $\beta\_1$ and $\beta\_2$ at all. Thus although $\hat{\beta}\_1$ and $\hat{\beta}\_2$ are themselves not directly comparable, the standardized versions are.
+
+Suppose now that we again have $\hat{\beta}\_1 = 2$, and $\hat{\beta}\_2 = 2.2$, but that $\text{SE}(\hat{\beta}\_1) = 0.2$ and $\text{SE}(\hat{\beta}\_2) = 2.1$. Then 
+
+$$\frac{\hat{\beta}\_1}{\hat{\text{SE}}{\hat{\beta}\_1}} = 10 \hspace{1cm} \text{and} \hspace{1cm} \frac{\hat{\beta}\_2}{\hat{\text{SE}}{\hat{\beta}\_2}} = 2$$
+
+Thus, although the initial estimates were very similar, the standardized values provide very strong evidence that $\hat{\beta}\_1$ is significantly different from zero (and thus that $x\_1$ is informative), but we are somewhat less confident that $\hat{\beta}\_2$ is significantly different from zero (although we note that a standardized value $2$ is still reasonably far from zero, it is much less significant than $10$). In the case of this example, we would consider $x\_1$ to be more informative.
+
+Now we consider the case where $x\_1$ and $x\_2$ are highly correlated, with $\text{cor}(x\_1,x\_2) = 0.99$, say. In this instance, it is hard to say which predictor is more important than the other, and the coefficients of each in the linear model become less interpretable: it would make little sense to discuss the effect of a unit change of one variable while holding the other constant. Further the estimators themselves become unstable, with the OLS estimator of the coefficients of correlated variables having much higher standard error. In fact it might be a better idea to simply use one of $x\_1$ and $x\_2$ (rather than both) or to combine them into a super predictor $\tilde{x} = x\_1 + x\_2$ (assuming $Var(X\_1) = Var(X\_2) = 1$) and estimate its coefficient. In this case we would have
+$$ y = \alpha \tilde{x} + \epsilon$$
+and we want to estimate $\alpha$.
+
+The main point to take away from the above discussion is that it is never a good idea to simply look at each variable isoltation. We instead need to consider the whole picture, in particular, the way in which the variables interact with one another.
+
+
 
 
 ### Using OLS for categorical data
