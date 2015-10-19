@@ -36,7 +36,7 @@ Ideally our conclusions and methods should be robust to both the specific sample
 
 #### Robustness to sampling
 
-One approach to identifying whether or not your results are nonesense is to perturb the data (for example by resampling and using various different random subsets of the data) and re-evaluate your results or re-fit your model. If you are obtaining equivalent results on the purturbed data, then this means that the results were not dependent on the specific set of observations used (this is a good thing!). 
+One approach to identifying whether or not your results are nonsense is to perturb the data (for example by resampling and using various different random subsets of the data) and re-evaluate your results or re-fit your model. If you are obtaining equivalent results on the perturbed data, then this means that the results were not dependent on the specific set of observations used (this is a good thing!). 
 
 #### Robustness to assumptions
 

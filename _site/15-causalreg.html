@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h2>Using regression in Causal Inference</h2>
+
+<p>Recall our discussion on <a href="http://rlbarter.github.io/Stat_Models_Book/3-causal.html">causal inference</a>. In this section, we introduced the Neyman-Rubin model of potential outcomes where we have two possible outcomes: the outcome if subject $i$ is assigned to treatment, $Y_{i1}$, and the outcome if subject $i$ is assigned to control $Y_{i0}$. For any given subject, we can only observe <em>one</em> of these two outcomes, and we can write the response that we do observe as
+$$Y_i = ( 1- T_i) Y_{i0} + T_i Y_{i1}$$</p>
+
+<p>where $T_i$ is the treatment indicator (and is a <em>random variable</em>) whereby $T_i = 1$ is subject $i$ is assigned to treatment and $T_i = 0$ if subject $i$ is assigned to control. We are interested in estimating the causal effect:
+$$\frac{1}{N}\sum_{i=1}^N (Y_{i1} - Y_{i0})$$
+which is an unobservable quantity that we typically estimate by the observed average outcome difference between the treatment and control groups:
+$$\tau = \frac{1}{n_1} \sum_{i : T_i = 1} Y_i - \frac{1}{n_0} \sum_{i : T_i = 0} Y_i$$</p>
+
+<p>It turns out that we can very naturally relate causal effect and linear regression. Suppose that we fit a linear model to the outcome using treatment assignment as the sole predictor:</p>
+
+<p>$$Y_i = \beta_0 + \beta_1 T_i + \epsilon_i$$</p>
+
+<p>Then $\beta$ can be thought of as the treatment effect on the outcome, and we can estimate it using OLS as described above. It can be shown that this estimate of the treatment effect is more or less equivalent to the simple estimator of the sample average treatment effect (SATE) of the form:</p>
+
+<p>$$\tau = \frac{1}{n_1} \sum_{i : T_i = 1} Y_i - \frac{1}{n_0} \sum_{i : T_i = 0} Y_i$$</p>
+
+<p>It is common to &quot;adjust for covariates&quot; by adding them into the regression equation</p>
+
+<p>$$Y_i = \beta_0 + \beta_1 T_i + \beta_2 x_i +  \epsilon_i$$</p>
+
+<p>however, the only reason we should ever even be <em>tempted</em> to do this is if we believe that the covariate, $x$, is imbalanced between treatment and control in some way. This approach involving estimating the causal effect of the treatment by estimating $\beta_1$ using regression in which we adjust for covariates seems simple, and at first glance, very reasonable; in fact, this is the reason that this approach is so widely used (and misused!). There are however a huge number of critiques of this approach, primarily in the case of observational studies. One of the main issues is the assumption of <em>linearity</em>. If this assumption is unjustified, then our OLS estimates will be significantly worse than the simple difference in means SATE estimates! Moreover, if we adjust for covariates in our linear model, it is often the case that we will introduce extra bias into our estimate of treatment effect! For example, Berk et al. (2010) claim that &quot;Random assignment does not justify any form of regression with covariates. If regression adjustments are introduced nevertheless, there is likely to be bias in any estimates of treatment effects and badly biased standard errors&quot;. There are examples of adjustments for which this disparaging view of using regression to adjust for covariates is not justified (see, for an example, <a href="http://www.stat.berkeley.edu/%7Ewinston/agnostic.pdf">Lin (2010)</a>), but these models should still be used with caution.</p>
+
+<p>In general, the only reason we would want to use regression to estimate our causal effect is to adjust for covariates; if we did not feel that any of our covariates differed between the treatment and control group, then we might as well simply calculate the more general SATE estimator, $\tau$. If, however, we did feel concerned about covariate imbalance, then perhaps this adjusted regression is justified, however, there are a number of other approaches to consider: notable we might perform <em>matching</em> which involves comparing subjects in the treatment to comparable subjects in the control group (where two subjects are comparable if they have similar covariate measurements).</p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

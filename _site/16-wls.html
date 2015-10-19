@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>Weighted least squares</h1>
+
+<p>Imagine that we want to fit a linear model, $y = X\beta + \epsilon$, where the error terms $\epsilon$ are assumed to be independent of $X$, but we do not believe the usual assumption that each of the error terms $\epsilon_i$ are iid with $E(\epsilon | X) = 0$ and $Cov(\epsilon | X) = \sigma^2 I$. In particular, what if we have reason to believe that the common variance assumption is violated. That is, instead of each error term having the same variance (homoskedasticity), we allow the error terms to each have different variances (heteroskedasticity):</p>
+
+<p>$$Cov(\epsilon | X) = \Sigma = \left[ \begin{array}{cccc} \sigma_1^2 &amp; 0 &amp; \dots &amp; 0\\
+ 0 &amp; \sigma_{2}^2 &amp; \dots &amp; 0\\
+ \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+ 0 &amp; 0 &amp; \dots &amp; \sigma_{n}^2\end{array} \right]$$</p>
+
+<p>Note that the standard OLS assumption of homoskedasticity corresponds to the case where $\sigma_1^2 = \sigma_2^2 = \dots = \sigma_n^2 = \sigma^2$. In the variance-covariance matrix above, we still assume <em>independent</em> errors, but we no longer assume <em>identically distributed</em> errors.</p>
+
+<p>Heteroskedasticity is actually quite common, for example, suppose that we are interested in measuring household expenditure on meals as a function of household income. We might expect households of lower income to be more consistent in their food expenditure by always purchasing inexpensive food. Higher income households, on the other hand, will tend to be more variable in the amount they expend on their meals: on occasion, they will endulge in an extremely fancy and disturbingly expensive meal, while there will likely be other instances where they fall back on less expensive, yet more convenient meal options. Such an example of heteroskedasticity is demonstrated in the figure below, whereby we are observing household meal expenditure on a particular day versus income for 100 different households. We see that there is much less variability in the low-income households, whereas there is much more variability in the high-income households.</p>
+
+<p><img src = "heteroskedasticity.png" alt="heteroskedasticity" style="width:500px;height:400px;"></p>
+
+<p>Given that for data which exhibits heteroskedasticity we are violating the iid assumption for the errors, can we still use the standard OLS procedure to estimate $\beta$? Technically, yes, we can use whatever estimator we want, however, whenever we violate model assumptions the estimates that we obtain are much less trustworthy. The question is, in what way are the estimates less trustworthy? Are they biased? Do they have incorrect variance? Are they even estimating the right thing? We will explore answers to these questions in the case of heteroskedaasticity below. <FONT COLOR="red">Come back to these questions</FONT></p>
+
+<hr>
+
+<h3>Estimating $\beta$ in the presence of heteroskedasticity using weighted least squares</h3>
+
+<p>To estimate $\beta$ when we do not have constand variance accross observations, we can use a procedure called weighted least squares (WLS). The motivation behind WLS is that we have less confidence in observations which are extremely variable, and so we would like to reduce their influence on the least squares estimator by downweighting such observations. In the presence of heteroskedasticity, the standard OLS estimator would be dominated by these noisy observations. Our goal is to reduce the impact of the imbalance of noise in our data. The WLS estimator can thus be written as</p>
+
+<p>$$\hat{\beta}_{WLS} = \underset{\beta}{\text{argmin}} \sum_{i=1}^n \left(\frac{y_i - X_i^T \beta}{\sigma_i} \right)^2$$</p>
+
+<p>Note that the difference between $\hat{\beta}_{WLS}$ and $\hat{\beta}_{OLS}$ is the fact that we are dividing (weighting) by $\sigma_i$ in the WLS estimator. If we define W to be the matrix where</p>
+
+<p>$$W_{ij} = \begin{cases} \frac{1}{\sigma_i^2} &amp; \text{ if } i = j \\ 0 &amp;\text{otherwise} \end{cases}$$</p>
+
+<p>then it is not too hard to show that our WLS estimator $\hat{\beta}_{WLS}$ satisfies</p>
+
+<p>$$(X^TWX)\hat{\beta}_{WLS} = X^TWy$$</p>
+
+<p>(recall that our OLS estimator satisfied $(X^TX)\hat{\beta}_{OLS} = X^Ty$). So if $X^TWX$ is invertible, our estimator becomes</p>
+
+<p>$$\hat{\beta}_{WLS} = (X^TWX)^{-1}X^TWy$$</p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

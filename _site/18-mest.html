@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>Alternatives to least squares: least absolute deviation and M-estimation</h1>
+
+<p>Above we have focused primarily on estimating $\beta$ in the model $y = X\beta  + \epsilon$ by minimizing the squared loss function (or weighted versions of it):</p>
+
+<p>$$\hat{\beta}_{OLS} = \underset{\beta}{\text{argmin}} \sum_{i=1}^n (y_i - X_i^T \beta)^2$$</p>
+
+<p>but what&#39;s stopping us from using other types of loss functions? The answer is: absolutely nothing! This prompts us to define a general M-estimator (of which least squares is an example): an M-estimate of $\beta$ is any estimator that can be written in the following form</p>
+
+<p>$$\hat{\beta} = \underset{\beta}{\text{argmin}} \sum_{i=1}^n \rho(y_i - X_i^T \beta)$$</p>
+
+<p>where $\rho$ is any suitable function. For example</p>
+
+<ul>
+<li><p>$\rho(x) = x^2$ gives us the ordinary least squares estimator.</p></li>
+<li><p>$\rho(x) = \vert x \vert$ gives us the least absolute deviation (LAD) estimator.</p></li>
+</ul>
+
+<p>If in general, we consider the OLS estimate as a generalization of the mean, then the LAD estimate can be thought of as a generalization of the median. The LAD is in general much more robust to outliers than the OLS estimator, but it does not confer a closed-form solution (recall that the closed-form solution for the OLS estimator is $\hat{\beta}_{OLS} = (X^TX)^{-1}X^Ty$). So how can we use LAD to estimate $\beta$?</p>
+
+<p>We can use the fact that $\frac{\vert X \vert^2}{\vert X \vert} = \vert X \vert$ to iteratively compute the LAD estimate using weighted least squares. The procedure is as follows: </p>
+
+<ol>
+<li><p>Choose an initial estimate (typically we use the standard OLS estimator as our starting point) $$\hat{\beta}^{(0)} = \hat{\beta}_{OLS}$.$</p></li>
+<li><p>Given a current estimate, $\hat{\beta}^{(t)}$, calculate a new LAD estimate by solving
+\begin{aligned}
+\hat{\beta}^{(t + 1)} &amp; = \underset{\beta}{\text{argmin}} \sum_{i=1}^n \frac{\Big\vert y_i - X_i^T \beta \Big\vert^2}{\Big\vert y_i - X_i^T \beta^{(t)} \Big\vert}\\
+&amp; =  \underset{\beta}{\text{argmin}} \sum_{i=1}^n w_i(t) \Big\vert y_i - X_i^T \beta \Big\vert^2
+\end{aligned}
+where $w_i(t) = \frac{1}{\Big\vert y_i - X_i^T \hat{\beta}^{(t)} \Big\vert}.$</p></li>
+<li><p>Continue until convergence has been achieved.</p></li>
+</ol>
+
+<p>Note that this is equivalent to itertatively solving a WLS problem.</p>
+
+<p>Since the LAD estimator is more robust than the OLS estimator, shouldn&#39;t we just always use the LAD estimator? Can you think of an example of why not? Essentially this question boils down to whether or not the median is &quot;better&quot; than the mean as an estimator of a &quot;typical value&quot;. In reality, which provides a better estimator depends on what you mean by typical. As an example, consider reporting housing prices in a particular area. If the area consists of mostly moderately sized houses but there are a few extremely large houses, then these large houses will have a large influence on the mean house price (it will inflate it significantly and give a misleading sense of how nice the houses in the area are), but they will have little effect on the median house price. In this situation, since we are interested in the house of a &quot;typical&quot; house in the area, it makes sense to look at the median house price rather than the mean. On the other hand, if the outliers are informative in terms of the questions being asked, then you don&#39;t want to ignore them by using a robust estimator or deleting the observations! </p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

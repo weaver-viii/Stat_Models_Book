@@ -32,18 +32,18 @@ $$Y =\left[ \begin{array}{c}y\_1\\\ y\_2 \\\   \vdots\\\   y\_n\end{array} \righ
 
 is a $n \times 1$ **response vector** for our $n$ individuals, 
 
-$$X =\left[ \begin{array}{cccc}
-x\_{1, 1} & x\_{1, 2} & \dots & x\_{1, p}\\\
-x\_{2, 1} & x\_{2, 2} & \dots & x\_{2, p}\\\
- \vdots & \vdots & \ddots & \vdots \\\
- x\_{n, 1} & x\_{n, 2} & \dots & x\_{n, p} \end{array}\right]$$
+$$X =\left[ \begin{array}{ccccc}
+1 & x\_{1, 1} & x\_{1, 2} & \dots & x\_{1, p}\\\
+1 & x\_{2, 1} & x\_{2, 2} & \dots & x\_{2, p}\\\
+\vdots &  \vdots & \vdots & \ddots & \vdots \\\
+ 1 & x\_{n, 1} & x\_{n, 2} & \dots & x\_{n, p} \end{array}\right]$$
 
 
-is a $n \times p$ **design matrix** for our $n$ observations (the first row corresponds to the 4p$ variable measurements for individual 1, and so on),
+is a $n \times (p + 1)$ **design matrix** for our $n$ observations (the first column corresponds to the intercept term and the remaining columns correspond to the $p$ variable measurements for each individual),
 
-$$\beta = \left[ \begin{array}{c}\beta\_1\\\ \beta\_2 \\\   \vdots\\\   \beta\_p\end{array} \right]$$ 
+$$\beta = \left[ \begin{array}{c}\beta\_0 \\\ \beta\_1\\\ \beta\_2 \\\   \vdots\\\   \beta\_p\end{array} \right]$$ 
 
-is our $p \times 1$ **coefficient vector**, and
+is our $(p \times 1) \times 1$ **coefficient vector**, and
 
 $$\epsilon = \left[ \begin{array}{c}\epsilon\_1\\\ \epsilon\_2 \\\   \vdots\\\   \epsilon\_n\end{array} \right]$$
 
@@ -59,6 +59,8 @@ The model, $Y = X \beta + \epsilon$ is commonly referred to as a *linear regress
 
 Note that nowhere have we explicitly assumed a Gaussian distribution for the errors!
 
+--------
+
 ### Fitting a linear model using OLS
 
 
@@ -66,7 +68,7 @@ How do we come up with an estimator $\hat{\beta}$ of the population coefficients
 
 $$\hat{\beta} = \underset{\beta}{\text{arg}~\text{min}} \\| Y - X \beta\\|\_2^2 =  \underset{\beta}{\text{arg}~\text{min}} \sum\_{i = 1}^n (y_i - X\_i \beta)^2$$
 
-where $X\_i = [x\_{i,1}~ x\_{i, 2} ~... ~x\_{i, p}]$ is the $i$th row of the design matrix (the predictor vector for observation $i$). In the image below, this corresponds to finding the line such that the vertical distances between the observations and the line are minimized.
+where $X\_i = [1 ~ x\_{i,1}~ x\_{i, 2} ~... ~x\_{i, p}]$ is the $i$th row of the design matrix (the predictor vector for observation $i$). In the image below, this corresponds to finding the line such that the vertical distances between the observations and the line are minimized.
 
 <img src="OLS.png" alt="OLS" style="width:500px;height:300px;">
 
@@ -74,6 +76,9 @@ If our design matrix, $X$, is full rank, then the value of $\beta$ that minimize
 $$\hat{\beta}\_{OLS} = \left(X^TX\right)^{-1}X^T Y $$
 
 and this is what we call the **ordinary least squares** (OLS) estimator (because it is the minimizer of the *squared loss* function). Note that if $X$ is not full rank, it is possible to calculate a generalized inverse using singular value decomposition, however in this case, the solution (the minimizer) is not unique, as we will explore below. 
+
+
+------
 
 ### The hat matrix: generating predictions
 
@@ -106,12 +111,13 @@ To show that $H$ is the projection matrix onto the column space of $X$, we can t
 
 This implies that the (L^2) distance from our response $Y$ to the "true" regression line, $X\beta$ is greater or equal to the distance from our response $Y$ to $HY$. Thus, since $HY = X(X^TX)^{-1}X^TY = X\hat{\beta}\_{OLS}$, it must follow that this fitted line is the best that we can do in terms of estimating the line $X\beta$ by minimizing the distance between the fitted line and our response $Y$.
 
-
+-----------
 
 ### Sources of randomness 
 
 Let's ask a question: is $\hat{\beta}$ random? What about $\beta$? To answer this question, let's ask, where does the randomness in the model come from? We usually consider $X$ to be fixed (but this is not a requirement), and $\beta$ is a *constant* (but unobservable) population variable. **The only source of randomness in the regression model $Y = X \beta + \epsilon$ is in the random error, $\epsilon$** ($Y$ is random only because it depends on $\epsilon$). Keep this in mind, because it is very important! So we ask again: is $\hat{\beta}$ random? Look again at the formula $\hat{\beta} = \left(X^TX\right)^{-1}X^T Y$. The $X$ matrices are fixed, but $Y$ is random (due to its dependency on $\epsilon$). Thus, the answer is: yes, $\hat{\beta}$ is random! In fact, if we were to draw another sample and re-estimate $\beta$ using the new $X^\*$ and $Y^\*$, then we would get a different value for our estimator $\hat{\beta}^\* = \left(X^{\*T}X^\*\right)^{-1}X^{\*T} Y^\*$ despite the fact that both $\hat{\beta}$ and $\hat{\beta}^\*$ estimates of $\beta$: they can both be considered as realizations of the same **random variable**, $\hat{\beta}$. 
 
+-------
 
 ### Residuals
 
@@ -122,14 +128,46 @@ $$Y = X \hat{\beta}_{OLS} + e$$
 
 where $e = Y - X \hat{\beta}_{OLS}$ are called the **residuals**. The $i$th residual, $e\_i$, measures how far the predicted response $\hat{y}\_i$ is from the true value, $y\_i$. However, it is a common misconception that the formula presented above is the regression model. This merely represents a relationship that is always true: that the observed values are equal to the predicted values plus the residuals (the difference between the observed and predicted values). There is no description in the above formula of the sources of randomness assumed by the model. The linear regression model is the formula containing the explicit random error variable $\epsilon$, $Y = X \beta + \epsilon$.
 
-So given that we have a **fitted linear model**, $\hat{Y} = X \hat{\beta}$, how can we figure out how well the model is fitting the data? It makes sense to look at how close the fitted/predicted values are to the true values: that is, it makes sense to look at the residuals. In fact, a common measure of adequacy of model fit is given by the residual sum of squares (RSS):
+It is not hard to show that the vector of residuals, $e$, is orthogonal to $X$:
+
+\begin{aligned}
+X^Te &= X^T(y - X\hat{\beta}) \\\
+& = X^T(y - X(X^TX)^{-1}X^Ty)\\\
+& = X^Ty - X^TX(X^TX)^{-1}X^Ty\\\
+& = X^Ty - X^Ty\\\
+&= 0
+\end{aligned}
+
+moreover, this implies that the residuals always sum equal to zero *whenever the model has an intercept term*. This is because the if the model has an intercept term, then the first column of $X$ is simply a column of $1$'s, and the orthogonality of $X$ and $e$ implies that
+
+$$\sum\_{i=1}^n e\_i = 0$$
+
+(if you're not sure where this came from, expand the matrix multiplication $X^Te$, and it should be clear).
+
+
+Next, given that we have a **fitted linear model**, $\hat{Y} = X \hat{\beta}$, how can we figure out how well the model is fitting the data? It makes sense to look at how close the fitted/predicted values are to the true values: that is, it makes sense to look at the residuals. In fact, a common measure of adequacy of model fit is given by the residual sum of squares (RSS):
 
 $$RSS = \sum\_{i=1}^n (y\_i - \hat{y}\_i)^2 = \sum\_{i=1}^n e\_i^2$$
 
 
+However, looking at the $RSS$, we only get an overall view of how close the responses predicted by the model are to the true responses. Looking at the $RSS$ (or an $R^2$ value) and claiming that the model fits well is the equivalent of claiming to understand a dataset because we have looked at some summary statistics such as the mean of each variable. Clearly there is a lot more that we could consider! One such way is to assess the distribution of the residuals, usually though a plot of the residuals $e\_i = y\_i - x\_i^T \hat{\beta}$ versus the fitted values $\hat{y}\_i = x\_i^T\hat{\beta}$ (although we could alternatively plot the residuals versus some other value such as time or a variable in the data).  In general, we hope to observe that the residuals are randomly scattered about the line $e = 0$, such as in the figure below.
+
+<img src="residuals.png" alt = "residuals" style="width:500px;height:400px;">
+
+
+
+On the other hand, patterns in the plot that do not follow this random scattering pattern are typically indicative of regions in the data where the model doesn't work well, or over-fits. For example, panel (a) in the figure below displays an example in which the variance of the residuals is much larger for large values of the fitted values. Such a residual plot can be used to identify heteroskedasticity (i.e. that our assumption of equal variance for all of our error terms was incorrect). In this case, we might decide that our original model was incorrect, and we are better off estimating $\beta$ using [generalized least squares](http://rlbarter.github.io/Stat_Models_Book/16-gls.html). The residuals in panel (b), however, exhibit extremely small variation, indicating that the model may be overfitting the data and thus is unlikely to work well on external datasets. One thing to keep in mind is the importance of the scale of the axis. In particular, if we zoomed in on the residual plot in panel (b), we would see an image resembling the randomly scattered residuals in the figure above. The interpretation of the plot depends on the scale used, so it is vital to use a scale appropriate to the data.
+
+<img src="badresiduals.png" alt = "residuals" style="width:500px;height:300px;">
+
+Residual plots can be used to identify places where the model does not work well or over-fits. In particular, if the residuals appear to be randomly scattered about zero for a particular range of fitted values, but appear non-random for a different range of fitted values, we might conclude that the model is works well over the first range but not on the second.
+
+
+--------
+
 ### Properties of the OLS estimator $\hat{\beta}$
 
-Note that OLS was just one approach (in particular, minimizing the squared, or $L^2$, loss: $\sum\_{i=1}^n(Y\_i - X\_i \beta)^2$) to estimating the coefficient vector, $\beta$. There are a number of alternative approaches such as the least absolute difference (LAD) which minimizes the $L^1$-loss $\sum\_{i=1}^n|Y\_i - X\_i \beta|$. However, there are a number of properties that the OLS approach possesses that makes it particularly attractive as an estimator. Namely, the OLS estimator is unbiased and has an asymptotic Gaussian distribution. We will explore these properties below.
+Note that OLS was just one approach (in particular, minimizing the squared, or $L^2$, loss: $\sum\_{i=1}^n(Y\_i - X\_i \beta)^2$) to estimating the coefficient vector, $\beta$. There are a number of alternative approaches such as the least absolute difference (LAD) which minimizes the $L^1$-loss $\sum\_{i=1}^n|Y\_i - X\_i \beta|$ (we will discuss alternatives later). However, there are a number of properties that the OLS approach possesses that makes it particularly attractive as an estimator. Namely, the OLS estimator is unbiased and has an asymptotic Gaussian distribution. We will explore these properties below.
 
 
 #### Unbiasedness
@@ -231,6 +269,7 @@ Thus an unbiased estimate of $\sigma^2$ is given by
 
 $$\hat{\sigma}^2 = \frac{\sum\_{i=1}^ne\_i^2}{n-p}$$
 
+--------
 
 ### Interpreting the linear model
 
@@ -257,12 +296,13 @@ The main point to take away from the above discussion is that it is never a good
 
 
 
+-------
 
 ### Using OLS for categorical data
 
 As a side note, although it is uncommon to use OLS to generate a linear model for two-class (binary) problems (a more modern approach is to use logistic regression, which we will discuss later), it remains a perfectly reasonable thing to do. If we had three-class or other multi-class problems, however, OLS is no longer reasonable, primarily because the labeling of these categorical classes as the numbers $1, 2, 3, 4, ...$ implies that class $1$ is more similar to class $2$ than it is to class $4$ (simply because the numbers $1$ and $2$ are closer together than the numbers $1$ and $4$), which is, in most cases, monstrously incorrect! Thus, typically when we consider linear regression, we are assuming that our response variable, $Y$, is *continuous*.
 
-
+-------
 
 ### Leverage
 
@@ -273,6 +313,8 @@ $$h\_i = H\_{ii}$$
 Interestingly, **leverage doesn't measure "outlierness" in terms of the response, $Y$, it only measures extreme values in terms of our predictor space**. To see this, recall that $H =  X\left(X^TX\right)^{-1}X^T$.
 
 
+
+------
 
 ### Least squares when $X$ is not full rank
 
@@ -323,40 +365,8 @@ Suppose that we only want to use 10 of the 154 predictor variables to train the 
 -->
 
 
-## Using regression in Causal Inference
 
-Recall our discussion on [causal inference](http://rlbarter.github.io/Stat_Models_Book/3-causal.html). In this section, we introduced the Neyman-Rubin model of potential outcomes where we have two possible outcomes: the outcome if subject $i$ is assigned to treatment, $Y\_{i1}$, and the outcome if subject $i$ is assigned to control $Y\_{i0}$. For any given subject, we can only observe *one* of these two outcomes, and we can write the response that we do observe as
-$$Y\_i = ( 1- T\_i) Y\_{i0} + T\_i Y\_{i1}$$
-
-where $T\_i$ is the treatment indicator (and is a *random variable*) whereby $T\_i = 1$ is subject $i$ is assigned to treatment and $T\_i = 0$ if subject $i$ is assigned to control. We are interested in estimating the causal effect:
-$$\frac{1}{N}\sum\_{i=1}^N (Y\_{i1} - Y\_{i0})$$
-which is an unobservable quantity that we typically estimate by the observed average outcome difference between the treatment and control groups:
-$$\tau = \frac{1}{n\_1} \sum\_{i : T\_i = 1} Y\_i - \frac{1}{n\_0} \sum\_{i : T\_i = 0} Y\_i$$
-
-It turns out that we can very naturally relate causal effect and linear regression. Suppose that we fit a linear model to the outcome using treatment assignment as the sole predictor:
-
-$$Y\_i = \beta\_0 + \beta\_1 T\_i + \epsilon\_i$$
-
-Then $\beta$ can be thought of as the treatment effect on the outcome, and we can estimate it using OLS as described above. It can be shown that this estimate of the treatment effect is more or less equivalent to the simple estimator of the sample average treatment effect (SATE) of the form:
-
-$$\tau = \frac{1}{n\_1} \sum\_{i : T\_i = 1} Y\_i - \frac{1}{n\_0} \sum\_{i : T\_i = 0} Y\_i$$
-
-It is common to "adjust for covariates" by adding them into the regression equation
-
-$$Y\_i = \beta\_0 + \beta\_1 T\_i + \beta\_2 x\_i +  \epsilon\_i$$
-
-however, the only reason we should ever even be *tempted* to do this is if we believe that the covariate, $x$, is imbalanced between treatment and control in some way. This approach involving estimating the causal effect of the treatment by estimating $\beta\_1$ using regression in which we adjust for covariates seems simple, and at first glance, very reasonable; in fact, this is the reason that this approach is so widely used (and misused!). There are however a huge number of critiques of this approach, primarily in the case of observational studies. One of the main issues is the assumption of *linearity*. If this assumption is unjustified, then our OLS estimates will be significantly worse than the simple difference in means SATE estimates! Moreover, if we adjust for covariates in our linear model, it is often the case that we will introduce extra bias into our estimate of treatment effect! For example, Berk et al. (2010) claim that "Random assignment does not justify any form of regression with covariates. If regression adjustments are introduced nevertheless, there is likely to be bias in any estimates of treatment effects and badly biased standard errors". There are examples of adjustments for which this disparaging view of using regression to adjust for covariates is not justified (see, for an example, [Lin (2010)](http://www.stat.berkeley.edu/~winston/agnostic.pdf)), but these models should still be used with caution.
-
-In general, the only reason we would want to use regression to estimate our causal effect is to adjust for covariates; if we did not feel that any of our covariates differed between the treatment and control group, then we might as well simply calculate the more general SATE estimator, $\tau$. If, however, we did feel concerned about covariate imbalance, then perhaps this adjusted regression is justified, however, there are a number of other approaches to consider: notable we might perform *matching* which involves comparing subjects in the treatment to comparable subjects in the control group (where two subjects are comparable if they have similar covariate measurements).
-
-
-
-
-
-
-
-
-
+--------
 
 ## Regression towards the mean (the regression fallacy)
 
@@ -371,15 +381,6 @@ We can propose many plausible mechanisms for why this may happen: for example, t
 For example, we tend to experience "football shaped" scatterplots, such as that presented above. We see that all of the points are clustered around the mean (the blue regression line), but the observations which are extreme in both axes tend to be closer to the regression line.
 
 It is important not to confuse a difference in the test scores with regression to the mean.
-
-
-## Regularization
-
-
-## Lasso
-
-The Least Absolute Shrinkage and Selection Operator (LASSO) was introduced by Robert Tibshirani in 1996
-
 
 
 

@@ -32,7 +32,7 @@ General topics/methods that you should know about before moving on
 * [Hypothesis testing][test]
 * [Cross validation][cv]
 * [Normalization][norm]
-* [Model Validation][valid]
+* [Model validation][valid]
 
 
 Visualization
@@ -48,7 +48,14 @@ Clustering
 Prediction
 
 * [Prediction][pred]
-* [Linear Models][lin]
+
+Regression
+
+* [Linear models][lin]
+* [Regression in causal inference][causalreg]
+* [Generalized least squares][gls]
+* [The challenger O-ring failure example][oring]
+* [Alternatives to least squares][mest]
 
 
 [intro]: 0-introduction.html 
@@ -66,3 +73,8 @@ Prediction
 [clust]: 12-clust.html
 [pred]: 13-pred.html
 [valid]: 14-valid.html
+[causalreg]: 15-causalreg.html
+[gls]: 16-gls.html
+[oring]: 17-oring.html
+[mest]: 18-mest.html
+
