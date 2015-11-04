@@ -150,7 +150,7 @@ Next, given that we have a **fitted linear model**, $\hat{Y} = X \hat{\beta}$, h
 $$RSS = \sum\_{i=1}^n (y\_i - \hat{y}\_i)^2 = \sum\_{i=1}^n e\_i^2$$
 
 
-However, looking at the $RSS$, we only get an overall view of how cose the responses predicted by the model are to the true responses. Looking at the $RSS$ (or an $R^2$ value) and claiming that the model fits well is the equivalent of claiming to understand a dataset because we have looked at some summary statistics such as the mean of each variable. Clearly there is a lot more that we could consider! One such way is to assess the distirbution of the residuals, usually though a plot of the residuals $e\_i = y\_i - x\_i^T \hat{\beta}$ versus the fitted values $\hat{y}\_i = x\_i^T\hat{\beta}$ (although we could alternatively plot the residuals versus some other value such as time or a variable in the data).  In general, we hope to observe that the residuals are randomly scattered about the line $e = 0$, such as in the figure below.
+However, looking at the $RSS$, we only get an overall view of how close the responses predicted by the model are to the true responses. Looking at the $RSS$ (or an $R^2$ value) and claiming that the model fits well is the equivalent of claiming to understand a dataset because we have looked at some summary statistics such as the mean of each variable. Clearly there is a lot more that we could consider! One such way is to assess the distribution of the residuals, usually though a plot of the residuals $e\_i = y\_i - x\_i^T \hat{\beta}$ versus the fitted values $\hat{y}\_i = x\_i^T\hat{\beta}$ (although we could alternatively plot the residuals versus some other value such as time or a variable in the data).  In general, we hope to observe that the residuals are randomly scattered about the line $e = 0$, such as in the figure below.
 
 <img src="residuals.png" alt = "residuals" style="width:500px;height:400px;">
 
@@ -160,7 +160,7 @@ On the other hand, patterns in the plot that do not follow this random scatterin
 
 <img src="badresiduals.png" alt = "residuals" style="width:500px;height:300px;">
 
-Residual plots can be used to identify places where the model doesn’t work well or over-fits. In particular, if the residuals appear to be randomly scattered about zero for a particular range of fitted values, but appear non-random for a different range of fitted values, we might conclude that the model is works well over the first range but not on the second.
+Residual plots can be used to identify places where the model does not work well or over-fits. In particular, if the residuals appear to be randomly scattered about zero for a particular range of fitted values, but appear non-random for a different range of fitted values, we might conclude that the model is works well over the first range but not on the second.
 
 
 --------

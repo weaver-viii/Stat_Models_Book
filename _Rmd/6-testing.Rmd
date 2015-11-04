@@ -35,7 +35,7 @@ where $T\_i = 1$ if observation $i$ is in the treatment group and $T\_i = 0$ if 
 
 ### Normal assumptions
 
-When we don't have normal data (as is typically the case), we typically use the central limit theorem to justify using a t-test. The central limit theorem tells us that is we have $n$ independent and identically distributed (IID) samples $X\_1, ..., X\_n$ (where each $X\_i$ has expected value $\mu$ and standard deviation $\sigma$), then distribution of the mean (or average), $\bar{X}\_n = \frac{1}{n} \sum\_{i=1}^n X\_i$, tends to the normal distribution as our sample size, $n$ increases to infinity. $$\frac{\bar{X}\_n - \mu}{\sigma} \overset{\text{approx}}{\sim} N\left(\mu, \frac{\sigma^2}{n}\right) ~~~~~~ \text{ for large $n$}$$
+When we don't have normal data (as is typically the case), we typically use the central limit theorem to justify using a t-test. The central limit theorem tells us that is we have $n$ independent and identically distributed (IID) samples $X\_1, ..., X\_n$ (where each $X\_i$ has expected value $\mu$ and standard deviation $\sigma$), then distribution of the mean (or average), $\bar{X}\_n = \frac{1}{n} \sum\_{i=1}^n X\_i$, tends to the normal distribution as our sample size, $n$ increases to infinity. $$\bar{X}\_n  \overset{\text{approx}}{\sim} N\left(\mu, \frac{\sigma^2}{n}\right) ~~~~~~ \text{ for large $n$}$$
 
 However, if we do not know the true standard deviation, $\sigma$, of our samples, then we have the related result that the distribution of the mean tends to a $t$ distribution with $n-1$ degrees of freedom. $$\frac{\bar{X}\_n - \mu}{SE(\bar{X})} \overset{\text{approx}}{\sim} t_{n-1} ~~~~~~ \text{ for large $n$}$$
 

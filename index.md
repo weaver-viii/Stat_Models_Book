@@ -3,7 +3,7 @@ layout: post
 title: Sample ebook
 ---
 
-This is an online version of *The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning*, a book based on STAT 215A, a graduate-level applied statistics class at UC Berkeley currently taught by Prof. Bin Yu.
+This is an online version of the **ongoing draft** of *The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning*, a book based on STAT 215A, a graduate-level applied statistics class at UC Berkeley currently taught by Prof. Bin Yu.
 
 
 
@@ -19,6 +19,7 @@ Ongoing projects
 
 * [The fruitfly project][fly]
 * [The neuroscience project][neuro]
+* [Cloud detection in polar regions][cloud]
 
 
 Causal Inference
@@ -45,9 +46,7 @@ Clustering
 * [Principal component analysis][pca]
 * [Clustering][clust]
 
-Prediction
 
-* [Prediction][pred]
 
 Regression
 
@@ -57,6 +56,16 @@ Regression
 * [The challenger O-ring failure example][oring]
 * [Alternatives to least squares][mest]
 
+Prediction
+
+* [Prediction][pred]
+* [Binary classification methods][class]
+* [Evaluating a prediction rule][eval]
+
+
+Generalized linear models
+
+* [Generalized linear models][glms]
 
 [intro]: 0-introduction.html 
 [how]: 1-philosophy.html
@@ -77,4 +86,8 @@ Regression
 [gls]: 16-gls.html
 [oring]: 17-oring.html
 [mest]: 18-mest.html
+[glms]: 19-glms.html
+[cloud]: 20-clouds.html
+[eval]: 21-evaluation.html
+[class]: 22-classification.html
 

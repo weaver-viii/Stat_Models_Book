@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>Cloud detection over polar regions</h1>
+
+<p>This project focuses on predicting the presence of clouds in polar regions, which is notable difficult due to the reseblence of clouds to snow from satellite images. Cloud coverage is a key feature of predictive climate models due to the cloud&#39;s ability to both act as a blanket to trap heat in the lower atmosphere as well as their ability to reflect rays from the outer atmosphere. Uncertainties about the impact of cloud radiation feedback on the global climate are among the greatest obstacles in understanding and predicting the future of Earth&#39;s climate, however the presence of cloud above snow and ice covered surfaces is particularly difficult to detect from satellite images due to the similar reflective and temperal properties of cloud and snow. </p>
+
+<p>In the late 1990s, NASA launched a satellite called Terra as a part of NASA’s Earth Observing System (EOS), the goal of which is to improve the scientific understanding of global climate changes and provide the scientific basis for environmental policies. Terra was equipped with instruments including a Multi-angle Imaging SpectroRadiometer (MISR), a camera that is used to take pictures of the earth below from multiple angles. NASA&#39;s goal for this satellite was to capture images of the Earth each from multiple angles in order to increase understanding of the Earth&#39;s systems. At each location, an image is taken from 9 different angles, resulting in images of 9 separate locations. However, as the satellite moves along its path, images of each location are taken from all subequent angles (see the figure below). Further, each of these images is recorded using 4 different (443nm, 555nm, 670nm, and 865nm Near Infrared Red) wavelengths at each angle.</p>
+
+<p><img src="misr.jpg" alt="MISR" style="width:400px;height:400px;"></p>
+
+<p>The MISR algorithm retrieves the cloud height and cloud movement by matching the same cloud in images obtained from three different angles. This algorithm works very well when detecting clouds over darker surfaces such as deep ocean or vegetation covered land surface, but is less efective over snow and ice covered surfaces due to the difficulty in matching.</p>
+
+<p><img src="misr_detect.png" alt="MISR" style="width:400px;height:200px;"></p>
+
+<p>Consider, for example, the figures presented blow. The top panel in the figure below shows a situation in which cloud is easy to detect as it cloud appears over a deep body of water, whereas the second panel displays clouds appearing over ice/snow in Greenland.</p>
+
+<p><img src="cloud.png" alt="clouds" style="width:500px;height:800px;"></p>
+
+<h3>Inital approaches to cloud detection in polar regions: LCMC</h3>
+
+<p>An initial approach (Shi et al. 2002), LCMC, utilizes the domain knowledge that correlations between angles are high over snow and ice covered regions but weak for regions covered by high clouds. Further, clouds are brigher than snow and ice covered surfaces in forward angles (see the figures below: the left panel corresponds to the image taken from the AN angle and the right panel corresponds to the image taken from the DF angle). </p>
+
+<p><img src="cloud_angles.png" alt="clouds at angles" style="width:800px;height:500px;"></p>
+
+<p>To utilize this information, this approaches focuses on identifying regions of snow or ice rather than clouds. However, this approach fails in regions where the surface is smooth (such as frozen rivers) or there are thin clouds. How could we adapt the method to rectify these issues? We could use SD to measure smoothness and forward scattering via DF to deal with thin clouds <FONT COLOR="red">what?</FONT></p>
+
+<h4>The Enhanced LCMC algorithm</h4>
+
+<p>The enhanced LCMC algorithn (ELCMC) thresholds 3 features based on 275m, terrain projected red radiances. Instead of utilizing the expert labels, this approach performs clustering (an example of unsupervised learning). The three features are</p>
+
+<ol>
+<li><p>The correlation between different angles measured by 
+$$CORR = \frac{r_{AF - AN} + r_{BF - AN}}{2}$$</p></li>
+<li><p>Surface smoothness measured by $SD_{AN}$</p></li>
+<li><p>The angular signature of the radiances from different angles: Normalized Difference Angular Index (NDAI) see Nolin, Fetterer, and Scambos (2002), measured by
+$$NDAI = \frac{Radiance_{DF} - Radiance_{AN}}{Radiance_{DF} + Radiance_{AN}}$$</p></li>
+</ol>
+
+<p>The algorithm works be predicting that a pixel is clear of cloud (contains snow and/or ice) when our values satisfy at least one of two thresholding criteria:</p>
+
+<p>$$SD_{AN} &lt; threshold_{sd}$$</p>
+
+<p>or when</p>
+
+<p>$$CORR &gt; threshold_{corr} ~~~ \text{ and } ~~~ NDAI &lt; theshold_{ndai}$$</p>
+
+<p>where the thresholding values are either fixed or adaptively chosen. If neither of these two conditions are satisfied, then the pixel is predicted to be cloudy.</p>
+
+<p><img src="ELCMC.png" alt="ELCMC" style="width:800px;height:500px;"></p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

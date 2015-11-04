@@ -22,11 +22,11 @@ where $\rho$ is any suitable function. For example
 
 * $\rho(x) = \vert x \vert$ gives us the least absolute deviation (LAD) estimator.
 
-If in general, we consider the OLS estimate as a generalization of the mean, then the LAD estimate can be thought of as a generalization of the median. The LAD is in general much more robust to outliers than the OLS estimator, but it does not confer a closed-form solution (recall that the closed-form solution for the OLS estimator is $\hat{\beta}\_{OLS} = (X^TX)^{-1}X^Ty$). So how can we use LAD to estimate $\beta$?
+If in general, we consider the OLS estimate as a generalization of the mean ($\underset{a}{\text{argmin}} \sum\_{i=1}^n (x\_i - a)^2 = \bar{x}$), then the LAD estimate can be thought of as a generalization of the median ($\underset{a}{\text{argmin}} \sum\_{i=1}^n |x\_i - a| = \text{median}(x)$). The LAD is in general much more robust to outliers than the OLS estimator, but it does not confer a closed-form solution (recall that the closed-form solution for the OLS estimator is $\hat{\beta}\_{OLS} = (X^TX)^{-1}X^Ty$). So how can we use LAD to estimate $\beta$?
 
 We can use the fact that $\frac{\vert X \vert^2}{\vert X \vert} = \vert X \vert$ to iteratively compute the LAD estimate using weighted least squares. The procedure is as follows: 
 
-1. Choose an initial estimate (typically we use the standard OLS estimator as our starting point) $$\hat{\beta}^{(0)} = \hat{\beta}\_{OLS}$.$
+1. Choose an initial estimate (typically we use the standard OLS estimator as our starting point) $$\hat{\beta}^{(0)} = \hat{\beta}\_{OLS}$$.
 
 1. Given a current estimate, $\hat{\beta}^{(t)}$, calculate a new LAD estimate by solving
 \begin{aligned}
@@ -37,7 +37,7 @@ where $w\_i(t) = \frac{1}{\Big\vert y\_i - X\_i^T \hat{\beta}^{(t)} \Big\vert}.$
 
 1. Continue until convergence has been achieved.
 
-Note that this is equivalent to itertatively solving a WLS problem.
+Note that this is equivalent to iteratively solving a WLS problem.
 
 
 

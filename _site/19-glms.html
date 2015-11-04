@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>Generalized linear models</h1>
+
+<p>In the previous sections we have introduced a number of alternatives to using ordinary least squares for estimating the coeffieicnets of linear models. For example, we discussed methods of performing least squares when we do not have common variance (weighted least squares) and when our errors have, not only different variances, but also non-zero covariances (generalized least squares). Moreover, we discussed alternatives to the squared loss function by using M-estimators such as least absolute deviation instead of least squares. However, in all of these examples, we have maintained that the model we were trying to fit was of the same linear form:</p>
+
+<p>$$Y = X \beta + \epsilon$$</p>
+
+<p>In this section, we discuss a further generalization, which this time will be a generalization on the form of the model above.</p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>
