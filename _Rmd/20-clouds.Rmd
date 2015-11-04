@@ -27,7 +27,7 @@ Consider, for example, the figures presented blow. The top panel in the figure b
 
 An initial approach (Shi et al. 2002), LCMC, utilizes the domain knowledge that correlations between angles are high over snow and ice covered regions but weak for regions covered by high clouds. Further, clouds are brigher than snow and ice covered surfaces in forward angles (see the figures below: the left panel corresponds to the image taken from the AN angle and the right panel corresponds to the image taken from the DF angle). 
 
-<img src="cloud_angles.png" alt="clouds at angles" style="width:800px;height:500px;">
+<img src="cloud_angles.png" alt="clouds at angles" style="width:800px;height:200px;">
 
 
 To utilize this information, this approaches focuses on identifying regions of snow or ice rather than clouds. However, this approach fails in regions where the surface is smooth (such as frozen rivers) or there are thin clouds. How could we adapt the method to rectify these issues? We could use SD to measure smoothness and forward scattering via DF to deal with thin clouds <FONT COLOR="red">what?</FONT>
@@ -55,6 +55,6 @@ $$CORR > threshold\_{corr} ~~~ \text{ and } ~~~ NDAI < theshold\_{ndai}$$
 
 where the thresholding values are either fixed or adaptively chosen. If neither of these two conditions are satisfied, then the pixel is predicted to be cloudy.
 
-<img src="ELCMC.png" alt="ELCMC" style="width:800px;height:500px;">
+<img src="ELCMC.png" alt="ELCMC" style="width:500px;height:200px;">
 
 
