@@ -92,16 +92,16 @@ will even be in $\{0, 1\}$, in fact, this is extremely unlikely!</p>
 
 <p>$$P(y_i = 1 | x_i) = \frac{e^{\beta_0 + \beta_1x_{i1} + ... + \beta_px_{ip}} }{1 + e^{\beta_0 + \beta_1x_{i1} + ... + \beta_px_{ip}}} = \frac{e^{x_i^T \boldsymbol{\beta}} }{1 + e^{x_i^T \boldsymbol{\beta}}}$$</p>
 
-<p>where as in standard linear regression, we want to estimate the $\beta$. Recall that in standard linear regression, we have $E(y_i | x_i) = x_i^T\beta$, and $Var(y_i | x_i) = Var(\epsilon_i) = \sigma^2$, and if we assumed normality of the $\epsilon_i$&#39;s, we had 
+<p>where, as with standard linear regression, we want to estimate the $\beta$ vector. Recall that in standard linear regression, we have $E(y_i | x_i) = x_i^T\beta$, and $Var(y_i | x_i) = Var(\epsilon_i) = \sigma^2$, so that if we assumed normality of the $\epsilon_i$&#39;s, we had 
 $$y_i | x_i \sim N(x_i^T\beta, \sigma^2)$$</p>
 
 <p>the corresponding distributional result assumed by logistic regression is
 $$y_i | x_i \sim Bernoulli\left(\frac{e^{x_i^T \boldsymbol{\beta}} }{1 + e^{x_i^T \boldsymbol{\beta}}}\right)$$</p>
 
-<p>Moreover, the log-odds ratio is defined by
+<p>Next, we can define the <em>log-odds ratio</em> by
 $$\log \left(\frac{P(y_i = 1 | x_i)}{P(y_i = 0 | x_i)} \right) = \log  \left(\frac{P(y_i = 1 | x_i)}{1 - P(y_i = 1 | x_i)} \right) = \log \left( e^{x_i^T \beta} \right) = x_i^T \beta$$</p>
 
-<p>In an attempt to foreshadow later results, we will eventually refer to this the <em>link function</em> for logistic regression. The link function describes how the response is &quot;linked&quot; to the linear combination of the predictors (for standard linear regression, the link function is simply $g(x) = x$).</p>
+<p>In an attempt to foreshadow later results, we will eventually refer to the log-odds as the <em>link function</em> for logistic regression. The link function describes how the response is &quot;linked&quot; to the linear combination of the predictors (for standard linear regression, the link function is simply $g(x) = x$).</p>
 
 <p>How do we convert the logistic regression model into class predictions? Given a new sample $x_i^*$, we can plug it into the fitted logistic model</p>
 
@@ -115,9 +115,12 @@ $$\log \left(\frac{P(y_i = 1 | x_i)}{P(y_i = 0 | x_i)} \right) = \log  \left(\fr
 
 <h4>Fitting the logistic regression model</h4>
 
-<p>In the previous section, we have discussed how to use logistic regression to obtain a class prediction for an observation. However, to do this, we need to know how to estimate $\beta$. This is not as straightforward as using least squares for the standard linear regression model, whereby we can solve the loss function to obtain a closed form solution. </p>
+<p>In the previous section, we have discussed how to use logistic regression to obtain a class prediction for an observation. However, to do this, we need to know how to estimate $\beta$. This is not as straightforward as using least squares for the standard linear regression model for which we wanted to find the value of $\beta$ that minimized the squared loss $\sum_{i=1}^n (y_i - x_i\beta)^2$, for which we could find a closed form solution $\hat{\beta}_{OLS} = (X^TX)^{-1} X^T y$. </p>
 
-<p>Recall that the least squares estimate of $\beta$ in the standard linear model corresponds to the <em>maximum likelihood estimate</em> (MLE). The following steps walk us through deriving the MLE for logistic regression, where the MLE estimate for $\beta$ is the value of $\beta$ that maximizes the likelihood function (or, equivalently, the log-likelihood function).</p>
+<p>In the case of the logistic regression model, the least squares estimate for $\beta$ would be defined by 
+$$\hat{\beta}_{LS} = \underset{\beta}{\text{argmin}} \sum_{i=1}^n \left(y_i -  \frac{e^{x_i^T \beta}}{1 + e^{x_i^T \beta}}\right)^2$$ </p>
+
+<p>However, this estimate is rarely used for multiple reasons. The first is that it cannot be computed explicitly (there is no closed-form solution), and must be estimated using numerical methods (we will discuss these further below). Moreover, least squares in the context of logistic regression is no longer optimal. For the standard linear model case, it was possible to show that the least squares estimate of $\beta$ was the same as the <em>maximum likelihood estimate</em> (MLE) of $\beta$, and thus was the best estimator (in the sense that it had the lowest MSE). In the case of logistic regression, however, the least squares estimator yields an estimator distinct from the MLE, implying that the least suqares estimator is no longer the ideal estimator. The following steps walk us through deriving the MLE for logistic regression, where the MLE estimate for $\beta$ is the value of $\beta$ that maximizes the likelihood function (or, equivalently, the log-likelihood function).</p>
 
 <p>First, assuming that the $y_i | x_i$&#39;s are independent (this assumption is extremely important for inference, but somewhat less important for prediction if we have a proper test set with which to evaluate the prediction accuracy), the likelihood can be split up into</p>
 
@@ -143,7 +146,35 @@ $$\log \left(\frac{P(y_i = 1 | x_i)}{P(y_i = 0 | x_i)} \right) = \log  \left(\fr
 <p>$$\hat{y} = \begin{cases} 0 &amp; \text{ if } \hat{\pi}^{MLE} = \frac{e^{x^T \boldsymbol{\hat{\beta}}_{MLE}} }{1 + e^{x^T \boldsymbol{\hat{\beta}}_{MLE}}} &lt; 0.5 \\ 
  1 &amp; \text{ if } \hat{\pi}^{MLE} = \frac{e^{x^T \boldsymbol{\hat{\beta}}_{MLE}} }{1 + e^{x^T \boldsymbol{\hat{\beta}}_{MLE}}} \geq 0.5\end{cases}$$</p>
 
-<p>However, unfortunately, there is no closed-form solution for the maximum of the log-likelihood function given above, implying that we cannot simply find a formula for the MLE estimator. However, fortunately, we are able to estimate the MLE using numerical methods such as Newton-Rhapson or iteratively weighted least squares (IWLS). The technical details are provided in the appendix for the interested reader.</p>
+<p>However, unfortunately, there is no closed-form solution for the maximum of the log-likelihood function given above, implying that we cannot simply find n explicit formula for the MLE estimator. However, fortunately, we are able to estimate the MLE using numerical methods such as Newton-Rhapson or iteratively weighted least squares (IWLS). The technical details of these iterative approaches are provided in the appendix for the interested reader. One point to note is that, as with any iterative procedure, it is important to check the convergence criteria: the NR or IWLS procedures will converge to the true minimum (or maximum), but we need to ensure that we have run through a sufficient number of iterations to have achieved convergence. When implemented in the software, such methods typically have a default number of iterations, however, for some problems, this default may not be enough to ensure convergence, and as such, it is important to check convergence criteria.</p>
+
+<h4>A comparison of least squares and maximum likelihood for binary responses</h4>
+
+<p>To summarize the discussion above, we discussed how to estimate $\beta$ for the logistic regression model for binary responses. The logistic regression model assumed that</p>
+
+<p>$$y_i| x_i \sim Bernoulli\left(\frac{e^{x_i^T \boldsymbol{\beta}} }{1 + e^{x_i^T \boldsymbol{\beta}}}\right)$$</p>
+
+<p>and we discussed the fact that the LS estimator of $\beta$ based on this model,</p>
+
+<p>$$\hat{\beta}_{LS} = \underset{\beta}{\text{argmin}} \sum_{i=1}^n \left(y_i -  \frac{e^{x_i^T \beta}}{1 + e^{x_i^T \beta}}\right)^2$$</p>
+
+<p>was less optimal than the MLE estimator defined by</p>
+
+<p>$$\hat{\beta}_{MLE} = \underset{\beta}{\text{argmax}}\sum_{i=1}^n \left( y_i x_i^T \beta - \log \left( 1 + e^{x_i^T \beta} \right) \right) $$</p>
+
+<p>However, in this section we will discuss how the  <em>OLS estimator for the standard linear regression model</em> compares with the <em>MLE estimator for the logistic regression model</em>? That is, we are comparing the standard linear model OLS formulation</p>
+
+<p>$$\hat{\beta}_{OLS} = \underset{\beta}{\text{argmin}} \sum_{i=1}^n \left(y_i -  \frac{e^{x_i^T \beta}}{1 + e^{x_i^T \beta}}\right)^2 ~~~~~ \text{where} ~~~~ y_i | x_i \sim N(x_i^T\beta, \sigma^2)$$</p>
+
+<p>with the losgistic regression MLE formulation</p>
+
+<p>$$\hat{\beta}_{MLE} = \underset{\beta}{\text{argmax}}\sum_{i=1}^n \left( y_i x_i^T \beta - \log \left( 1 + e^{x_i^T \beta} \right) \right) ~~~~~ \text{where} ~~~~ y_i | x_i \sim Bernoulli\left(\frac{e^{x_i^T \boldsymbol{\beta}} }{1 + e^{x_i^T \boldsymbol{\beta}}}\right)$$</p>
+
+<p>The figure below displays contour maps for the estimates of $\beta_0$ and $\beta_1$ for the O-ring data when we use the log-likelihood estimate for logistic regression and when we use the least squares estimate for the standard linear regresssion. </p>
+
+<p><img src="ls_vs_mle.png" alt="OLS" style="width:600px;height:400px;"></p>
+
+<p>These graphs display the contour lines of the surface for the two loss-functions. The minimum point is shown on each plot: the &quot;o&quot; corresponds to the OLS estimator (corresponding to the minimum of the right plot) and the &quot;x&quot; corresponds to the MLE estimator (corresponding to the minimum of the left plot). One thing to notice is that the logistic regression surface does not exhibit symmetry whereas the linear regression surface does. What we are seeing however, is that the estimate obtained from the MLE (log-likelihood) for the logistic regression model is fairly similar to the estimate obtained from least squares on the standard regression model. <FONT COLOR = "red">will need to come back to this...</FONT></p>
 
 <h4>MLE in high-dimensions</h4>
 
@@ -151,7 +182,7 @@ $$\log \left(\frac{P(y_i = 1 | x_i)}{P(y_i = 0 | x_i)} \right) = \log  \left(\fr
 
 <h5>Feature selection</h5>
 
-<p>One way to reduce the dimension of our data is to identify the most informative variables which we will use to build a model. The problem of feature selection hosts a wide array of literature, and a plethora of methods exist. One of the most intuitive, and simple, approaches to feature selection is to simply select the features whose values are most correlated with the response of interest. Alternatively, we could use some prespecified criterion such as the AIC or BIC step-wise procedures which describe how much a model is improved by including or excluding each individual variable (however, the AIC and BIC approaches are not recommended). Another approach is to perform PCA, whereby we could either use the first few principal components (or those who explain the majority of the variability in the data) as our new variables, or if we wished to retain the original interpretability of our features, we could identify the original variables that were the most correlated with the first few principal components.r4</p>
+<p>One way to reduce the dimension of our data is to identify the most informative variables which we will use to build a model. The problem of feature selection hosts a wide array of literature, and a plethora of methods exist. One of the most intuitive, and simple, approaches to feature selection is to simply select the features whose values are most correlated with the response of interest. Alternatively, we could use some prespecified criterion such as the AIC or BIC step-wise procedures which describe how much a model is improved by including or excluding each individual variable (however, the AIC and BIC approaches are not recommended). Another approach is to perform PCA, whereby we could either use the first few principal components (or those who explain the majority of the variability in the data) as our new variables, or if we wished to retain the original interpretability of our features, we could identify the original variables that were the most correlated with the first few principal components.</p>
 
 <h5>Regularization</h5>
 
