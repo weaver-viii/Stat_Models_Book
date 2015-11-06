@@ -118,6 +118,7 @@ $$\hat{y} = \begin{cases} 0 & \text{ if } \hat{\pi}^{MLE} = \frac{e^{x^T \boldsy
 However, unfortunately, there is no closed-form solution for the maximum of the log-likelihood function given above, implying that we cannot simply find n explicit formula for the MLE estimator. However, fortunately, we are able to estimate the MLE using numerical methods such as Newton-Rhapson or iteratively weighted least squares (IWLS). The technical details of these iterative approaches are provided in the appendix for the interested reader. One point to note is that, as with any iterative procedure, it is important to check the convergence criteria: the NR or IWLS procedures will converge to the true minimum (or maximum), but we need to ensure that we have run through a sufficient number of iterations to have achieved convergence. When implemented in the software, such methods typically have a default number of iterations, however, for some problems, this default may not be enough to ensure convergence, and as such, it is important to check convergence criteria.
 
 
+
 #### A comparison of least squares and maximum likelihood for binary responses
 
 To summarize the discussion above, we discussed how to estimate $\beta$ for the logistic regression model for binary responses. The logistic regression model assumed that
