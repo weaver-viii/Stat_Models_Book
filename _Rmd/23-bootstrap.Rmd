@@ -95,7 +95,47 @@ It is worth noting that when the true distirbution of $\epsilon$ has heavy tails
 
 
 
-### The parametric bootstrap
+### The parametric approach
+
+In the nonparametric approach to the bootstrap that we have discussed so far, we have made no distributional assumptions on our data, and have simply used the sample as our bootstrap population. However, it is concievable that one might have an idea the form of the true distribution of the data although be ignorant of the true parameter values. For example, one might have binary data from which it might not seem unreasonable that the data, $X\_1, ..., X\_n$ comes from a $Bernoulli(p)$ distirbution, i.e. that each observation is either $0$ or $1$ with a fixed probability, but that the true value of the parameter, $p = P(X\_i = 1)$ is unknown. Certainly we can estimate $p$ by the proportion of $1$'s in our data (let's call this estimate $\hat{p}$). In this case, to generate a bootstrap sample, instead of sampling without replacement from the $X\_1, ..., X\_n$ (the nonparametric approach), we could draw samples from the estimated $Bernoulli(\hat{p})$ distribution. 
+
+To place this notion in more general terms, suppose we knew that our data $X\_1, ..., X\_n \sim F(\theta)$, but that $\theta$ was unknown. We could use the overved data to generate an estimate, $\hat{\theta}$, of the distirbution parameter, and we could then draw our bootstrap samples from $F^\* = F(\hat{\theta})$ to obtain
+
+$$X\_1^\* , ..., X\_n^\* \sim F\left(\hat{\theta}\right)$$
+
+
+and repeat this $M$ times so that we could generate $M$ bootstraped versions of our statistic of interest, $T(X)$ (for example, we might have $T(X) = \bar{X}$):
+
+
+$$X\_1^{\*(1)}, X\_2^{\*(1)}, ..., X\_n^{\*(1)} \sim F(\hat{\theta}), \text{ generates the estimate } T(X)\_{(1)}^{\*}$$
+$$X\_1^{\*(2)}, X\_2^{\*(2)}, ..., X\_n^{\*(2)} \sim F(\hat{\theta})\text{ generates the estimate } T(X)\_{(2)}^{\*}$$
+$$ \vdots $$
+$$X\_1^{\*(M)}, X\_2^{\*(M)}, ..., X\_n^{\*(M)} \sim F(\hat{\theta})\text{ generates the estimate } T(X)\_{(M)}^{\*}$$
+
+
+
+#### The parametric bootstrap in logistic regression
+
+Unlike for standard linear regression, the maximum likelihood estimate (MLE) for logistic regression which is typically calcualted iteratively has less straightforward theoretical properties. Suppose that we have a dataset with binary responses, $y\_1, ..., y\_n \in \{0, 1\}$, and some predictor variables, $x\_{i1}, ..., x\_{ip}$, for each $y\_i$. Recall that the logistic regression model assumes that the $y\_i \sim Bernoulli(\pi\_i)$, where the probability, $\pi\_i$ was logistically related to the $x\_i^T$, i.e.
+
+$$\pi\_i = \frac{e^{x\_i^T\beta}}{1 + e^{x\_i^T\beta}}$$
+
+For this model, there is no closed form solution for the optimal $\beta$, so we typically calculate an approximation to the MLE, $\hat{\beta}\_{MLE}$, using iterative methods. How can we use the bootstrap to examine properties of our estimator, $\hat{\beta}\_{MLE}$? This is a slightly more complex problem than the standard linear regression problem above, but again, if we could draw bootstrap samples from the $y = (y\_1, ..., y\_n)$ directly, then we could use our $M$ bootstrapped samples $(y^\*\_{(k)}, X\_{(k)})\_{k = 1, ..., M}$ to obtain estimates, $\hat{\beta}^\*\_{(1)},..., \hat{\beta}^\*\_{(M)}$, of $\hat{\beta}\_{MLE}$.
+
+
+The standard parametric approach is to use our inital estimate $\hat{\beta}\_{MLE}$ to estimate $\pi\_i$ by
+
+$$\hat{\pi}\_i = \frac{e^{x\_i^T\hat{\beta}\_{MLE}}}{1 + e^{x\_i^T\hat{\beta}\_{MLE}}}$$
+
+using which we could simulate a sample of size $n$, $y\_1^\*, ..., y\_n^\*$, where $y\_i^\* \sim Bernoulli(\hat{\pi}\_i)$ (this is where the parametric assumption comes in - we are assuming that the $y\_i$ have a Bernoulli distribution). Repeating this $M$ times, we would have $M$ bootstrap samples from which we could obtain $M$ estimates, $\hat{\beta}^\*\_{(1)}, ..., \hat{\beta}^\*\_{(M)}$ of $\hat{\beta}\_{MLE}$.
+
+We can use these $M$ bootstrapped estimates to approximate the distribution of $\hat{\beta}\_{MLE}$ from which we can estimate properties of our estimator. 
+
+What would be different if we were instead performing nonparametric bootstrapping for this example? We could use the sampling-with-replacement approach from our "little population" defined by $(x\_1, y\_1), ..., (x\_n , y\_n)$ to generate bootatrap samples of the form $(x\_1^\*, y\_1^\*), ..., (x\_n^\*, y\_n^\*)$. From this bootstrap sample, we could obtain the a bootstrap estimate $\hat{\beta}\_{MLE}^\*$, and so on. This approach is actually extremely common (primarily since it is simple and very intuitive) and can be used for arbitrary GLMs, not just for logistic regression.
+
+
+
+
 
 # Further Reading
 
