@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>The Bootstrap</h1>
+
+<p>The bootstrap is a method that uses sampling with replacement to generate empirical distributions in order to sidestep extreme distributional assumptions. In particular, it assumes that the notion of our observed sample being drawn from a population is analagous to the notion of a re-sample (with replacement) being drawn from our observed sample.</p>
+
+<p>Making inference about our population (which, in most cases, we cannot observe) based on a sample drawn from the population is difficult to do without extreme theoretical assumptions. However, making inferences about our observed sample based on a re-sample (sample from our sample drawn with replacement) is easier because we can treat our observed sample as our &quot;population&quot;. </p>
+
+<p>In the simplest case, suppose that $X_1, ..., X_n \overset{iid}{\sim} F$, for some unspecified distribution, $F$. Suppose that our first two moments are known, that is $EX_1 = \mu$ and $EX_q^2 = \sigma^2_X$. How could we calculate a confidence interval for $\mu$? If we had a large sample, we could use the central limit theorem (CLT) which says that asymptotically,</p>
+
+<p>$$n (\bar{X} - \mu) \overset{d}{\rightarrow} N(0, \sigma_X^2)$$</p>
+
+<p>and create a confidence interval of the form $(\bar{X} - 1.96 \frac{s}{\sqrt{n}}, \bar{X} + 1.96  \frac{s}{\sqrt{n}})$ where $1.96$ is the $97.5$th percentile of the Normal distirbution and $s$ is the estimated standard deviation of our population based on our sample. If our sample size is large enough, the central limit theorem tells us that this confidence interval for the mean is entirely reasonable.</p>
+
+<p>However, what if we were interested in another statistic (recall that a statistic is defined to be any function of our data) for which we did not have such a nice asymptotic distributional result. Consider, for example, the the median, or some arbitrary model parameter estimate, $\hat{\beta}$? We could use the bootstrap method to estimate properties of our statistic based on empirical distributions (rather than by drawing potentially unrealistic distributional assumptions). </p>
+
+<h3>The nonparametric approach</h3>
+
+<p>For simplicity, we will demonstrate using the bootstrap to generate a confidence interval for the sample mean, $\overline{X}$ (pretending that we are ignorant to the central limit theorem). To begin, let&#39;s consider the data (the observed values of the $X_i$&#39;s) as a &quot;little popuation&quot;, a term used in the <em>Statistical Models: Theory and Practice</em> by David A. Freedman. Next, we simulate $n$ drawns, made at random <em>with replacement</em> from this little population (so that some observations will likely be drawn more than once and others not at all) to get a <strong>bootstrap sample</strong> $X_1^*, ..., X_n^*$ of the same size as our original sample (see Figure 1, sourced from Freedman).</p>
+
+<p><img src="Bootstrap.png" alt="Bootstrap" style="width:500px;height:200px;"></p>
+
+<p>From a bootstrap sample, we can generate a bootstrap estimator, $\overline{X}^* = \frac{1}{n} \sum_{i=1}^n X_i^*$. However, given that we are interested in exploring the <em>distribution</em> of our original estimator, $\bar{X}$, a single draw, $\overline{X}^*$, from our &quot;population&quot; of estimators is not hugely helpful. What we really want is to generate many $\bar{X}^*$s to form an empirical distribution for $\overline{X}$, from which we can estimate its properties such as its variance. Thus, we typically generate $M$ (usually $M &gt; 100$) bootstrap samples in order to obtain $M$ bootstrap estimates of $\overline{X}$:</p>
+
+<p>$$X_1^{*(1)}, X_2^{*(1)}, ..., X_n^{*(1)}, \text{ generates the estimate } \overline{X}_{(1)}^{*}$$
+$$X_1^{*(2)}, X_2^{*(2)}, ..., X_n^{*(2)} \text{ generates the estimate } \overline{X}_{(2)}^{*}$$
+$$ \vdots $$
+$$X_1^{*(M)}, X_2^{*(M)}, ..., X_n^{*(M)} \text{ generates the estimate } \overline{X}_{(M)}^{*}$$</p>
+
+<p>The idea is that as $M$ gets large, the distribution of $\overline{X}^* - \overline{X}$ will be a good approximation for the distribution of $\overline{X} -\mu$. In particular, we should have that</p>
+
+<p>$$P\left(\frac{ \overline{X} - \mu}{\sigma_X} &lt; t \right) \approx P\left(\frac{ \overline{X}^* - \overline{X}}{\sigma_X} &lt; t \right)$$</p>
+
+<p>by which we mean that the process of sampling from the population should be comparable to the process of taking a bootstrap sample from our original sample. Thus, since we can never observe $\mu$ but we do observe both $\overline{X}^*$ and $\overline{X}$, we can use the probability on the RHS of the above expression to estimate the probability of interest on the LHS.</p>
+
+<p>It is important to make the following distinction: since the bootstrap estimators, $\overline{X}^*$, are generated by sampling from the original <em>sample</em> (rather than the population), whose mean is $\overline{X}$ (rather than $\mu$), it follows that $\overline{X}^*$ is not a new estimator for the parameter $\mu$, but rather is something that we have generated to better understand the original estimator, $\overline{X}$. For instance, if we define 
+$$ \overline{X}_{ave}^* = \frac{1}{M} \sum_{k=1}^M \overline{X}_{(k)}^*$$ </p>
+
+<p>then we can estimate the true bias of our estimator, which is defined by $bias(\overline{X}) = E\left(\overline{X}\right) - \mu$, to be</p>
+
+<p>$$bias(\overline{X}) \approx \overline{X} - \overline{X}_{ave}^*$$</p>
+
+<p>and similarly the standard error of $\overline{X}$ to be</p>
+
+<p>$$SE(\bar{X}) \approx \sqrt{\frac{1}{M} \sum_{k=1}^M \left( \overline{X}_{(k)}^* - \overline{X}_{ave}^*\right)^2}$$</p>
+
+<p>Note that the procedure described above is that of the <em>nonparametric bootstrap</em> for the sample mean in the sense that it makes absolutely no assumptions on the form of the original distribution, $F_X$, of the data. </p>
+
+<h4>The Nonparametric bootstrap in standard regression</h4>
+
+<p>There are many ways to apply bootstrapping to a regression problem. Suppose that we have the model</p>
+
+<p>$$Y = X \beta + \epsilon$$</p>
+
+<p>where $\epsilon_1, ..., \epsilon_n \sim N(0, \sigma^2)$ and that we are interested in obtaining the properties of the OLS estimator for $\hat{\beta}_{OLS} = (X^TX)^{-1}X^TY$ but don&#39;t know any of the theoretical properties (let&#39;s ignore the fact that we know, for example, that the bias is $0$ and the covariance matrix is $\sigma^2(X^TX)^{-1}$). There are a number of ways that we could conceivably use the bootstrap procedure to estimate properties of $\hat{\beta}_{OLS}$ such as its bias and variance.</p>
+
+<p>The primary approach for to generating a bootstrap sample for $\hat{\beta}_{OLS}$ involves generating a bootstrap sample of the responses, $y_1^*, ..., y_n^*$, so that we can define our bootstrap sample for $\hat{\beta}_{OLS}$ to be</p>
+
+<p>$$\hat{\beta}_{OLS}^* = (X^TX)^{-1}X^TY^*$$</p>
+
+<p>where $Y^* = [y_1^*, ..., y_n^*]^T$. The naive approach to doing this is to simply bootstrap the $y_1, ..., y_n$ by sampling with replacement as in the example above. However, recall that in a linear model such as $Y = X \beta  + \epsilon$, the randomness in the $Y$ comes from the iid random errors $\epsilon_1, ..., \epsilon_n$, and by construction, the $y_i$&#39;s are not drawn from the same distribution (e.g. each $y_i$ has a different mean $E(y_i) = x_i^T\beta$), making directly bootstrapping the $y_i$&#39;s the entirely wrong thing to do. Thus, it makes more sense to bootstrap the errors $\epsilon_1, ..., \epsilon_n$, rather than the responses. There&#39;s just one problem... we never actually observe the $\epsilon_i$&#39;s.</p>
+
+<p>One reasonable approach would be to approximate the distribution of the errors, $\epsilon_i$, by the distribution of the corresponding model residuals, $e_i = y_i - x_i^T \hat{\beta}_{OLS}$ (if the fitted model was actually the true model, then the residuals would be equal to the true errors). More specifically, we can define our &quot;little population&quot; to be the set of $n$ residuals, $e_1, ..., e_n$, and from this little population we will draw $n$ observations at random with replacement to get the bootstrap sample, $\epsilon_1^*, ..., \epsilon_n^*$, from which we can generate the bootstrap sample of the $y_i$s to get </p>
+
+<p>$$y_i^* = x_i^T\hat{\beta}_{OLS} + \epsilon_i^*, ~~~~ i = 1, ..., n$$ </p>
+
+<p>Further we can obtain a bootstrap sample of our OLS estimator of $\hat{\beta}_{OLS}$ by</p>
+
+<p>$$\hat{\beta}^* = (X^TX)^{-1}X^T Y^*$$</p>
+
+<p>and we can generate $M$ such bootstrap samples, $\hat{\beta}^*_{(k)}, k = 1, ..., M$.</p>
+
+<p>Again, the idea is that if the sample size is large enough, then the empirical distribution given by $\hat{\beta}^*_{(k)} - \hat{\beta}_{OLS}, k = 1, ..., M$ is a good approximation to the distribution of $\hat{\beta}_{OLS} - \beta$. In particular, we have that</p>
+
+<p>$$\sqrt{n} \left( \hat{\beta}_{OLS} - \beta\right) \overset{d}{\approx} \sqrt{n}\left(\hat{\beta}^* - \hat{\beta}_{OLS}\right)$$</p>
+
+<p>It is worth noting that when the true distirbution of $\epsilon$ has heavy tails, CLT and bootstrap approaches are less accurate.</p>
+
+<h3>The parametric bootstrap</h3>
+
+<h1>Further Reading</h1>
+
+<p>Peter Hall&#39;s book.</p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

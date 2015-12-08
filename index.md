@@ -33,7 +33,6 @@ General topics/methods that you should know about before moving on
 * [Hypothesis testing][test]
 * [Cross validation][cv]
 * [Normalization][norm]
-* [Model validation][valid]
 
 
 Visualization
@@ -67,6 +66,16 @@ Generalized linear models
 
 * [Generalized linear models][glms]
 
+Model validation
+
+* [Model validation][valid]
+
+The Bootstrap
+
+* [The bootstrap][boot]
+
+
+
 [intro]: 0-introduction.html 
 [how]: 1-philosophy.html
 [fly]: 2-fruitfly.html 
@@ -90,4 +99,4 @@ Generalized linear models
 [cloud]: 20-clouds.html
 [eval]: 21-evaluation.html
 [class]: 22-classification.html
-
+[boot]: 23-bootstrap.html
