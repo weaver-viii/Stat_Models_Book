@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+<head>
+
+<!-- LaTeX -->
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</title>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+<!--	<link href='http://fonts.googleapis.com/css?family=Fanwood+Text:400,400italic' rel='stylesheet' type='text/css'> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!--[if lt IE 9]>
+ <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+ <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1><a href="index.html">The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning</a> <h1><a><medium>Bin Yu and Rebecca Barter</medium></a></h1></h1>
+<p></p>
+
+<p class="view"><a href="https://github.com/rlbarter/Stat_Models_Book">View the Project on GitHub <small>rlbarter/Stat_Models_Book</small></a></p>
+
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+
+<section>  
+
+
+
+<h1>Regularization in Linear Regression</h1>
+
+<p>We saw in our discussion of <a href="http://rlbarter.github.io/Stat_Models_Book/13-pred.html">prediction</a> that there exist cases in which &quot;regularized&quot; models can yield better predictions than unregularized models. The most common use of regularization in statistics is to perform model selection by penalizing models with extreme parameter values. We will discuss in this section the most common regularization approaches in linear regression problems: Ridge and Lasso.</p>
+
+<h3>Ridge regression</h3>
+
+<p>Consider the standard linear model described by $E(Y) = X \beta$, but suppose that we are in a situation where the number of observations, $n$, is less than the number of parameters, $p$. In this case, the OLS estimate for $\hat{\beta}_{OLS} = (X^TX)^{-1}X^TY$ is not well defined since $X^TX$ will have rank at most $n &lt; p$, and is thus not invertible . We must thus week alternative methods for estimating $\beta$, such as <strong>ridge regression</strong>.</p>
+
+<p>The Gauss-Markov theorem tells us that for the following linear model</p>
+
+<p>$$y_i = x_i^T \beta + \epsilon_i,$$</p>
+
+<p>the OLS estimate, $\hat{\beta}_{OLS}$, of $\beta$ is BLUE (Best Linear Unbiased Estimate), that is, the OLS estimate is unbiased and achieves the lowest variance amongst all possible unbiased estimates. However, it turns out that in many situations, there exist biased estimators with lower variance than the unbiased OLS estimator. Recall that</p>
+
+<p>$$MSE = Bias^2 + Variance$$</p>
+
+<p>If we can find a new estimator that has a little bit of bias but significantly less variance, then it is possible that the estimator will have lower MSE than the unbiased estimator (recall the bias/variance tradeoff).</p>
+
+<p>Let&#39;s define a modified OLS estimator, called the <strong>ridge regression estimator</strong>, by</p>
+
+<p>$$\hat{\beta}^* = \left(X^TX + kI\right)^{-1}X^TY = \left(I + k(X^TX)^{-1}\right)^{-1}\hat{\beta}_{OLS}$$</p>
+
+<p>Notice that as we move $k$ towards $0$, $\hat{\beta}^*$ approaches the OLS estimator, but moving $k$ away from $0$ yields an estimator that differs from $\hat{\beta}_{OLS}$ in the sense that it shrinks it towards $0$. This is one of the important properties of ridge regression:</p>
+
+<p><strong>Ridge regression shrinks the model parameters (coefficients) towards zero, where the amount of shrinkage depends on the size of the regularization parameter, $k$</strong></p>
+
+<p>It turns out that although our new estimator, $\hat{\beta}^*$, is no longer unbiased, it has <em>lower variance</em> than $\hat{\beta}_{OLS}$.</p>
+
+<p><img src="ridge.png" alt="Ridge" style="width:500px;height:500px;"></p>
+
+<p>An alternative, yet more common formulation of the ridge regression estimate of $\beta$ which focuses on adding a penalty for models with large $\beta$ values is given by</p>
+
+<p>$$\hat{\beta}^* = \underset{\beta}{\text{argmin}}\left[ \sum_{i=1}^n (y_i - x_i^T \beta)^2 + k \sum_{j = 1}^p \beta^2\right]$$</p>
+
+<p>This formulation yields the estimator presented above which we can write as</p>
+
+<p>$$\hat{\beta}^* = Z \hat{\beta}_{OLS}$$</p>
+
+<p>where $Z = (I + k(X^TX)^{-1})^{-1}$.</p>
+
+<h4>The bias and variance of the ridge estimator</h4>
+
+<p>It is easy to show that $\hat{\beta}^*$ is unbiased ($E\left(\hat{\beta}^*\right) = E(Z \hat{\beta}_{OLS}) = Z\beta \neq \beta$), however the steps to calculate the variance of the ridge estimator, are a bit more involved (see the Appendix). Some fun algebraic steps show that</p>
+
+<p>$$Var\left(\hat{\beta}^*\right) = \sigma^2 \sum_{j=1}^p \frac{\lambda_j}{(\lambda_j + k)^2}$$</p>
+
+<p>where $\lambda_1, ..., \lambda_p$ are the eigenvalues of $X^TX$. From the above expression, it is clear that increasing the regularization parameter, $k$, <em>decreases</em> the variance of our ridge estimator.</p>
+
+<p>Further, we can show that if the eigenvalue decomposition of $X^TX$ is given by $X^TX = P^T \Lambda P$ where $P$ consists of the eigenvectors of $X^TX$ and $\Lambda$ is a diagonal matrix whose entries are the eigenvalues of $X^TX$, then </p>
+
+<p>$$Bias^2\left(\hat{\beta}^*\right) = \sum_{j=1}^p \frac{\alpha_j^2}{\left( 1 + \frac{\lambda_j}{k} \right)^2 }$$</p>
+
+<p>where $\alpha_j = \beta^T P_j$, implying that increasing $k$ <em>increases</em> the bias of our ridge estimator.</p>
+
+<h4>For which values of $k$ is the MSE for the ridge estimate much better than OLS?</h4>
+
+<p>It can be shown that the ridge regression estimator actually achieves lower MSE than the OLS estimator even in the traditional setting of $n &gt; p$. However, the extent of the improvement in MSE depends on the value of $k$. In the appendix, it is shown that the values of $k$ for which the variance is rapidly decreasing while bias is only slightly increasing (i.e. the MSE as a function of $k$ is negative), are those such that</p>
+
+<p>$$k &lt; \frac{\sigma^2}{\max_i(\alpha_j^2)}$$</p>
+
+<p>To vaguely understand why, recall the Figure above (in which the MSE of the ridge estimator corresponds to the dotted line). The region specified corresponds to the values of $k$ for which the ridge MSE is rapidly decreasing (and is clearly less than the MSE for OLS).</p>
+
+<h3>Using ridge in practice</h3>
+
+<p>Supposing that we can express the ridge estimate as $\hat{\beta}^* = X^T\hat{\alpha}$ for some $\hat{\alpha} \in \mathbb{R}^n$, i.e. that the solution lies within the span of the rows of $X$ (we encourage you, the reader, to show that this is true as an exercise), calculation of the ridge estimate can be reformulated as solving for $\alpha$ rather than $\beta$, i.e. instead of solving $\hat{\beta}^* = \underset{\beta}{\text{argmin}}\left( \|Y - X \beta\|_2^2 + k\|\beta\|_2^2\right)$ (the standard approach), we solve the following optimization problem over $\alpha$:</p>
+
+<p>$$\hat{\alpha} = \underset{\alpha}{\text{argmin}} \left( \|Y - XX^T \alpha\|_2^2 + k \|X^T \alpha\|_2^2\right)$$</p>
+
+<p>and then plug the evaluated $\hat{\alpha}$ into $\hat{\beta}^* = X^T \hat{\alpha}$ to obtain our ridge estimate.</p>
+
+<p>At this point, you might be wondering why this is an improvement. The crucial difference between the original optimization problem and its reformulation is that finding the optimal $\alpha$ will involve inverting an $n \times n$ matrix instead of a $p \times p$ matrix, which, when $p \gg n$,  is a significant improvement. That is, it is much simpler to calculate the ridge estimate than the OLS estimate for high-dimensional problems, particularly when we have more parameters than observations.</p>
+
+<p>To calculate $\hat{\alpha}$, we want to find $\alpha$ such that</p>
+
+<p>$$\frac{d}{d\alpha} \left( \| y - X X^T \alpha \|_2^2 + k \| X^T \alpha \|_2^2 \right) = 0$$</p>
+
+<p>Let&#39;s define $M := XX^T$. Then since $\|A\|_2^2 = A^TA$, we have that</p>
+
+<p>\begin{aligned}
+ \| y - X X^T \alpha \|_2^2 + k \| X^T \alpha \|_2^2 &amp;= (y - M\alpha)^T(y - M \alpha) + k \alpha^TM \alpha\\
+ &amp; = y^Ty - y^TM \alpha - \alpha^T M y + \alpha^TM^TM\alpha + k \alpha^TM\alpha
+\end{aligned}</p>
+
+<p>so that differentiating with respect to $\alpha$ and setting the result to zero, we need to solve</p>
+
+<p>$$-2My + 2M^2 \alpha + 2kM\alpha = 0$$</p>
+
+<p>i.e. </p>
+
+<p>$$M(M + I k) \alpha = My$$</p>
+
+<p>where if $p &gt; n$, then $M$ is invertible if it is full rank (note that in this situation, $X^TX$ is not invertible!), and we thus have that</p>
+
+<p>$$\hat{\alpha}  = (M + Ik)^{-1} y$$</p>
+
+<p>from which (using the identity $(I + AB)^{-1}A = A(I + BA)^{-1}$) we can calculate our ridge estimate as</p>
+
+<p>$$\hat{\beta}^* = X^T \hat{\alpha} = X^T (XX^T + Ik)^{-1}y = (X^TX + Ik)^{-1} X^Ty$$</p>
+
+<p>which is the same as the estimate that we calculated above.</p>
+
+<h1>Appendix: The variance of the ridge estimator</h1>
+
+<p>The Mean Squared Error (MSE) as a function of $k$ can be written as</p>
+
+<p>\begin{aligned}
+MSE(k) &amp; = E \left[ \left(\hat{\beta}^* - \beta\right)^T\left(\hat{\beta}^* - \beta\right) \right]\\
+&amp; =  E \left[ \left(\hat{\beta}^* - Z\beta + Z\beta - \beta\right)^T\left(\hat{\beta}^* - Z\beta + Z\beta -  \beta\right) \right]\\
+&amp; =  E \left[ \left(Z\hat{\beta}_{OLS} - Z\beta + Z\beta - \beta\right)^T\left(Z\hat{\beta}_{OLS} - Z\beta + Z\beta -  \beta\right) \right]\\
+&amp; = E\left[ \left(\hat{\beta}_{OLS} - \beta \right)^T Z^TZ \left( \hat{\beta}_{OLS} - \beta \right) \right] + (Z\beta - \beta)^T(Z\beta - \beta)
+\end{aligned}</p>
+
+<p>where the last step followed from the unbiasedness of $\hat{\beta}_{OLS}$ (i.e. that $E(\hat{\beta}_{OLS} - \beta) = 0$) implying that the cross-terms disappear.</p>
+
+<p>Next, the above equation is of the form</p>
+
+<p>$$MSE(k) = Var\left( \hat{\beta}^* \right) + Bias\left(\hat{\beta}^*\right)^2$$</p>
+
+<p>where, since $E\left( \hat{\beta}^*\right ) = Z \beta$, we have that</p>
+
+<p>\begin{aligned}
+Var\left(\hat{\beta}^*\right) &amp;= E\left[ \left( \hat{\beta}^* - E \left(\hat{\beta}^*\right) \right)^T\left( \hat{\beta}^* - E \left(\hat{\beta}^*\right) \right) \right]\\
+&amp; = E \left[ \left(\hat{\beta}^* - Z \beta\right)^T\left(\hat{\beta}^* - Z \beta\right) \right]\\
+&amp; = E\left[ \left( \hat{\beta}_{OLS} - \beta \right)^TZ^T Z\left( \hat{\beta}_{OLS} - \beta \right) \right]
+\end{aligned}</p>
+
+<p>and</p>
+
+<p>\begin{aligned}
+Bias^2\left(\hat{\beta}^*\right) &amp;= \left(E(\hat{\beta}^*) - \beta \right)^T\left(E(\hat{\beta}^*) - \beta \right)\\
+&amp; = (Z \beta - \beta)^T (Z \beta - \beta)
+\end{aligned}</p>
+
+<p>Suppose that $X^TX$ has eigenvalues $\lambda_1, ..., \lambda_p$, then</p>
+
+<p>\begin{aligned}
+Var\left(\hat{\beta}_{OLS}\right) &amp;= E\left(\hat{\beta}_{OLS} - \beta\right)^T\left(\hat{\beta}_{OLS} - \beta\right)\\
+&amp; = Etr\left(\hat{\beta}_{OLS} - \beta\right)^T\left(\hat{\beta}_{OLS} - \beta\right)\\
+&amp; = \sigma^2 tr(X^TX)^{-1}\\
+&amp; = \sigma^2 \sum_{j=1}^p \frac{1}{\lambda_j}
+\end{aligned}</p>
+
+<p>Note that $Z = \left(I + k(X^TX)^{-1}\right)^{-1}$ has eigenvalues $\gamma_i = \frac{\lambda_i}{\lambda_i + k}$, so that</p>
+
+<p>$$Var\left(\hat{\beta}^*\right) = \sigma^2 \sum_{j=1}^p \frac{\lambda_j}{(\lambda_k + k)^2}$$</p>
+
+<h1>Appendix: Values of $k$ for which the MSE for the ridge estimate is smaller than for the OLS estimator</h1>
+
+<p>The values of $k$ for which the variance is rapidly decreasing while bias is only slightly increasing (i.e. the MSE as a function of $k$ is negative), are those such that</p>
+
+<p>$$k &lt; \frac{\sigma^2}{\max_i(\alpha_j^2)}$$</p>
+
+<p>To understand why, recall the Figure above (in which the MSE of the ridge estimator corresponds to the dotted line). We need to show that the region specified corresponds to the $k &gt; 0$, such that</p>
+
+<p>$$\frac{d}{dk} MSE(k) &lt; 0$$</p>
+
+<p>i.e. the values of $k$ that fall into the region in which the variance is rapidly decreasing while bias is only slightly decreasing. Note that since</p>
+
+<p>$$MSE\left(\hat{\beta}^*\right) - Var(k) + Bias^2(k)$$</p>
+
+<p>we simply need to find sufficient conditions for</p>
+
+<p>$$\frac{d}{dk}( Var(k) + Bias^2(k)) &lt; 0$$</p>
+
+<p>where $Var(k) = \sigma^2 \sum_{j=1}^p \frac{\lambda_j}{(\lambda_j + k)^2}$ and $Bias^2(k) =  \sum_{j=1}^p \frac{\alpha_j^2}{\left( 1 + \frac{\lambda_j}{k} \right)^2 }$. Thus</p>
+
+<p>$$\frac{d}{dk} Var(k) = -2 \sigma^2 \sum_{j=1}^p \frac{\lambda_j}{(\lambda_j + k)^3}$$</p>
+
+<p>and</p>
+
+<p>$$\frac{d}{dk} Bias^2(k) = 2k\sum_{j=1}^p \frac{\lambda_j \alpha_j^2}{(\lambda_j + k)^3}$$</p>
+
+<p>so that we need for each $j$</p>
+
+<p>$$2 \sigma^2 \lambda_j &gt; 2k \lambda_j \alpha_j^2$$</p>
+
+<p>which implies that a sufficient condition for the existence of such a $k$ is given by</p>
+
+<p>$$k &lt; \frac{\sigma^2}{\max_i (\alpha_j^2)}$$</p>
+
+
+
+</section>
+
+<footer>
+
+<p><small>Site powered by <a href="http://jekyllrb.com/">Jekyll, <a href="http://pandoc.org/">pandoc and <a href="http://yihui.name/knitr/">knitr</a>.</small></p>
+</footer>
+
+
+</div>
+<script src="javascripts/scale.fix.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-39541792-2', 'github.com');
+ga('send', 'pageview');
+</script>    
+</body>
+</html>

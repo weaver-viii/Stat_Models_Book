@@ -75,6 +75,10 @@ The Bootstrap
 * [The bootstrap][boot]
 
 
+Regularization
+
+* [Regularization in linear regression][reg]
+
 
 [intro]: 0-introduction.html 
 [how]: 1-philosophy.html
@@ -100,3 +104,4 @@ The Bootstrap
 [eval]: 21-evaluation.html
 [class]: 22-classification.html
 [boot]: 23-bootstrap.html
+[reg]: 24-regularization.html
