@@ -1,0 +1,35 @@
+
+
+\chapter{Regression in causal inference}
+\label{ch:causalreg}
+
+
+Recall our discussion on causal inference. In this section, we introduced the Neyman-Rubin model of potential outcomes where we have two possible outcomes: the outcome if subject $i$ is assigned to treatment, $Y\_{i1}$, and the outcome if subject $i$ is assigned to control $Y\_{i0}$. For any given subject, we can only observe \textit{one} of these two outcomes, and we can write the response that we do observe as
+$$Y_i = ( 1- T_i) Y_{i0} + T_i Y_{i1}$$
+
+where $T_i$ is the treatment indicator (and is a \textit{random variable}) whereby $T_i = 1$ is subject $i$ is assigned to treatment and $T_i = 0$ if subject $i$ is assigned to control. We are interested in estimating the causal effect:
+$$\frac{1}{N}\sum_{i=1}^N (Y_{i1} - Y_{i0})$$
+which is an unobservable quantity that we typically estimate by the observed average outcome difference between the treatment and control groups:
+$$\tau = \frac{1}{n_1} \sum_{i : T_i = 1} Y_i - \frac{1}{n_0} \sum_{i : T_i = 0} Y_i$$
+
+It turns out that we can very naturally relate causal effect and linear regression. Suppose that we fit a linear model to the outcome using treatment assignment as the sole predictor:
+
+$$Y_i = \beta_0 + \beta_1 T_i + \epsilon_i$$
+
+Then $\beta$ can be thought of as the treatment effect on the outcome, and we can estimate it using OLS as described above. It can be shown that this estimate of the treatment effect is more or less equivalent to the simple estimator of the sample average treatment effect (SATE) of the form:
+
+$$\tau = \frac{1}{n_1} \sum_{i : T_i = 1} Y_i - \frac{1}{n_0} \sum_{i : T_i = 0} Y_i$$
+
+It is common to ``adjust for covariates'' by adding them into the regression equation
+
+$$Y_i = \beta_0 + \beta_1 T_i + \beta_2 x_i +  \epsilon_i$$
+
+however, the only reason we should ever even be \textit{tempted} to do this is if we believe that the covariate, $x$, is imbalanced between treatment and control in some way. This approach involving estimating the causal effect of the treatment by estimating $\beta_1$ using regression in which we adjust for covariates seems simple, and at first glance, very reasonable; in fact, this is the reason that this approach is so widely used (and misused!). There are however a huge number of critiques of this approach, primarily in the case of observational studies. One of the main issues is the assumption of \textit{linearity}. If this assumption is unjustified, then our OLS estimates will be significantly worse than the simple difference in means SATE estimates! Moreover, if we adjust for covariates in our linear model, it is often the case that we will introduce extra bias into our estimate of treatment effect! For example, Berk et al. (2010) claim that ``Random assignment does not justify any form of regression with covariates. If regression adjustments are introduced nevertheless, there is likely to be bias in any estimates of treatment effects and badly biased standard errors''. There are examples of adjustments for which this disparaging view of using regression to adjust for covariates is not justified (see, for an example, Lin (2010)), but these models should still be used with caution.
+
+In general, the only reason we would want to use regression to estimate our causal effect is to adjust for covariates; if we did not feel that any of our covariates differed between the treatment and control group, then we might as well simply calculate the more general SATE estimator, $\tau$. If, however, we did feel concerned about covariate imbalance, then perhaps this adjusted regression is justified, however, there are a number of other approaches to consider: notable we might perform \textit{matching} which involves comparing subjects in the treatment to comparable subjects in the control group (where two subjects are comparable if they have similar covariate measurements).
+
+
+
+
+
+

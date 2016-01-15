@@ -1,0 +1,196 @@
+
+
+\chapter{An introduction to causal inference}
+\label{ch:causal}
+
+
+
+Have you ever heard the phrase ``correlation does not imply causation''? Chances are that you have (perhaps it was even accompanied by a humorous graph describing how the age of Miss America is correlated with the rate of murders by steam, hot vapors and hot objects), yet although everyone and their dog is capable of uttering the phrase, few appear to really understand it. It is in fact extremely common for human beings to jump to an inference of causation from an observation of correlation. It is not hard to postulate reasons for why this fallacy is so common. One could argue that the fundamental human tendency to infer causation arose as a result of our innate need to understand and explain the world in which we live, and even offers an evolutionary advantage. Our inclination to draw causal conclusions begins from a young age; for example, as a child we learn that touching a hot object causes pain. At such a young age, we don't understand the mechanism of \textit{why} we felt pain when we touched the hot object, but we inferred that it was indeed the physical act of \emph{touching} the object that \emph{caused} the pain. The end result being that we quickly learn to stop touching hot objects, no matter how appealing they seem.
+
+Although in most every day encounters we don't have the means to explain the mechanism of cause and effect, oftentimes our intuition that lead us to infer causation from correlation is indeed correct. The problem arises when we continue to draw this need to infer causation into the complex realm of science. As an example, consider drug advertisements: most drug advertisements feature extraordinarily happy and healthy people, bright colors, accompanied by a passing description of what the drug is actually for. The idea behind these advertisements is that the human mind automatically infers causation from the association presented between the drug and the happy people. The aim is to make the viewer infer that the drug \emph{causes} health and happiness (which, if you pay attention to the hurriedly reported side-effects at the end of the ad, is likely the opposite of what the drug causes). 
+
+\subsection*{The egg-yolk study}
+
+
+\textcolor{red}{Description and discussion of study needs work!}
+
+
+For a more concrete example, let's consider a Canadian study by Spence et al. on egg yolk consumption and cartoid plaque which aimed to identify whether the atherosclerosis burden (as a marker of arterial damage) was related to regular consumption of egg-yolk. The results of the study were discussed in the media using tag lines such as ``a new study suggests eating egg yolks can accelerate heart disease almost as much as smoking'', and ``No yolk: [is] eating the whole egg as dangerous as smoking?''.
+
+The study was based on an 2831 consecutive patients attending vascular prevention clinics at University Hospital were asked to fill out a lifestyle questionnaire at the time of referral to the vascular prevention clinic. From the questionnaire, the authors calculated for each patient pack-years of smoking (number of packs per day of cigarettes times the number of years of smoking) and egg-yolk years (number of egg yolks per week times the number of years consumed). For each patient, each plaque identified in the common, external and internal carotid artery on both sides was measured in a longitudinal view, in the plane in which it was biggest. The perimeter of each plaque was measured by tracing a cursor on a computer screen. Of the 2831 patients with data on egg yolk consumption, 1231 consented to use the data and had data on pack-years of smoking and carotid total plaque area. Data range checks were performed and data entry errors such as decimal errors were identified by scatterplots of age against each continuous variable. The author's interpretation of the results in their study is that the ``data suggests a strong association between egg consumption and carotid plaque burden'', and they conclude that their ``findings suggest that regular consumption of egg yolk should be avoided by persons at risk of cardiovascular disease''.
+
+
+
+Can you see any issues with this study? Are the conclusions drawn reasonable?
+
+
+There are in fact a number of issues:
+
+\begin{enumerate}
+\item The study is only considering people who had been referred to a particular vascular prevention clinic, yet the conclusion is making claims about the general population.
+\item The study is observational AND they have no control group for comparison.
+\item  Do the measurements of plaque area seem reasonable? To me they seem very crude and are potentially a large source of error. This was not discussed at all in the media reports of the study.
+\item ``All patients with complete data for each analysis were included'': there is no explanation of how many patients had incomplete data, nor potential reasons for this. For example, what if people who did not consume egg-yolks or smoke simply chose not to fill out the questionnaire.
+\item Less than half of the original study population were actually used in the study (either as a result of lack of consent or missing data) -- we are offered no information on how those who were used in the study differ from those who were not.
+\item They jumped to causation in their conclusion by suggesting that ``regular consumption of egg yolk should be avoided by persons at risk of cardiovascular disease'', which implies that consumption of egg yolk \emph{causes} heart disease.
+\end{enumerate}
+
+
+
+
+There is a common misconception that a study with a large sample size is automatically better than a smaller one. However a large study with a poor design will almost never be better than a smaller study with a great design. Compare the relatively large egg-yolk study with the NZ filmmaker \textcolor{red}{Name? Reference?} who put himself on a calorie controlled diet, but ensured that all of the calories came from high-fat junk food. Within 8 weeks he had gained an enormous amount of weight. This is a study with only one person (an incredibly small sample size), but which study would you believe more? 
+
+
+\section{Treatment assignment mechanisms}
+
+In the egg-yolk study described above, we discussed the many issues with the study and touched upon why it didn't provide enough evidence to draw a causal conclusion. We now move on to discuss the general principles for designing studies from which we \textit{could} conceivably draw causal conclusions. In doing so, we will introduce the Neyman-Rubin framework for causal inference.
+
+
+
+
+It is generally considered that the gold-standard for drawing causal inferences is to conduct a \textbf{randomized, controlled experiment}. The idea behind this notion is as follows: suppose that, from your population of interest, you randomly select $N$ people. You then randomly split your sample in half, so that $N/2$ are in the ``treatment'' group and $N/2$ are in the ``control'' group. Then, on average, the treatment and control groups would be statistically equivalent (the covariate distributions of the two groups should be more or less the same). In particular, if we apply an intervention (a treatment) to the treatment group, but not to the control group, then the only difference between these two groups becomes the fact that the treatment group received the treatment and the control group did not. Thus any difference observed between the two groups after applying the treatment must be a caused by the treatment itself (rather than a reflection of some initial underlying difference between the two groups: if the randomization worked, there should be no underlying difference).
+
+In contrast to the randomized experiment we just described, an \textbf{observational study} is one in which the experimenter simply observes the differences between subjects who have placed themselves in the treatment group and those who have not. In a randomized, controlled experiment the experimenter decided, albeit randomly, who received the treatment and who did not, whereas in an observational study, the experimenter has no control over the treatment assignment. What is the problem with this approach? The primary problem is that there might be underlying differences between the treatment and control groups. In this case, we can never be certain that the differences that we observe were a result of the treatment rather than some underlying difference. Even if we only compare treated individuals with control individuals whose measured \textbf{covariates} (variables related to the response) are similar, there is always the possibility that there are unobserved variables that differ between the two groups. Randomization guarantees that, on average, \textit{all} covariates (observed or unobserved) are balanced.
+
+Suppose, for an example, that we wanted to estimate the causal effect of smoking on the incidence of cancer. The response in this example is a binary indicator of whether an individual develops lung cancer or not, and possible covariates include age, gender, race and various socio-economic variables. It would certainly be unethical to randomly assign half of our sample of people to smoke and the other half not to be. A much more reasonable approach would be to compare people who are already smokers to people who are not smokers and calculate the difference in the proportion of people in each group who develop lung cancer. What if, however, there existed underlying differences between people who chose to smoke and people who do not (for example genetic differences, which at the time, were unobservable) which caused people both to smoke and to develop lung cancer. In this case, smoking doesn't cause lung cancer at all. In fact, this was the argument used by many tobacco companies to dispute the many observational studies that began to arise claiming that smoking caused lung cancer.
+
+As mentioned, the principal problem with observational studies is that there may be underlying differences between the treatment and control group, other than the treatment itself, which influences the response. Such variables are called \textbf{confounders}. The question to ask of observational studies thus becomes: how can we be sure that any differences we observe between the treatment and the control groups are due to the treatment rather than confounding variables?
+
+
+
+
+\subsection*{Inferring causation from randomized studies}
+
+The most obvious arguments for conducting randomized studies are related to the issues discussed above to encourage balanced covariates between the treatment and control groups. However, there is a common misconception that randomization \emph{ensures} balanced covariates. This is not necessarily true, and the likelihood of balanced covariates depends strongly on the randomization procedure undertaken. Consider, for example, the case where assignment to treatment is done by the flip of a coin: for each individual, if the coin flip shows heads then they are assigned to the treatment group, and if it shows tails they are assigned to the control group. Then, in a study with $N$ individuals, there are $2^N$ different possible ways to treatment assignment (each individual has two possible assignments: treatment or control). Moreover, several of these treatment assignment outcomes result in useless studies: it is entirely possible (though unlikely) that under this randomization procedure, everyone will be assigned to the treatment group. In which case it is impossible to make a causal inference about the effect of the treatment on the response (since you have no control group to compare to).
+
+For another example, consider a study aimed at assessing the effectiveness of a type of heart surgery on 1,000 patients from a total of 12 different hospitals. Surely the outcome will vary from hospital to hospital. Thus even if the randomization is conducted such that half of the patients are in the treatment group and the other half are in the control group, there is the possibility that the treatment group will contain only patients from hospitals 1, 2, 4, 7, 8 and 12 and the control group contained only patients from hospitals 3, 5, 6, 9, 10 and 11. This mechanism has the property that we are never comparing patients from the same hospital, moreover, it is likely that each hospital is different, and thus that our treatment and control groups are not necessarily comparable. How could we conduct the randomization to increase the chance obtaining more comparable (more balanced) treatment and control groups? One way is to perform the randomization procedure individually \emph{within} each hospital. This process is called \emph{stratification}.
+
+Thus it is certainly not the case that a randomization ensures that the study will be well-designed, but hopefully we can agree that randomization studies are more likely to lead to balanced covariates than observational studies. An analyst needs to think carefully about how to conduct the randomization to ensure that the control and treatment groups are equivalent. In the (rare) case that the covariates are perfectly balanced between the treatment and control groups, then to obtain an unbiased estimate the causal effect of the treatment, we could simply calculate:
+
+$$(\textrm{Average outcome of the treatment group}) - (\textrm{Average outcome of the control group})$$
+
+In ideal situations, this is the only number we ever really need to look at. Why would we need to fit linear models or conduct hypothesis tests when the difference in average outcomes tells us everything we need to know. \textcolor{red}{Expand on this}
+
+Another point in favor of randomization of treatment assignment is that it makes the randomness in the problem explicit. More specifically, we know exactly how the randomness was created and it is easily replicable. As we will discuss when we introduce the Neyman-Rubin causal inference model, the only randomness in these types of problems comes from the assignment to treatment (in particular, the measured outcome is non-random). This is strikingly different to the traditional approach in which the outcome of interest is a random variable and the traditional approaches such as hypothesis testing and confidence intervals rest on properly defined probability distributions or sample spaces. This allows for more transparency in the problem.
+
+
+Randomization is certainly the gold-standard in inferring causation (although it is important not to accept a study as perfect just because the experiment was randomized. See the fruitfly experiment as an example).
+
+Although the first people to truly emphasize the importance of randomization was R.A Fisher did so for experimental reasons. \textcolor{red}{a history of randomization}. These days, randomization has many uses beyond just experimental design. The modern approaches involve many randomized algorithms such as: compressed sensing, randomized algorithms for big data, Shannon's randomized channel code, random projections, non-parametric testing, etc.
+
+
+\subsection*{Inferring causation from observational studies}
+
+As discussed above, using randomized experiments it's certainly possible to infer that a treatment \emph{causes} a change in some outcome, however we haven't yet discussed whether it's even possible to infer causation from observational studies. You may have heard the phrase \emph{``no causation without manipulation''}, however we will consider an example (smoking) that represents a counterexample.
+
+
+\begin{itemize}
+\item matching - consider all confounders (never know if you've observed \emph{all} of them!)
+\item
+\end{itemize}
+
+
+
+This is great news -- there are certainly many instances in which observational trials would be preferred to randomized trials.
+
+\section{The Neyman-Rubin model}
+
+Everything we have discussed in this chapter so far has a philosophical and non-rigorous flavor to it. The Neyman-Rubin framework allows us to introduce rigor into the vague language of causal inference. The Neyman-Rubin model is named after Jerzy Neyman, who introduced the potential-outcomes framework for causality in 1923, and Donald Rubin who is a pioneer in extending this framework into the modern of causal inference in observational and randomized experiments.
+
+The model is rooted in the notion that each individual in a two-arm study (control and treatment) has two \emph{potential outcomes}. To make our descriptions transparent, we will embed our description of the Neyman-Rubin model within an example: suppose that we are interested in testing the effectiveness of a new drug on reducing the incidence of monthly headaches (our response). The patients assigned to the control group are not provided with the drug (perhaps they are provided with a placebo to make the study blinded, but we won't worry about this now), while the patients in the treatment group are provided with the drug and are told to take it daily. Each patient in each group then reports the number of headaches they experience in a month.
+
+Let's think hypothetically about an individual patient (patient $i$). Suppose that when patient $i$ is assigned to the control group, they report experiencing 10 headaches. The notation we use is $Y_{i0} = 10$, where the 0 index corresponds to ``control''. Alternatively, when patient $i$ is assigned to the treatment group, they report experiencing 8 headaches, and we write $Y_{i1} = 8$, where the 1 index corresponds to ``treatment''. In reality, however, we can \emph{only observe one} of these outcomes, since patient $i$ will be assigned \emph{either} to the control group or to the treatment group, \emph{but not both}. Hence we call $Y_{i0}$ and $Y_{i1}$ the \emph{potential outcomes} for patient $i$. It is crucial to realize that both $Y_{i0}$ and $Y_{i1}$ are \emph{fixed} values (i.e. they are not random!). The \emph{observed} outcome (the outcome that we actually observe) for patient $i$ can be written as
+
+$$Y_i = (1 - T_i) Y_{i0} + T_i Y_{i1}$$
+
+where $T_i = 1$ if patient $i$ is assigned to the treatment group and $T_i = 0$ if patient $i$ is assigned to the control (recall that only one of these will occur). Note that if patient $i$ is assigned to the treatment group, we have
+
+$$Y_i = 0 \times Y_{i0} + 1 \times Y_{i1} = Y_{i1}$$
+
+whereas if patient $i$ is assigned to the control group, we have
+
+$$Y_i = 1 \times Y_{i0} + 0 \times Y_{i1} = Y_{i0}$$
+
+That is, we observe the potential outcome corresponding to which group patient $i$ is assigned.
+
+
+\subsubsection*{Randomness in the Neyman-Rubin model}
+
+When presented with a new formulation or model, it is good practice to ask ``where does the randomness come from in this model?''. In essence, we are asking ``what assumptions are we making about the randomness by using this model?''.
+
+Recall that the potential outcomes, $Y_{i0}$ and $Y_{i1}$, are considered \emph{fixed} (non-random) values. The observed outcome, $Y_i$, however, is considered to be random. But given that $Y_i$ is just a linear combination of the potential outcomes, where does the randomness come from? The answer is that the randomness comes from the treatment assignment variable, $T_i$. That is, under this formulation, the only reason that we consider the observed outcome to be random is because the decision to place the patient in the treatment group or control group was random.
+
+
+Thus the key difference between the Neyman-Rubin formulation and the traditional formulation is that in the Neyman-Rubin formulation a subject's outcome under each treatment is considered fixed, but the outcome that we observe is random (since it is random which treatment group the subject will be assigned to). In the traditional formulation, the response is considered to be random itself, but it is usually not explained where the randomness comes from. That is, the Neyman-Rubin model makes the randomness explicit!
+
+\textcolor{red}{I need to explain what I mean by the ``traditional formulation''}
+
+Note that in the typical setting, we consider the randomness to come from the sampling procedure where we draw our sample from the population. Although this randomness also exists when we use the Neyman-Rubin model, we are not using this source of randomness for our analysis. In the Neyman-Rubin model, the primary source of randomness comes from the random assignment to the treatment or control group.
+
+\subsection*{Estimating the causal effect: an example}
+
+
+Let's consider an example: suppose that you were the inventor of a new painkiller, and you needed to prove to the FDA that the painkiller was effective. How would you do this? Ideally, you would be able to perform a randomized trial Suppose that you had access to patients who visited a certain medical clinic over a period of a year. Then for each new patient who consented to participate in the trial, and whose primary reason for visiting the clinic was pain, you could conduct a random ``coin toss'' to decide if the doctor will prescribe the new painkiller to the patient or not. Note that in general the doctor cannot decide themselves whether or not to prescribe the painkiller, since this will introduce personal selection bias into the experiment, rather, the doctor must follow the decision made by an automated ``randomized'' process at the trial center. If the doctor is instructed to assign the patient to the treatment group, then they will prescribe the patient with the new painkiller, otherwise they will prescribe the patient to follow existing pain reliving paths. Over the duration of the trial, each enrolled patient must self-report their pain level on a scale of 1 to 10 (regardless of whether or not they received the new painkiller), and send their reports to the trial center. We are interested in identifying whether or not there is a difference in average headache severity between those who received the new painkiller and those who did not. To place this in the Neyman-Rubin framework, for patient $i$, we observe the average headache severity $Y_{i}$ which will be one of the two possible potential outcomes:
+
+$$Y_{i} = \begin{cases} Y_{i0} & \textrm{ if patient $i$ is assigned to the control group} \\ 
+Y_{i1} & \text{ if patient $i$ is assigned to the treatment group} \end{cases}$$ 
+
+
+That is, if patient $i$ is assigned to receive the new painkiller, we will observe the outcome $Y_{i1}$ (for example $Y_{i1} = 4$ implies that if the patient is assigned to take the new painkiller, they will have an average headache severity of 4), and we will observe the outcome $Y_{i0}$ otherwise (for example $Y_{i0} = 6$ implies that if the patient is not assigned to take the new painkiller, they will have an average headache severity of 6). Clearly we can only observe $Y_i = Y_{i0}$ or $Y_i = Y_{i1}$ based on treatment assignment. As discussed above, this can be re-written as
+
+$$Y_i = (1 - T_i) Y_{i0} + T_i T_{i1}$$
+
+where $T_i = 1$ if patient $i$ is assigned to the treatment group and $T_i = 0$ otherwise.
+
+
+We are interested in identifying the effect of the treatment (being prescribed the placebo) on the outcome. Ideally, we would like to measure the difference between the outcome when assigned to treatment and when assigned to control for each person, i.e. we would like to observe $Y_{i1} - Y_{i0}$ (the difference in average headache intensity for patient $i$ for when they receive the painkiller and when they don't), and take the average over all patients enrolled in the study. This is called the sample average treatment effect (SATE):
+
+$$SATE = \frac{1}{n}\sum_{i=1}^n (Y_{i1} - Y_{i0})$$
+
+and it estimates the treatment effect (the effect of prescribing the painkiller). However, the SATE is not observable since for an individual we observe either $Y_{i1}$ OR $Y_{i0}$, not both (thus we certainly cannot calculate the difference $Y_{i1} - Y_{i0}$. An unbiased estimate of the SATE, however, can be given by the obvious estimator
+
+$$\frac{1}{n_1} \sum_{i:T_i = 1} Y_{i} - \frac{1}{n_0} \sum_{i:T_i = 0} Y_{i}$$
+
+whereby we are taking the average of the outcomes observed for those in the treatment group and subtracting the average of the outcomes observed for those in the control group. 
+
+
+
+\subsection*{Hypothesis testing for treatment effect}
+
+
+
+The notion of identifying a treatment effect can also be phrased as a hypothesis testing problem. Fisher posed this problem as testing the null hypothesis that
+
+$$H_0: Y_{i1} = Y_{i0}$$
+
+i.e. the treatment has \emph{no effect on anyone}. This hypothesis, however, is not something that we can directly test since, once again, for each $i$ we only observe one of $Y_{i1}$ and $Y_{i0}$, and so cannot test the hypothesis that they will be the same. Alternatively, we can test the weaker hypothesis 
+
+$$H_0: \mu_1 = \mu_0$$
+
+where $\mu_1$ is the population average response of those assigned to the treatment, and $\mu_0$ is the population average response of those assigned to control. This null hypothesis is equivalent to the claim that there is no difference between the average outcome of the control and the treatment groups. This hypothesis is in fact testable, and a suitable test statistic can be found in the SATE:
+
+$$\tau = \overline{Y}_1^{obs} - \overline{Y}_0^{obs}$$
+
+where $\overline{Y}_1^{obs} = \frac{1}{n_1} \sum_{i:T_i = 1}Y_i$ is the average outcome for the treatment group and $\overline{Y}_0^{obs} = \frac{1}{n_0} \sum_{i:T_i = 0}Y_i$ is the average outcome for the control group.
+
+How do we obtain a notion of significance for this test statistic? Rather than estimating the variance of $\tau$, and using a distributional result to obtain a $p$-value, it is more common to conduct a permutation test to approximate the null distribution of $\tau$ and thus obtain a $p$-value. For a specific example, suppose that we had randomly assigned 500 children in 3rd grade to drink milk every day and another 500 children in 3rd grade to never drink milk. Suppose that the height difference that we observed between these two groups after a year was 2 inches. The question is, given that we have observed a difference of $\overline{Y}_T - \overline{Y}_C = 2$, how do we know that this is a ``significant'', or real, finding, not just the result of random chance?
+
+If the treatment (drinking milk daily) truly had no effect, then we would imagine that if instead different partitions of the 1000 children into two groups of 500 had been drawn, then there we would observe a similar height difference as in the original experiment. Thus, a way of seeing whether the treatment did in fact make a difference, we would ideally like to compare this value to the height difference that we would have obtained from all other permutations of treatment assignment. To formalize this somewhat, under the \emph{strong null hypothesis} (that $Y_i(1) = Y_i(0)$ for all $i$), we can randomly flip the treatment indicator and obtain the same results. If we can show that the value of our test statistic, $\tau$, that we obtained from our original experiment is extreme (very large or very small) compared to the values obtained in situations when we have randomly permuted the treatment vector, then this implies that our sample is not a typical representation of this null situation in which there is no difference between the outcome observed under treatment and control. In this case, we typically say that our result is ``significant''.
+
+
+\begin{enumerate}
+\item Calculate the value of the test statistic, $\tau$
+\item Randomly re-shuffle (permute) the treatment and assignment labels for each individual. For example if we had a (pathetically small) study involving 6 people, whose treatment assignments were $T = (1, 0, 0, 1, 0, 1)$ (i.e. individuals 1, 4 and 6 were assigned to treatment and individuals 2, 3 and 5 were assigned to control), we would randomly rearrange the order of the values in $T$ to get, for example, $T^* = (1, 1, 0, 1, 0, 0)$. 
+\item Re-evaluate the value of $\tau$ using the treatment assignment given by $T^*$: 
+$$\tau^* = \frac{1}{n_1} \sum_{i:T^*_i = 1}Y_i - \frac{1}{n_0} \sum_{i:T^*_i = 0}Y_i$$
+\item Repeat steps 2 and 3 many times (this will give an empirical estimate of the null distribution of $\tau$, whereby we are assuming that treatment and control are exchangeable: under the null hypothesis the treatment has no effect)
+\item Calculate a $p$-value by calculating the proportion of $\tau^*$ values that are more ``extreme'' (larger in absolute value) than our true value, $\tau$.
+\end{enumerate}
+
+\section{Notes}
+
+
+
+In this chapter, we have just touched on the deep field of causal inference. For those who would like to delve further into the Neyman-Rubin approach to causal inference and learn more about the existing methods for conducting and analyzing experimental and observational experiments, Imbens and Rubin's book, Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction, is an excellent resource.
+
+Further, it is worth noting that there are a number of alternative approaches to the language of causal inference, the most prominent of which is that of graphical models introduced by Judea Pearl.

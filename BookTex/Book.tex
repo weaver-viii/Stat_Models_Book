@@ -1,0 +1,127 @@
+% arara: pdflatex: { synctex: on } 
+% arara: pdflatex: { synctex: on } 
+
+\documentclass[oneside]{scrbook} 
+
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\title{The Elements of Data Science: A Perspective from Applied Statistics and Machine Learning} 
+\author{Bin Yu, Rebecca Barter} 
+
+%\publishers{School of Something\\University of Somewhere} 
+
+\begin{document} 
+\maketitle 
+
+\frontmatter 
+
+
+\include{intro} 
+\tableofcontents 
+
+
+\mainmatter 
+
+\part{Applied Statistics: an introduction}
+
+\include{1-how} 
+
+
+
+
+\include{2-projects}
+
+
+
+
+
+\part{Causal Inference}
+
+\include{3-causal}
+
+
+
+
+
+\part{General topics/methods that you should know about before moving on}
+
+\include{4-tradeoff}
+
+\include{5-testing}
+
+\include{6-cv}
+
+\include{7-normalization}
+
+
+
+
+\part{Visualization}
+
+\include{8-eda}
+
+
+
+
+\part{Finding structure in data}
+
+\include{9-pca}
+
+\include{10-clustering}
+
+
+
+
+
+\part{Regression}
+
+\include{11-linear}
+
+\include{12-causalreg}
+
+\include{13-gls}
+
+\include{14-oring}
+
+\include{15-mest}
+
+
+
+
+
+
+
+\part{Prediction}
+
+\include{16-pred}
+
+\include{17-class}
+
+\include{18-eval}
+
+
+
+
+
+
+
+\part{Extending regression}
+
+\include{19-glms}
+
+\include{20-valid}
+
+\include{21-bootstrap}
+
+
+\include{22-ridge}
+
+\include{23-lasso}
+
+\backmatter 
+
+\end{document}

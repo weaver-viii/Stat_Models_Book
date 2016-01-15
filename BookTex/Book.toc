@@ -1,0 +1,128 @@
+\contentsline {part}{\numberline {I}Applied Statistics: an introduction}{1}
+\contentsline {chapter}{\numberline {1}How to be an applied statistician}{2}
+\contentsline {section}{\numberline {1.1}The importance of communication}{2}
+\contentsline {section}{\numberline {1.2}Sources of data}{2}
+\contentsline {section}{\numberline {1.3}Sources of randomness in the data}{3}
+\contentsline {section}{\numberline {1.4}Why should we shift away from the search for ``optimality''?}{3}
+\contentsline {section}{\numberline {1.5}The accessability of statistics as a field}{4}
+\contentsline {section}{\numberline {1.6}Critical thinking}{4}
+\contentsline {section}{\numberline {1.7}Using statistics in real life}{5}
+\contentsline {section}{\numberline {1.8}Data wisdom}{6}
+\contentsline {section}{\numberline {1.9}Notes}{8}
+\contentsline {chapter}{\numberline {2}Ongoing projects}{9}
+\contentsline {section}{\numberline {2.1}The Drosophila fruitfly project}{9}
+\contentsline {section}{\numberline {2.2}The neuroscience project}{14}
+\contentsline {subsubsection}{\nonumberline Assumptions}{19}
+\contentsline {section}{\numberline {2.3}Cloud detection over polar regions}{20}
+\contentsline {part}{\numberline {II}Causal Inference}{24}
+\contentsline {chapter}{\numberline {3}An introduction to causal inference}{25}
+\contentsline {section}{\numberline {3.1}Treatment assignment mechanisms}{27}
+\contentsline {section}{\numberline {3.2}The Neyman-Rubin model}{29}
+\contentsline {section}{\numberline {3.3}Notes}{34}
+\contentsline {part}{\numberline {III}General topics/methods that you should know about before moving on}{35}
+\contentsline {chapter}{\numberline {4}The bias-variance tradeoff}{36}
+\contentsline {section}{\numberline {4.1}Bias}{36}
+\contentsline {section}{\numberline {4.2}Variance}{37}
+\contentsline {section}{\numberline {4.3}Question}{38}
+\contentsline {section}{\numberline {4.4}Manipulating the tradeoff: regularization}{39}
+\contentsline {section}{\numberline {4.5}Appendix: the sample variance is unbiased}{39}
+\contentsline {section}{\numberline {4.6}Answers to questions}{40}
+\contentsline {chapter}{\numberline {5}Hypothesis testing}{42}
+\contentsline {section}{\numberline {5.1}Significance}{42}
+\contentsline {section}{\numberline {5.2}Normal assumptions}{42}
+\contentsline {section}{\numberline {5.3}Issues with p-values}{43}
+\contentsline {chapter}{\numberline {6}Cross-validation}{44}
+\contentsline {chapter}{\numberline {7}Normalization}{45}
+\contentsline {section}{\numberline {7.1}Normalization by standardization}{45}
+\contentsline {section}{\numberline {7.2}Normalization for comparison}{45}
+\contentsline {section}{\numberline {7.3}Normalization by transformation}{45}
+\contentsline {section}{\numberline {7.4}Normalization in real life}{49}
+\contentsline {section}{\numberline {7.5}Appendix: The delta-method}{50}
+\contentsline {part}{\numberline {IV}Visualization}{52}
+\contentsline {chapter}{\numberline {8}Exploratory data analysis}{53}
+\contentsline {section}{\numberline {8.1}A good graph is worth a thousand words: examples of visual data}{54}
+\contentsline {section}{\numberline {8.2}Tools for visualizing data}{57}
+\contentsline {section}{\numberline {8.3}ggplot2 in R}{68}
+\contentsline {section}{\numberline {8.4}Appendix: the bias-variance tradeoff for kernel estimation}{68}
+\contentsline {section}{\numberline {8.5}Notes}{71}
+\contentsline {section}{\numberline {8.6}Answers to the questions:}{71}
+\contentsline {part}{\numberline {V}Finding structure in data}{73}
+\contentsline {chapter}{\numberline {9}Principal component analysis}{74}
+\contentsline {section}{\numberline {9.1}PCA for the Enron Data}{75}
+\contentsline {section}{\numberline {9.2}To normalize or not to normalize:}{77}
+\contentsline {section}{\numberline {9.3}PCA on the fruitfly project}{78}
+\contentsline {section}{\numberline {9.4}Independent component analysis}{79}
+\contentsline {section}{\numberline {9.5}Sparse PCA}{79}
+\contentsline {section}{\numberline {9.6}Non-negative matrix factorization}{80}
+\contentsline {section}{\numberline {9.7}A comparison of PCA, ICA and NMF}{80}
+\contentsline {chapter}{\numberline {10}Clustering}{81}
+\contentsline {section}{\numberline {10.1}K-means}{82}
+\contentsline {section}{\numberline {10.2}PAM}{84}
+\contentsline {section}{\numberline {10.3}Hierarchical clustering}{84}
+\contentsline {section}{\numberline {10.4}Minimum spanning trees (MST)}{84}
+\contentsline {section}{\numberline {10.5}Spectral clustering}{84}
+\contentsline {section}{\numberline {10.6}The EM algorithm}{90}
+\contentsline {section}{\numberline {10.7}Two types of community detection algorithms: parametric and algorithmic}{92}
+\contentsline {section}{\numberline {10.8}How to choose the number of clusters?}{94}
+\contentsline {section}{\numberline {10.9}Cross-validation}{96}
+\contentsline {part}{\numberline {VI}Regression}{97}
+\contentsline {chapter}{\numberline {11}Linear models}{98}
+\contentsline {section}{\numberline {11.1}Fitting a linear model using OLS}{100}
+\contentsline {section}{\numberline {11.2}Sources of randomness}{102}
+\contentsline {section}{\numberline {11.3}Residuals}{102}
+\contentsline {section}{\numberline {11.4}Properties of the OLS estimator $\mathaccentV {hat}05E{\beta }$}{104}
+\contentsline {section}{\numberline {11.5}Interpreting the linear model}{107}
+\contentsline {section}{\numberline {11.6}Using OLS for categorical data}{108}
+\contentsline {section}{\numberline {11.7}Leverage}{109}
+\contentsline {section}{\numberline {11.8}Least squares when $X$ is not full rank}{109}
+\contentsline {section}{\numberline {11.9}Regression towards the mean (the regression fallacy)}{110}
+\contentsline {chapter}{\numberline {12}Regression in causal inference}{112}
+\contentsline {chapter}{\numberline {13}Generalized least squares}{114}
+\contentsline {section}{\numberline {13.1}Weighted least squares}{114}
+\contentsline {section}{\numberline {13.2}Generalized least squares}{116}
+\contentsline {chapter}{\numberline {14}The challenger O-ring failure}{118}
+\contentsline {chapter}{\numberline {15}Alternatives to least squares (M-estimation)}{120}
+\contentsline {part}{\numberline {VII}Prediction}{122}
+\contentsline {chapter}{\numberline {16}Prediction}{123}
+\contentsline {section}{\numberline {16.1}Regularization: a motivational example}{123}
+\contentsline {section}{\numberline {16.2}Set-up: prediction problems}{125}
+\contentsline {section}{\numberline {16.3}Binary prediction methods: classification}{125}
+\contentsline {chapter}{\numberline {17}Binary prediction methods (classification)}{127}
+\contentsline {section}{\numberline {17.1}Linear discriminant analysis (LDA)}{127}
+\contentsline {section}{\numberline {17.2}Quadratic discriminant analysis (QDA)}{128}
+\contentsline {section}{\numberline {17.3}Logistic regression}{128}
+\contentsline {section}{\numberline {17.4}A comparison of least squares and maximum likelihood for binary responses}{131}
+\contentsline {section}{\numberline {17.5}MLE in high-dimensions}{133}
+\contentsline {section}{\numberline {17.6}Random forest (RF)}{134}
+\contentsline {section}{\numberline {17.7}Support vector machines (SVM)}{134}
+\contentsline {section}{\numberline {17.8}Appendix: Estimating the MLE for logistic regression using Newton-Rhapson}{134}
+\contentsline {chapter}{\numberline {18}Evaluating a prediction rule}{137}
+\contentsline {section}{\numberline {18.1}Cross-validation}{138}
+\contentsline {section}{\numberline {18.2}Notes}{141}
+\contentsline {part}{\numberline {VIII}Extending regression}{142}
+\contentsline {chapter}{\numberline {19}Generalized linear models}{143}
+\contentsline {section}{\numberline {19.1}The link function}{143}
+\contentsline {section}{\numberline {19.2}Exponential families}{145}
+\contentsline {section}{\numberline {19.3}Fitting a generalized linear model}{147}
+\contentsline {section}{\numberline {19.4}The Fisher-scoring iteration method for estimating $\beta $}{148}
+\contentsline {section}{\numberline {19.5}Appendix: derivation of the Fisher scoring algorithm for GLMs}{149}
+\contentsline {chapter}{\numberline {20}Model validation}{153}
+\contentsline {section}{\numberline {20.1}Visualization}{153}
+\contentsline {section}{\numberline {20.2}Prediction}{153}
+\contentsline {section}{\numberline {20.3}Interpretability}{154}
+\contentsline {section}{\numberline {20.4}Replication of results}{154}
+\contentsline {section}{\numberline {20.5}Robustness}{155}
+\contentsline {section}{\numberline {20.6}The likelihood ratio test}{156}
+\contentsline {section}{\numberline {20.7}Model selection}{156}
+\contentsline {chapter}{\numberline {21}The bootstrap}{163}
+\contentsline {section}{\numberline {21.1}The nonparametric approach}{163}
+\contentsline {section}{\numberline {21.2}The parametric approach}{166}
+\contentsline {section}{\numberline {21.3}Notes}{168}
+\contentsline {chapter}{\numberline {22}Ridge regression}{169}
+\contentsline {section}{\numberline {22.1}The bias and variance of the ridge estimator}{170}
+\contentsline {section}{\numberline {22.2}Using ridge in practice}{171}
+\contentsline {section}{\numberline {22.3}Appendix: The variance of the ridge estimator}{172}
+\contentsline {section}{\numberline {22.4}Appendix: Values of $k$ for which the MSE for the ridge estimate is smaller than for the OLS estimator}{173}
+\contentsline {chapter}{\numberline {23}Lasso regression}{175}
+\contentsline {section}{\numberline {23.1}The Lasso estimator}{175}
+\contentsline {section}{\numberline {23.2}Estimation accuracy}{177}

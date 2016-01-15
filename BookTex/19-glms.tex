@@ -1,0 +1,318 @@
+
+\chapter{Generalized linear models}
+\label{ch:glms}
+
+
+
+
+In the previous sections we have introduced a number of alternatives to using ordinary least squares for estimating the coefficients of linear models. For example, we discussed methods of performing least squares when we do not have common variance (weighted least squares) and when our errors have, not only different variances, but also non-zero covariances (generalized least squares). Moreover, we discussed alternatives to the squared loss function by using M-estimators such as least absolute deviation instead of least squares. However, in all of these examples, we have maintained that the model we were trying to fit was of the same linear form:
+
+$$Y = X \beta + \epsilon$$
+
+In this section, we discuss a further generalization, which this time will be a generalization on the form of the model above. 
+
+\section{The link function}
+
+The essence of the generalization to the linear model is captured by the \textit{link function}, which describes how we relate the response variable, $y_i$, to it's expected value, $\mu_i := E(y_i)$. In particular, the link function is the function $g$ such that
+
+$$g(\mu_i) = x_i^T \beta$$
+
+For standard linear regression, we have
+
+$$\mu_i = E(Y_i | x_i) = x_i^T\beta$$
+
+and so our link function, $g$, can be described by the identity function
+
+$$g(\mu_i) = \mu_i$$
+
+\subsection*{Logistic regression}
+
+Recall that for logistic regression, we had $y_i \sim Bernoulli\left( \frac{e^{x_i^T\beta}}{1 + e^{x_i^T\beta}}\right)$, and our model was specified by
+
+$$P(y_i = 1 |x_i) = \frac{e^{x_i^T\beta}}{1 + e^{x_i^T \beta}}$$
+
+which implies that 
+$$\mu_i = E(y_i | x_i) = P(y_i = 1 |x_i) = \frac{e^{x_i^T\beta}}{1 + e^{x_i^T\beta}} = \frac{1}{1 + e^{-x_i^T\beta}}$$ 
+
+Thus, inverting this expression to make $x_i^T\beta$ the subject, we have that
+
+$$x_i^T\beta = g(\mu_i) = \log \left( \frac{\mu_i}{1 - \mu_i} \right)$$ 
+
+\subsection*{Probit regression}
+
+Another common example of a generalized linear model is the probit regression model which, like the logistic regression model allows the user to estimate the probability that an observation with a given predictor vector will fall into one of two possible classes (that is, the response is binary, i.e. $y_i \in \{ 0, 1\}$). The model can be written as
+
+$$P(y_i = 1 | x_i) = \Phi\left(x_i^T\beta\right)$$
+
+where $\Phi(\cdot)$ is the CDF of a standard normal distribution, defined by
+
+$$\Phi(x) = \int^x_{-\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{t}{2}} dt$$
+
+As such, we have the following relationship between $\mu_i$ and $x_i^T\beta$:
+
+$$\mu_i = E(y_i | x_i) = P(y_i = 1 | x_i) = \Phi\left(x_i^T \beta\right)$$
+
+implying that the link function is the inverse of the standard normal CDF, i.e. $g^{-1}(\cdot) = \Phi(\cdot)$. It is worth noting that we could realistically choose any CDF to be the inverse of a link function. 
+
+\subsection*{Poisson regression}
+
+Finally, what if we wanted to model our responses as a Poisson distribution. We would have (recall that the expected value of a $Poisson(\lambda)$ random variable is simply $\lambda$)
+
+$$y_i \sim Poisson(\mu_i)$$
+
+so that $\mu_i = E(y_i | x_i)$. How could we relate our linear combination of predictors, $x_i^T\beta$, to our response, $y_i$? We could naively fit a linear regression model
+
+$$E(y_i | x_i) = x_i^T \beta $$
+
+in which case we would have the identity link function since $\mu_i = E(y_i| x_i) = x_i^T\beta$, where the first equality comes from the distributional assumption that $y_i \sim Poisson(\mu_i)$ and the second equality comes from the model assumption that $E(y_i | x_i)  = x_i^T \beta$. What is the problem with this formulation? First of all, this is a concise way of writing $y_i = x_i^T \beta + \epsilon_i$, and we haven't claimed any distributional assumptions about $\epsilon_i$. <FONT COLOR="red">Why is this model a bad idea?</FONT>. What if, instead, we used a log-linear model (often called Poisson regression) that is, we modeled the *log* of our response as a linear combination of the predictors <FONT COLOR="red">Why log-linear model for Poisson data?</FONT>:
+
+
+$$\log \left( E\left( y_i | x_i\right) \right) = x_i^T \beta$$
+
+Thus, our relation can be specified as
+
+$$\log(\mu_i) = \log(E(y_i | x_i)) = x_i^T \beta$$
+
+so that the link function is
+
+$$g(\mu_i) = \log(\mu_i)$$
+
+
+
+\section{Exponential families}
+
+Generalized linear models unify standard linear regression, logistic regression, probit regression, Poisson regression and other regression types under a common umbrella. In fact, each of the underlying distributions for these models (normal, Bernoulli, Poisson, etc) lie within a family of distributions known as the \textbf{exponential family}, and for a regression model to be a GLM, we need the responses, $y_i$, to be independent and follow an exponential family distribution. All densities which fall within the one-dimensional (single parameter) exponential family of distributions have the following form
+
+$$f(y, \theta) = \exp\{a(y) b(\theta) + c(\theta) + d(y)\}$$
+
+In this setting, $a(y)$ is usually referred to as a \textit{sufficient statistic} for the parameter, $\theta$, $b(\theta)$ is some transformation of the parameter $\theta$ and $c(\theta)$ is the normalizing function. It is common to deal with the \textit{canonical parametrization} corresponding to the case where $a(y) = y$.
+
+For example, if we consider the $N(\mu, \sigma^2)$ distribution to be a one-dimensional distribution (where $\mu$ is the parameter of interest and $\sigma$ is just a nuisance parameter), we have
+
+\begin{align*}
+f(y, \mu) &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{ - \frac{1}{2\sigma^2}(y - \mu)^2 \right\} \\
+&= \exp\left\{ \frac{y\mu}{\sigma^2}  -\frac{y^2}{2\sigma^2} - \frac{\mu^2}{2\sigma^2} - \frac{1}{2}\log(2 \pi \sigma^2) \right\}
+\end{align*}
+
+so that
+
+$$a(y) = y, ~~~~b(\mu) = \frac{\mu}{\sigma^2}, ~~~~ c(\mu) = - \frac{\mu^2}{2\sigma^2} - \frac{1}{2} \log(2 \pi \sigma^2), ~~~~ d(y) = - \frac{y^2}{2\sigma^2}$$
+
+
+Note that if $a(y) = y$, then using the facts that 
+
+$$\int f(y, \theta) dy = 1$$
+
+which implies that 
+$$\frac{d}{d\theta} \int f(y, \theta) dy = 0$$
+which in turn implies that
+$$\frac{d^2}{d\theta^2} \int f(y, \theta) dy = 0$$
+
+it is not hard to show the following (extremely useful) results
+
+$$E(Y) = - \frac{c^\prime(\theta)}{b^\prime(\theta)}$$
+
+$$Var(Y) = \frac{b^{\prime \prime}(\theta) c^\prime(\theta) - c^{\prime \prime}(\theta)b^\prime(\theta)}{\left(b^\prime(\theta)\right)^3}$$
+
+Why are these useful, you ask? Well suppose that we know that a distribution is in the experiential family and we are asked to compute its mean and variance, then, instead of calculating a number of tedious integrals or sums, we can simply use the above formula to obtain an immediate answer! Here's a brief walk-through of the proof of the formula for the expected value (we're going to assume that we can interchange integration and differentiation; this is a valid assumption, but the proof is beyond the scope of this book). From our second assumption above,
+
+\begin{align*}
+0 &= \frac{d}{d\theta} \int f(y, \theta) dy \\
+& = \int \frac{d}{d\theta}  f(y, \theta) dy \\
+& = \int \frac{d}{d\theta} \left( \exp \{y b(\theta) + c(\theta) + d(y) \} \right) dy\\
+& \int \left( b^\prime(\theta) y + c^\prime(\theta) \right) f(y, \theta) dy\\
+& = E\left( b^\prime(\theta) Y + c^\prime(\theta) \right)
+\end{align*}
+
+which implies that
+
+$$E(Y) = - \frac{c^\prime(\theta)}{b^\prime(\theta)}$$
+
+The proof of the formula for the variance follows a similar approach, and is left to the extremely interested reader.
+
+In summary, to specify a GLM, we need the following two crucial pieces of information:
+
+\begin{enumerate}
+\item the \textit{link function}
+\item the \textit{distribution of $y_i$} which must be a member of the exponential family.
+\end{enumerate}
+
+
+For example, for the standard linear model, the distribution of $y_i$ is normal and the link function is the identity function, $g(\mu_i) = \mu_i$; for the logistic regression model, the distribution of $y_i$ is Bernoulli and the link function is the logit function, $g(\mu_i) = \log \left( \frac{\mu_i}{1 - \mu_i} \right)$.
+
+
+\section{Fitting a generalized linear model}
+
+The above discussion concerns the formulation of the class of models known as generalized lienar models, but we have not discussed how to estimate the coefficients of interest, $\beta$. In this section, we will show that the maximum likelihood estimate (MLE) of $\beta$ for GLMs is in fact an iteratively weighted least squares estimate (IWLS). In fact, we have already shown this for the logistic regression case, but here we will focus on the general model where the responses are drawn independently from an exponenital family distribution.
+
+Recall that if $Y_i$ comes from an exponential family distribution, then 
+
+$$E(Y_i) = \mu_i = -\frac{c^\prime(\theta_i)}{b^\prime(\theta_i)}$$
+
+and that by definition of the link function, $g$, 
+$$g(\mu_i) = g(E(Y_i)) = x_i^T \beta$$
+
+What this implies is that there is some dependency between the exponential family parameter $\theta$ and the model parameter $\beta$, which we will now begin to explore. To proceed in a general setting, suppose that the responses, $Y_i$, are random variables drawn from an exponential family distribution, and that the predictors, $x_i$, are fixed. We can now make the following general definitions
+
+\begin{align*} 
+\mu_i := E(Y_i)  
+\end{align*}
+
+and
+
+$$\eta_i = x_i^T \beta$$
+
+Further, we will make the crucial assumption that these two entities are related by a link function, $g$. That is
+
+$$g(\mu_i) = \eta_i$$
+
+and recall that if the distribution of the $Y_i$ lies in the exponential family of distributions with parameter $\theta_i$, then
+
+$$\mu_i = -c^\prime(\theta_i)/b^\prime(\theta_i)$$
+
+Note that $\theta_i$ is a distribution parameter, while $\beta$ is a model parameter.
+
+We will now delve into a discussion of the maximum likelihood estimator for the model parameter, $\beta$, and we will describe an iterative approach to the estimation problem. Recall that by independence of the $Y_i$, the likelihood function is given by $L(y, \beta) = f_{\beta}(y_1, ..., y_n) = f_{\beta}(y_1)f_{\beta}(y_2) \dots f_{\beta}(y_n)$, To begin, the log-likelihood function is given by
+
+\begin{align*}
+\ell(\beta) & = \log (Ly, \beta) \\
+& = \left( \prod_{i=1}^n f_{\beta}(y_i) \right) \\
+& = \sum_{i=1}^n \log f_\beta(y_i) \\
+& = \sum_{i=1}^n \left( a(y_i) b(\theta_i) + c(\theta_i) + d(y_i) \right)
+\end{align*}
+
+Ideally we would like to find the value of $\beta$ that maximizes $\ell(\beta)$, however note that as it is written above, $\beta$ doesn't even appear in $\ell(\beta)$. In actuality $\beta$ does appear in the above expression via dependencies of the other parameters. Recall that we claimed above that there exists some dependency between the exponential family parameter $\theta$ and the model parameter $\beta$; it is this dependency that we will exploit when we attempt to maximize the likelihood with respect to $\beta$.
+
+It turns out that, again, there will be no closed form solution to $\hat{\beta} = \underset{\beta}{\text{argmax}} \ell(\beta)$, and we must use numeric methods such as Newton-Rhapson. Recall that the intuition behind such approaches is based on making increasingly accurate approximations by at each iteration, defining our new estimate by taking a step in the direction of the derivative of the function that we are trying to maximize. If there exists a nearby maxima or minima, then this process guarentees that by this procedure we will get closer and closer to the maxima or minima.
+
+\section{The Fisher-scoring iteration method for estimating $\beta$}
+
+In a general setting, suppose that we have iid random variables $Y_1, ..., Y_n$ with a twice differentiable density $f(y; \theta)$ where our problem of interest is in calculating the MLE for $\theta$. Given a starting point $\theta_0$, a Taylor expansion of the score function about $\theta_0$, $U(\theta) = \ell^\prime(\theta)$, yields
+
+$$U(\theta) \approx U(\theta_0) - \mathcal{J}(\theta_0)(\theta - \theta_0)$$
+
+where $\mathcal{J}(\theta) = E(-H(\ell)) = E(U(\theta)U(\theta)^T)$ is the Fisher information matrix and $H(\ell)$ is the Hessian matrix of the likelihood function defined by
+
+$$H(\ell) = \left[ \begin{array}{cccc} \frac{\partial^2l}{\partial \beta_1^2} & \frac{\partial^2l}{\partial \beta_1\partial \beta_2} & \dots & \frac{\partial^2l}{\partial \beta_1\partial \beta_p} \\
+\frac{\partial^2l}{\partial \beta_2\partial \beta_1} & \frac{\partial^2l}{\partial^2 \beta_2} & \dots & \frac{\partial^2l}{\partial \beta_2\partial \beta_p}\\
+\vdots & \vdots & \ddots & \vdots\\
+\frac{\partial^2l}{\partial \beta_p\partial \beta_1} & \frac{\partial^2l}{\partial \beta_p\partial \beta_2} & \dots & \frac{\partial^2l}{\partial^2 \beta_p}\end{array}\right]$$
+
+Note that traditional Newton-Rhapson takes a similar approach although instead of the Fisher information, which is the expected value of the Hessian matrix, the traditional NR approach uses the empirical Hessian matrix. 
+
+Note that, by definition of $\hat{\theta}_{MLE}$ as the value of $\theta$ that maximizes $\ell(\theta)$, it follows that $U\left(\hat{\theta}^{MLE}\right) = 0$, and so rearranging the above Taylor expansion, we get that
+
+$$\hat{\theta}^{MLE} \approx \theta_0 + \mathcal{J}^{-1}(\theta_0)U(\theta_0)$$
+
+which inspires the final iterative algorithm
+
+$$\theta_{m + 1} = \theta_m + \mathcal{J}^{-1}(\theta_m)U(\theta_m)$$
+
+The (somewhat tedious) details provided in the appendix show that for the case of GLMs, given a current estimate $\beta^{(m-1)}$, the Fisher Scoring algorithm simplifies to solving
+
+$$X^TWX \beta^{(m)} = X^TWZ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (*)$$
+
+for $\beta^{(m)}$ where $Z$ is a vector with elements given by
+
+$$Z_i = \sum_{k=1}^px_{ik}\beta_k^{(m-1)} + (Y_i - \mu_i) \frac{d\eta_i}{d\mu_i}$$
+
+Note that the form of $(*)$ is extremely similar to that of the normal equations for weighted least squares (WLS) on a standard linear model ($X^TX \hat{\beta}_{OLS} = X^TY$), with the crucial difference that in the GLM situation, the expression is weighted must be solved iteratively. In particular, we have shown that for GLMs, the maximum likelihood estimates of $\beta$ are obtained by an \textit{iterative weighted least squares} procedure.
+
+
+
+\section{Appendix: derivation of the Fisher scoring algorithm for GLMs}
+
+The iterative algorithm for deriving the MLE for GLMs is given by
+
+$$\theta_{m + 1} = \theta_m + \mathcal{J}^{-1}(\theta_m)U(\theta_m)$$
+
+Recall that the \textit{score function}, $U(\beta)$, is defined to be the derivative of the likelihood function, however, if $\beta$ is a vector instead of a scalar variable, we instead take element-wise derivatives:
+
+$$U(\beta) = \Delta \ell(\beta) = \left(\frac{\partial \ell(\beta)}{\partial \beta_1},... , \frac{\partial \ell(\beta)}{\partial \beta_p}\right)$$
+
+Our goal is to find the values of $\beta$ such that $U(\beta) = 0$, this value will correspond to the value of $\beta$ that maximizes the log-likelihood function. Note that using the chain rule for differentiation we can write
+
+$$[(U(\beta)]_j = \frac{\partial \ell(\beta)}{\partial \beta_j} = \sum_{i=1}^n \frac{d \ell}{d \theta_i} \frac{d\theta_i}{d\mu_i} \frac{d\mu_i}{d\eta_i} \frac{d\eta_i}{d\beta_j}$$
+
+
+To understand where each of these decompositions came from, note that
+
+
+\begin{itemize}
+\item the only parameters that appears in $\ell = \sum_{i=1}^n \left( a(y_i) b(\theta_i) + c(\theta_i) + d(y_i) \right)$ are the $\theta_i$, so $\ell$ is primarily a function of the $\theta_i$ (we wrote it as $\ell(\beta)$ above to emphasize that we will be maximizing with respect the $\beta$),
+\item the relation $\mu_i = -c^\prime(\theta_i)/b^\prime(\theta_i)$ implies that we could write $\theta_i$ as a function of $\mu_i$,
+\item by definition of the link function, $g(\mu_i) = \eta_i$ so $\mu_i = g^{-1}(\eta_i)$ is a function of $\eta_i$,
+\item and $\eta_i = x_i^T \beta = \beta_0 + x_{i1} \beta_1 + ... + x_{ij} \beta_j + ... + x_{ip} \beta_p$ implying that $\eta_i$ is a function of $\beta_j$.
+\end{itemize}
+
+
+
+
+Thus in order to calculate the score function at the $j$th parameter, $[U(\beta)]_j$, we need to first calculate, $frac{d \ell}{d \theta_i}$, $\frac{d\theta_i}{d\mu_i}$, $\frac{d\mu_i}{d\eta_i}$ and $\frac{d\eta_i}{d\beta_j}$. More specifically, supposing that we are using the canonical parametrization ($a(Y_i) = Y_i$), we have
+
+\begin{align*}
+\frac{d\ell}{d\theta_i} &= a(Y_i) b^\prime(\theta_i) + c^\prime(\theta_i)\\
+& = Y_i b^\prime(\theta_i) + c^\prime(\theta_i)\\
+& = b^\prime(\theta_i) \left( Y_i + \frac{c^\prime(\theta_i)}{b^\prime(\theta_i)} \right)\\
+& = b^\prime(\theta_i)(Y_i - \mu_i)
+\end{align*}
+
+Next, we have
+
+\begin{align*}
+\frac{d\theta_i}{d\mu_i} &= \frac{1}{d\mu_i/d\theta_i} \\
+& = - \left( \frac{b^\prime(\theta_i) c^{\prime \prime}(\theta_i) - b^{\prime \prime}(\theta_i) c^\prime(\theta_i)}{b^\prime(\theta_i)^2} \right)^{-1}\\
+& = (b^\prime(\theta_i)Var(Y_i))^{-1}
+\end{align*}
+
+and finally since $\eta_i = x_i^T \beta = \beta_0 + x_{i1} \beta_1 + ... + x_{ij} \beta_j + ... + x_{ip} \beta_p$, we have that
+
+$$\frac{d\eta_i}{d\beta_j} = x_{ij}$$
+
+
+Thus the $j$th entry of the score function is given by
+
+$$[U(\beta)]_j = \sum_{i=1}^n \frac{Y_i - \mu_i}{Var(Y_i)} \frac{d\mu_i}{d\eta_i} x_{ij}$$
+
+Next, the Fisher information matrix can be derived as follows
+
+\begin{align*}
+\mathcal{J}_{jk} & = E(-H(\ell))_{jk} = E\left(U(\beta)U(\beta)^T\right)_{jk}\\
+& = E\left( \left( \sum_{i=1}^n \frac{Y_i - \mu_i}{Var(Y_i)} \frac{d\mu_i}{d\eta_i} x_{ij} \right)\left( \sum_{l=1}^n \frac{Y_l - \mu_l}{Var(Y_l)} \frac{d\mu_l}{d\eta_l} x_{lk} \right)\right)\\
+& = E\left( \sum_{i=1}^n \frac{(Y_i - \mu_i)^2}{Var(Y_i)^2} \left( \frac{d\mu_i}{d\eta_i} \right)^2 x_{ij}x_{ik} \right)\\
+& = \sum_{i=1}^n \frac{x_{ij}x_{ik}}{Var(Y_i)} \left(\frac{d\mu_i}{d\eta_i} \right)^2
+\end{align*}
+
+where the last equality uses the fact that $E(Y_i - \mu_i)^2 = Var(Y_i)$. Thus we have shown that
+
+$$\mathcal{J} = X^TWX$$
+
+where the diagonal weight matrix, $W$, has entries
+
+$$W_{ii} = \frac{1}{Var(Y_i)} \left( \frac{d\mu_i}{d\eta_i}\right)^2$$
+
+
+Finally, recall that the Fisher-scoring iterative method for estimating the MLE is given by
+
+$$\beta^{(m)} = \beta^{(m - 1)} + \left( \mathcal{J}^{(m-1)}\right)^{-1}U(\beta^{(m-1)})$$
+
+where $\beta^{(m-1)}$ is the estimate for $\beta$ at the $(m-1)$th iteration. Multiplying both sides of the above expression by $\mathcal{J}^{(m-1)}$ yields
+
+$$\mathcal{J}^{(m-1)} \beta^{(m)} = \mathcal{J}^{(m-1)} \beta^{(m-1)} + U\left(\beta^{(m-1)}\right)$$
+
+which, from the derivations above, is equivalent to
+
+$$\sum_{k=1}^p \sum_{i=1}^n \frac{x_{ij}x_{ik}}{Var(Y_i)} \left( \frac{d\mu_i}{d\eta_i} \right)^2 \beta_k^{(m)} = \sum_{k=1}^p \sum_{i=1}^n \frac{x_{ij}x_{ik}}{Var(Y_i)} \left( \frac{d\mu_i}{d\eta_i}\right)^2 \beta^{(m-1)} + \sum_{i=1}^n \frac{Y_i - \mu_i}{Var(Y_i)} \frac{d\mu_i}{d\eta_i} x_{ij}$$
+
+which can be written infinitely more concisely in matrix form as
+
+$$X^TWX \beta^{(m)} = X^TWZ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (*)$$
+
+where $Z$ is a vector with elements given by
+
+$$Z_i = \sum_{k=1}^px_{ik}\beta_k^{(m-1)} + (Y_i - \mu_i) \frac{d\eta_i}{d\mu_i}$$
+
+To summarize, given an estimate $\beta^{(m-1)}$, the new estimate is given by $\beta^{(m)}$ that satisfies the expression given in $(*)$.
+
+
+

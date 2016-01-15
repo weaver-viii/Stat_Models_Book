@@ -77,7 +77,7 @@ The Bootstrap
 
 Regularization
 
-* [Regularization in linear regression][reg]
+* [Ridge regression][ridge]
 
 
 [intro]: 0-introduction.html 
@@ -104,4 +104,4 @@ Regularization
 [eval]: 21-evaluation.html
 [class]: 22-classification.html
 [boot]: 23-bootstrap.html
-[reg]: 24-regularization.html
+[ridge]: 24-ridge.html
